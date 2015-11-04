@@ -1,0 +1,13 @@
+<div class="statistics-menu">
+  <ul>
+    <li>
+      <a ng-class="{ 'active': app.submoduleName == 'weight-water-fitness' }" ui-sref="statistics.weightWaterFitness"><span>Gewicht, Wasser, Fitness-Ergebnis</span></a>
+    </li>
+    <li>
+      <a ng-class="{ 'active': app.submoduleName == 'cravings-hunger-mood' }" ui-sref="statistics.cravingsHungerMood"><span>Heisshunger, Hunger, Stimmung</span></a>
+    </li>
+    <li ng-if="userCourse.trackGlucoseLevels || userCourse.trackSmokeCraving">
+      <a ng-class="{ 'active': app.submoduleName == 'cigarettes-glucose' }" ui-sref="statistics.cigarettesGlucose"><span>Zigaretten, Glukose</span></a>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,22 @@
+<div class="diary-measurements-modal">
+    <span class="close" ng-click="$close()"></span>
+
+    <h3>Aktuelles Gewicht</h3>
+    <!--
+    <div class="weight-update-display {{data.delta1 >= Math.abs(data.actualWeight - data.goalWeight) ? 'positive' : 'negative'}}">
+        <i class="fa {{ data.actualWeight > data.currentWeight ? 'fa-arrow-up' : data.actualWeight == data.currentWeight ? 'fa-minus' : 'fa-arrow-down'}}"></i><span ng-if="Math.abs(data.actualWeight - data.currentWeight)">{{ Math.abs(data.actualWeight - data.currentWeight) }}</span>
+
+        <i ng-if="data.actualWeight == data.goalWeight" class="fa fa-thumbs-up super"></i>
+    </div>
+    <p class="{{data.actualWeight == data.goalWeight ? 'active' : ''}}">{{'You have reached your goal!'}}</p>
+    -->
+    <form class="form-inline">
+        <div class="form-group clearfix">
+            <div class="input-group">
+                <input type="text" pattern="[0-9]*" class="form-control" onClick="this.select();" ng-model="data.actualWeight">
+                <div class="input-group-addon">kg</div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-default-alt" ng-click="updateWeight()">{{'frontend.diary.modal.submit' | translate}}</button>
+    </form>
+</div>

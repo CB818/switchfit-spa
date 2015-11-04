@@ -1,0 +1,50 @@
+<ng-include src="'views/common/header.html'"></ng-include>
+<section class="section__intro section--honky hidden-print quests__intro">
+    <div>
+        <div class="container">
+            <div class="section__intro__picture" ng-repeat="media in quest.photo" ng-if="media.type=='photo'">
+                <img class="section__intro__picture__default__quests" ng-src="{{media.photo.c70x70}}">
+            </div>
+            <p class="quest__title__detailview">{{tipps.title }}</p>
+
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</section>
+<section class="l-section-main section--azure" ui-view>
+    <div class="container quests-container">
+        <div class="main-content  quests-cat quests-cat-{{quest.questCategory.slug}}">
+            <div class="main-content__body">
+                <div class="row">
+                    <h2 class="sub-title uppercase mt-md">{{'quest.detail_view.introduction.headline' | translate}}</h2>
+                    <hr class="clearfix light mb-md mt-md">
+                    <div ng-bind-html="quest.instruction" class="text-content clearfix"></div>
+                    <div class="quest-media"
+                         ng-if="media.type=='video'"
+                         ng-repeat="media in quest.photo">
+                         <embed-video
+                                data-ng-href="{{media.embedCode}}"
+                                width="535"
+                                height="300"
+                                controls="0"
+                                force-quality="hq"
+                                ></embed-video>
+                    </div>
+                    <h2 class="sub-title uppercase mt-md">{{'quest.detail_view.explanation.headline' | translate}}</h2>
+                    <hr class="clearfix light mb-md mt-md">
+                    <div ng-bind-html="quest.explanation" class="text-content clearfix"></div>
+                    <div class="buttons clearfix mt-md">
+                        <span class="left">
+                            <a ui-sref="qods-overview" class="btn btn-default"><i class="fa fa-arrow-left"></i> {{'quest.detail_view.button.quest_overview' | translate}}</a>
+                        </span>
+                        <span class="right">
+                           <span class="btn btn-default btn-default-alt take-quest" ng-click="assignQuest(quest)" ng-if="'ASSIGNED' == quest.status">{{'quest.detail_view.button.start' | translate}}</span>
+                           <span class="btn btn-default btn-default-alt take-quest" ng-click="openConfirmPopup(quest)" ng-if="'STARTED' == quest.status"><i class="fa fa-check"></i> {{'quest.detail_view.button.complete' | translate}}</span>
+                        </span>
+                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<ng-include src="'views/common/footer.html'"></ng-include>

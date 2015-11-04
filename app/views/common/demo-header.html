@@ -1,0 +1,27 @@
+<div ng-if="showWarmup" ng-click="app.openWarmupModal()" class="warmup-block-link hidden-print" translate="frontend.warmup.title" translate-default=""></div>
+<nav class="header global-nav demo-header hidden-print">
+    <div class="container">
+        <a class="logo" ui-sref="demo"></a>
+        <ul class="main-menu" ng-class="{'de-main-menu' : locale == 'de'}">
+            <li ng-class="{ 'active': app.moduleName == 'demo' }">
+              <a ui-sref="demo" translate="frontend.menu.dashboard" translate-default="">Dashboard</a>
+            </li>
+            <li ng-class="{ 'active': app.moduleName == 'kitchen' }">
+              <a ui-sref="demo.kitchen" translate="frontend.menu.kitchen" translate-default="">Kitchen</a>
+            </li>
+            <li ng-class="{ 'active': app.moduleName == 'gym' }">
+              <a ui-sref="demo.gym" translate="frontend.menu.gym" translate-default="">Gym</a>
+            </li>
+            <li ng-class="{ 'active': app.moduleName == 'academy' }">
+              <a ui-sref="demo.academy" translate="frontend.menu.academy" translate-default="">Academy</a>
+            </li>
+            <li ng-class="{ 'active': app.moduleName == 'community' }">
+              <a ui-sref="demo.community" translate="frontend.menu.community" translate-default="">SwitchFit Life!</a>
+            </li>
+            <li ng-class="{ 'active': app.moduleName == 'diary' }">
+              <a ui-sref="demo.diary" translate="frontend.menu.diary" translate-default="">Diary</a>
+            </li>
+        </ul>
+        <ng-include src="'views/common/demo-user-menu.html'"></ng-include>
+    </div>
+</nav>

@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="main-content">
+    <div class="main-content__body text-center">
+      <div class="h1" translate="frontend.academy.final.congratulations" translate-default="">congratulations</div>
+      <img class="block centered mb-md" src="../../temp-img/goblet-md.png">
+      <em class="font-size-md" translate="frontend.menu.academy" translate-default="">Academy</em>
+      <div class="sub-title h2 mb-lg"><span class="color-info"><span translate="frontend.academy.progressbar.level" translate-default="">LEVEL</span> 16:</span> {{ final.result.score }} EXP</div>
+      <p class="message message-success font-size-xl"><span translate="frontend.academy.final.well_done" translate-default="">Well done</a> {{ currentUser.firstname }}!</p>
+      <p class="mb-lg" translate="frontend.academy.final.message" translate-default="">You have completed the final module test and are now officially <strong>SwitchFit Master</strong>.</p>
+      <div class="buttons-container">
+        <span class="btn btn-lg mr-lg btn-success" popover-template="views/popovers/share.html" popover-animation="true" popover-placement="top"><i class="fa fa-users"></i>&nbsp;&nbsp;{{ 'frontend.academy.final.share'|translate }}</span>
+        <span class="btn btn-lg btn-success"><i class="fa fa-print"></i>&nbsp;&nbsp;{{ 'frontend.academy.final.print'|translate }}</span>
+      </div>
+      <span class="link" translate="frontend.academy.final.back" translate-default="">Back to dashboard</span>
+    </div>
+  </div>
+</div>

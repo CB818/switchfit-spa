@@ -1,0 +1,65 @@
+<section class="section__intro section--honky hidden-print">
+  <div class="container">
+      <img class="section__intro__picture" src="images/icon-gym.png">
+      <p><strong>SwitchFit Gym</strong> is a all-in one resource to your healthy living. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem. Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit amet.</p>
+  </div>
+</section>
+
+<section class="l-section-main section--gym" ui-view>
+  <div class="container">
+    <div class="filter main-content">
+      <ul class="filter__header">
+        <li class="active">Workouts</li>
+        <li>HIITs / LOWs / BURNs</li>
+        <li>Weekly challenges</li>
+        <li>Measuring your progress</li>
+        <li>Workout tools</li>
+        <li>Gym experts</li>
+      </ul>
+      <div class="filter__body">
+        <div class="filter-container">
+          <div class="sub-title">Filter view:</div>
+          <div class="clearfix">
+            <div class="form-inline pull-left">
+                <div class="form-group">
+                    <select class="nya-selectpicker" data-container="body" ng-model="workouts.type" ng-options="type.id as type.title for type in workouts.types">
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select ng-if="workouts.type == 0" disabled class="nya-selectpicker" data-container="body" ng-model="workouts.category" ng-options="category.id as category.title for category in workouts.categories">
+                    </select>
+                    <select ng-if="workouts.type != 0" class="nya-selectpicker" data-container="body" ng-model="workouts.category" ng-options="category.id as category.title for category in workouts.categories">
+                    </select>
+                </div>
+            </div>
+            <ul class="filter-inline pull-left">
+              <li class="active" ng-click="onlyFavs = false"><span>Show all</span></li>
+              <li ng-click="onlyFavs = true"><img src="images/icon-heart-sm.png"> <span>Only favorites</span></li>
+            </ul>
+            <div class="reset pull-right" ng-click="workouts.resetFilters()"><div class="fa fa-times"></div> <span>Reset filters</span></div>
+          </div>
+        </div>
+        <hr class="fat">
+        <p>Showing <strong ng-bind="workouts.filteredWorkouts().length"></strong> meals out of <strong ng-bind="workouts.allWorkouts.length"></strong> total</p>
+        <ul class="img-items-list gym">
+          <li ui-sref="demo.gym.workout({ workout: workout.id })" class="img-item" ng-repeat="workout in workouts.filteredWorkouts()">
+            <figure>
+              <img ng-src="{{ workout.photos[0].photo.c172x143 }}" class="img-responsive">
+              <div class="liked"></div>
+              <span class="badge img-item--badge" ng-bind="workout.type.abbr"></span>
+              <span class="img-item__action">View details</span>
+              <span class="play"></span>
+              <figcaption class="half">
+                <span class="time" ng-bind="workout.workoutTime"></span>
+              </figcaption>
+            </figure>
+            <div class="img-item__desc">
+              <strong ng-bind="workout.title"></strong>
+              {{ workout.category.title }}
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

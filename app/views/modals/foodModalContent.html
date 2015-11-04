@@ -1,0 +1,80 @@
+<div ng-controller="FoodModalCtrl as meals" class="meal-modal">
+  <span class="close" ng-click="$close()"></span>
+  <!--<div class="sub-title">Select meal:</div>-->
+  <div class="filter-container clearfix">
+    <div class="form-inline pull-left">
+      <div class="form-group">
+        <select
+            ng-change="meals.filterMeals()"
+            disabled
+            class="nya-selectpicker"
+            data-none-selected-text="Alle Typen"
+            data-container="body"
+            ng-model="meals.type"
+            ng-options="type.id as type.title for type in meals.types">
+        </select>
+      </div>
+      <div class="form-group">
+        <select
+            class="category-select nya-selectpicker"
+            data-none-selected-text="Alle Kategorien"
+            data-container="body"
+            ng-model="meals.category"
+            ng-change="meals.changeCategory()"
+            ng-options="category.id as category.title for category in meals.categories">
+        </select>
+      </div>
+    </div>
+    <ul class="filter-inline">
+      <li class="active" ng-click="meals.changeFavs(false)"><span translate="frontend.kitchen.filter.show_all" translate-default="">Show all</span></li>
+      <li><i class="fa fa-heart"></i> <span ng-click="meals.changeFavs(true)" translate="frontend.kitchen.filter.only_favorites" translate-default="">Only favorites</span></li>
+    </ul>
+    <div class="reset" ng-click="meals.resetFilters()">
+      <span class="btn btn-link">
+        <span translate="frontend.kitchen.modal.reset_filters" translate-default="">Reset filters</span>
+      </span>
+    </div>
+  </div>
+  <div class="sub-title uppercase" translate="frontend.kitchen.filter.including_products" translate-default="">Including products</div>
+  <div class="clearfix relative">
+    <ul class="inline-checkbox-list pull-left">
+      <li ng-repeat="product in meals.products">
+        <div class="custom-checkbox">
+          <div class="custom-checkbox__container">
+            <input type="checkbox" checked ng-model="product.checked" ng-change="meals.changeProducts()">
+            <span class="custom-checkbox__fake"></span>
+          </div>
+          <label class="custom-checkbox__label" ng-bind="product.title"></label>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr class="fat">
+  <!--<p>Showing <strong ng-bind="meals.items.length"></strong> meals out of <strong ng-bind="meals.allMeals.length"></strong> total</p>-->
+  <p ng-if="!isLoading" translate="frontend.kitchen.list.showing_meals" translate-values="{showing: meals.currentFilteredMealsLength, total: meals.filteredMealsByTypeLength }" translate-default=""></p>
+  <p ng-if="isLoading" class="spinner-loader"><span us-spinner="{radius:7, width:2, length: 5, color: '#5c677b'}" spinner-key="kitchen-loader" spinner-start-active="1"></span></p>
+  <perfect-scrollbar class="modal__scroller mb-md timetable-item-modal" scroll-x-margin-offset="21" refresh-on-change="someArray">
+    <ul class="img-items-list dishes">
+      <li class="img-item" ng-repeat="meal in meals.filterMeals()">
+        <figure>
+          <img ng-src="{{ meal.media[0].photo.c172x143 }}">
+          <div ng-if="meal.favorite" class="liked"><i class="fa fa-heart"></i></div>
+          <!--<span class="badge img-item--badge" ng-bind="meal.type.abbr"></span>-->
+          <span class="img-item__action" ng-click="meals.selectMeal(meal)" translate="frontend.kitchen.modal.select" translate-default="">Select</span>
+          <figcaption>
+            <a ui-sref="kitchen.recipe({ recipe: meal.id })" ng-href="{{ '/kitchen/' + meal.id }}" target="_blank" translate="frontend.kitchen.list.view_recipe" translate-default="">View recipe</a>
+            <span class="time" ng-bind="meal.cook"></span>
+          </figcaption>
+        </figure>
+        <div class="img-item__desc">
+          <strong ng-bind="meal.title"></strong>
+          {{meal.category.title}}
+        </div>
+      </li>
+    </ul>
+  </perfect-scrollbar>
+  <!--<div class="text-center" ng-hide="true"><span class="btn btn-success btn-show-more">Show more</span></div>-->
+  <hr>
+  <a class="font-size-lg" href="mailto:help@swtichfit.io?subject={{ 'frontend.kitchen.modal.suit_me'|translate }}" translate="frontend.kitchen.modal.suit_me" translate-default="">None of the meals suit me</a>
+  <a class="read-more" ui-sref="kitchen.about" target="_blank" translate="frontend.kitchen.modal.read_more" translate-default="">Read more about <strong>SwitchFit Kitchen</strong> &raquo;</a>
+</div>

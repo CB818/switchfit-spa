@@ -1,0 +1,33 @@
+//
+// Close icons
+// --------------------------------------------------
+
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 16px;
+  height: 17px;
+//  background: url("../images/icon-close_modal.png");
+  background: url("../images/icon-close-alt.png");
+  z-index: @zindex-modal-close;
+
+  &:hover,
+  &:focus {
+    .opacity(.85);
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  // Additional properties for button version
+  // iOS requires the button element instead of an anchor tag.
+  // If you want the anchor version, it requires `href="#"`.
+  button& {
+    padding: 0;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    -webkit-appearance: none;
+  }
+}

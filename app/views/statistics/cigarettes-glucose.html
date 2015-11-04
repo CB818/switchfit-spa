@@ -1,0 +1,73 @@
+<div class="container">
+  <div class="col-sidebar">&nbsp;</div>
+  <div class="col-main">
+    <div class="statistics-header">
+      <div class="bordered-title clearfix mb-md">
+        <div class="h2 mt-base pull-left">Statistik</div>
+        <ng-include src="'views/statistics/menu.html'"></ng-include>
+      </div>
+    </div>
+    <div class="statistics">
+      <div class="weeks-weights">
+      </div>
+      <div class="charts">
+        <span us-spinner="{radius:7, width:2, length: 5, color: '#5c677b'}" spinner-key="chart-loader" spinner-start-active="1"></span>
+        <div
+          class="chart-cigarettes-glucose"
+          ng-class="{'is-loading': isLoading}"
+          stat-chart="'cigarettesGlucose'"
+          stat-data="stat.cigarettesGlucoseData"
+          stat-sub-data="subData">
+          </div>
+        </div>
+        <div class="cigarettes-axis">
+          <i class="fa fa-arrow-up"></i>
+          <ul>
+            <li>50</li>
+            <li>40</li>
+            <li>30</li>
+            <li>20</li>
+            <li>10</li>
+            <li>0<br>(ps)</li>
+          </ul>
+        </div>
+        <div class="glucose-axis">
+          <i class="fa fa-arrow-up"></i>
+          <ul>
+            <li>8.0</li>
+            <li>7.0</li>
+            <li>6.0</li>
+            <li>5.0</li>
+            <li>4.0</li>
+            <li>3.0<br>(mg)</li>
+          </ul>
+        </div>
+        <div class="weeks-titles">
+          <ul ng-class="{'is-loading': isLoading}">
+            <li ng-repeat="(weekNumber, week) in stat.weeks">
+              <span class="week-title" ng-class="{'current': currentWeekNumber == weekNumber}">
+                <span translate="frontend.user_progress.week" translate-default="" translate-values="{number: $index+1}"></span>
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div class="chart-legend">
+          <ul ng-class="{'is-loading': isLoading}">
+            <li
+                class="cigarettes-legend-box"
+                ng-click="activeChart = 'cigarettes'; subData['activeChart'] = 'cigarettes'" ng-class="{'active': activeChart == 'cigarettes'}">
+              <span class="legend-icon legend-cigarettes"></span>
+              <span class="legend-title" translate="frontend.stat.legend.cigarettes" translate-default="">CIGARETTES<br>(ps)</span>
+            </li>
+            <li
+                ng-click="activeChart = 'glucose'; subData['activeChart'] = 'glucose'" ng-class="{'active': activeChart == 'glucose'}">
+              <span class="legend-icon legend-glucose"></span>
+              <span class="legend-title" translate="frontend.stat.legend.glucose" translate-default="">GLUCOSE<br>(mg)</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+  </div>
+  <div class="clearfix"></div>
+  </div>
+</div>

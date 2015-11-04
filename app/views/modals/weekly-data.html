@@ -1,0 +1,156 @@
+<div class="weekly-data">
+  <span class="close" ng-click="$close()"></span>
+  <div class="sub-title bordered-title mb-md" translate="frontend.modal.weekly_data.title" translate-default="">Submit your weekly measurements</div>
+  <p class="mb-md" translate-default="">{{ 'frontend.modal.weekly_data.desc' | translate: { weekNumber: currentCourseWeek } }}</p>
+
+  <form name="weeklyDataForm" ng-submit="submit(weeklyDataForm)">
+    <div class="sub-title bordered-title" translate="frontend.modal.weekly_data.current_week" translate-default="">CURRENT WEEK</div>
+      <div class="clearfix mb-md">
+        <div class="col-half col--left">
+          <div class="form-group">
+            <label translate="frontend.modal.weekly_data.waist" translate-default="">Waist:</label>
+              <div>
+            <input type="number" class="form-control" placeholder="60" min="1" ng-model="weeklyData.waist"
+                   ng-class="{'has-errors': errorsFields.waist.length > 0}">
+              <div class="weekly-data-errors">
+                  <span ng-repeat="error in errorsFields.waist">{{ error }}.</span>
+              </div>
+              </div>
+          </div>
+          <div class="form-group">
+            <label translate="frontend.modal.weekly_data.bust" translate-default="">Bust:</label>
+              <div>
+            <input type="number" class="form-control" placeholder="90" min="1" ng-model="weeklyData.bust"
+                   ng-class="{'has-errors': errorsFields.bust.length > 0}">
+              <div class="weekly-data-errors">
+                  <span ng-repeat="error in errorsFields.bust">{{ error }}.</span>
+              </div>
+              </div>
+          </div>
+          <div class="form-group">
+            <label translate="frontend.modal.weekly_data.hips" translate-default="">Hips:</label>
+              <div>
+            <input type="number" class="form-control" placeholder="90" min="1" ng-model="weeklyData.hips"
+                   ng-class="{'has-errors': errorsFields.hips.length > 0}">
+              <div class="weekly-data-errors">
+                  <span ng-repeat="error in errorsFields.hips">{{ error }}.</span>
+              </div>
+              </div>
+          </div>
+          <div class="form-group">
+            <label translate="frontend.modal.weekly_data.arms" translate-default="">Arms:</label>
+              <div>
+            <input type="number" class="form-control" placeholder="20" min="1" ng-model="weeklyData.arms"
+                   ng-class="{'has-errors': errorsFields.arms.length > 0}">
+              <div class="weekly-data-errors">
+                  <span ng-repeat="error in errorsFields.arms">{{ error }}.</span>
+              </div>
+              </div>
+          </div>
+          <div class="form-group">
+            <label translate="frontend.modal.weekly_data.legs" translate-default="">Legs:</label>
+              <div>
+            <input type="number" class="form-control" placeholder="30" min="1" ng-model="weeklyData.legs"
+                   ng-class="{'has-errors': errorsFields.legs.length > 0}">
+              <div class="weekly-data-errors">
+                  <span ng-repeat="error in errorsFields.legs">{{ error }}.</span>
+              </div>
+              </div>
+          </div>
+          <!--<p ng-if="totalBodyMeasurements() > 0" class="nmb"><span translate="frontend.modal.weekly_data.total_body_measurements" translate-default="">Total body measurements</span>: <strong><em>{{totalBodyMeasurements()}} CM</em></strong></p>-->
+        </div>
+        <div class="col-half col--right">
+          <div class="form-group">
+            <label translate="frontend.modal.weekly_data.running_time" translate-default="">Running time (min):</label>
+              <div class="running-time">
+                  <input
+                      type="number"
+                      min="0"
+                      class="form-control"
+                      placeholder="00"
+                      ng-model="runningTime.min"
+                      ng-class="{'has-errors': errorsFields.runningTime.length > 0}"
+                      ><span>:</span><input
+                    type="number"
+                    min="0"
+                    class="form-control"
+                    placeholder="00"
+                    ng-model="runningTime.sec"
+                    ng-class="{'has-errors': errorsFields.runningTime.length > 0}">
+              <div class="weekly-data-errors">
+                  <span ng-repeat="error in errorsFields.runningTime">{{ error }}.</span>
+              </div>
+              </div>
+          </div>
+          <div class="form-group">
+            <label
+                translate="frontend.modal.weekly_data.number_of_pushups"
+                translate-default=""
+                style="line-height: 16px; padding-top: 3px;"># of pushups:</label>
+              <div>
+            <input type="number" class="form-control" placeholder="60" min="1" ng-model="weeklyData.pushupsNumber"
+                   ng-class="{'has-errors': errorsFields.pushupsNumber.length > 0}">
+              <div class="weekly-data-errors">
+                  <span ng-repeat="error in errorsFields.pushupsNumber">{{ error }}.</span>
+              </div>
+              </div>
+          </div>
+          <!--<div class="form-group">-->
+            <!--<label># of situps:</label>-->
+              <!--<div>-->
+            <!--<input type="number" class="form-control" placeholder="80" ng-model="weeklyData.situpsNumber"-->
+                   <!--ng-class="{'has-errors': errorsFields.situpsNumber.length > 0}">-->
+              <!--<div class="weekly-data-errors">-->
+                  <!--<span ng-repeat="error in errorsFields.situpsNumber">{{ error }}.</span>-->
+              <!--</div>-->
+              <!--</div>-->
+          <!--</div>-->
+          <div class="form-group">
+            <!--<label># of squat jumps:</label>-->
+              <!--<div>-->
+            <!--<input-->
+                    <!--type="number"-->
+                    <!--class="form-control"-->
+                    <!--placeholder="100"-->
+                    <!--ng-model="weeklyData.squatJumpsNumber"-->
+                    <!--ng-class="{'has-errors': errorsFields.squatJumpsNumber.length > 0}">-->
+          <!--</div>-->
+              <div class="weekly-data-errors">
+                  <span ng-repeat="error in errorsFields.squatJumpsNumber">{{ error }}.</span>
+              </div>
+            </div>
+        </div>
+      </div>
+    <div class="sub-title bordered-title" translate="frontend.modal.weekly_data.next_week" translate-default="">NEXT WEEK</div>
+    <div class="clearfix mb-md">
+      <div class="col-half col--left">
+        <div class="form-group" ng-class="{'selectpicker-has-errors': errorsFields.nextWeekDetoxDay.length > 0}">
+          <label translate="frontend.modal.weekly_data.detox_day" translate-default="">Detox day:</label>
+          <select
+              data-container="body"
+              class="nya-selectpicker"
+              ng-model="weeklyData.nextWeekDetoxDay"
+              data-none-selected-text="{{ frontend.modal.weekly_data.select_detox_day | translate}}">
+              <option value="" disabled selected  translate="frontend.modal.weekly_data.select_detox_day" translate-default="">Select detox day</option>
+              <option ng-repeat="(date, day) in detoxDays" value="{{date}}" translate="{{day}}" translate-default="">{{day}}</option>
+          </select>
+          <div class="weekly-data-errors">
+              <span ng-repeat="error in errorsFields.nextWeekDetoxDay">{{ error }}.</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-half col--right">
+        <div class="form-group">
+          <label translate="frontend.modal.weekly_data.week_goal" translate-default="" style="line-height: 16px; padding-top: 3px;">Week goal:</label>
+            <div>
+          <input type="number" min="1" class="form-control" placeholder="66" ng-model="weeklyData.nextWeekGoalWeight" ng-class="{'has-errors': errorsFields.nextWeekDetoxDay.length > 0}">
+            <div class="weekly-data-errors">
+                <span ng-repeat="error in errorsFields.nextWeekGoalWeight">{{ error }}.</span>
+            </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center"><button class="btn btn-lg btn-success" btn-loading="isLoading"><i class="fa fa-check"></i> <span translate="frontend.modal.weekly_data.submit" translate-default="">Submit</span></button></div>
+  </form>
+</div>

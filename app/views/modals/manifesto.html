@@ -1,0 +1,83 @@
+<div ng-controller="ModalManifestoCtrl">
+  <span class="close" ng-click="$close()"></span>
+  <section class="l-stick-to-top manifesto">
+    <div class="container">
+      <section class="manifesto-header">
+        <div class="manifesto-header__content">
+          <div class="avatar-container"><img class="avatar" ng-src="{{ currentUser.picture != null && currentUser.picture.c66x66 || 'temp-img/avatar.png'}}"></div>
+        </div>
+      </section>
+      <div class="commitment-content">
+        <div class="commitment-content__body text-center">
+          <h2>{{ 'frontend.diary.manifesto.title' | translate }}</h2>
+          <p>{{ 'frontend.diary.manifesto.i' | translate }}, {{currentUser.firstname}} {{currentUser.lastname}}, {{ 'frontend.diary.manifesto.text_1' | translate }}</p>
+          <h4><strong>{{ 'frontend.diary.manifesto.text_2' | translate }}:</strong></h4>
+          <ul class="manifesto-rules text-left">
+            <li class="clearfix">
+              <span class="rule-number">
+                <span>1</span>
+              </span>
+              <span class="rule-text">{{ 'frontend.diary.manifesto.promise_1' | translate }}</span>
+            </li>
+            <li class="clearfix">
+              <span class="rule-number">
+                <span>2</span>
+              </span>
+              <span class="rule-text">{{ 'frontend.diary.manifesto.promise_2' | translate }}</span>
+            </li>
+            <li class="clearfix">
+              <span class="rule-number">
+                <span>3</span>
+              </span>
+              <span class="rule-text">{{ 'frontend.diary.manifesto.promise_3' | translate }}</span>
+            </li>
+            <li class="clearfix">
+              <span class="rule-number">
+                <span>4</span>
+              </span>
+              <span class="rule-text">{{ 'frontend.diary.manifesto.promise_4' | translate }}</span>
+            </li>
+            <li class="clearfix">
+              <span class="rule-number">
+                <span>5</span>
+              </span>
+              <span class="rule-text">{{ 'frontend.diary.manifesto.promise_5' | translate }}</span>
+            </li>
+            <li class="clearfix">
+              <span class="rule-number">
+                <span>6</span>
+              </span>
+              <span class="rule-text">{{ 'frontend.diary.manifesto.promise_6' | translate }}</span>
+            </li>
+          </ul>
+          <p>{{ 'frontend.diary.manifesto.text_3' | translate }}</p>
+          <p>{{ 'frontend.diary.manifesto.text_4' | translate }}</p>
+        </div>
+        <div class="commitment-content__sign text-center">
+          <div ng-if="signature == null || signature.length == 0">
+            <h4><strong>{{ 'frontend.diary.manifesto.signed_by' | translate }}:</strong></h4>
+            <div class="signature-pad" signature-pad="{drawOnly: true, lineWidth: 0, penColour: '#5c677b'}">
+              <div class="sig sigWrapper">
+                <div class="typed"></div>
+                <canvas class="pad" width="396" height="76"></canvas>
+                <input type="hidden" name="sign" class="output">
+              </div>
+              <a class="clearButton clear-sig-btn" href="#clear">{{ 'frontend.diary.manifesto.clear' | translate }}</a>
+            </div>
+            <p>{{ 'frontend.diary.manifesto.signature_text' | translate }}</p>
+          </div>
+          <div ng-if="signature != null && signature.length > 0">
+            <h4><strong>{{ 'frontend.diary.manifesto.signed_by' | translate }}:</strong></h4>
+            <div class="signature-pad">
+              <img src="{{signature}}" class="signature-img"/>
+            </div>
+          </div>
+        </div>
+        <div class="commitment-content__commit-btn text-center">
+          <button ng-if="signature == null || signature.length == 0" class="btn btn-lg btn-success" btn-loading="isLoading" ng-click="addSignature()">{{ 'frontend.diary.manifesto.commit' | translate }}</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>

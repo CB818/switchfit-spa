@@ -1,0 +1,71 @@
+<div class="container">
+  <div class="main-content">
+    <div class="main-content__body">
+      <div class="h2 text-center" translate="frontend.academy.progressbar.final_test" translate-default="">Final TEST</div>
+      <form class="quiz">
+        <div class="sub-title bordered-title"><i class="fa fa-edit"></i> <span translate="frontend.academy.final.intro" translate-default="">Your Final Academy Test</span> - <em class="text-normal" translate="frontend.academy.final.good_luck" translate-default="">Good Luck!</em></div>
+        <ul class="quiz__list mb-xl">
+          <li class="quiz__list__item" ng-repeat="question in module.topics[module.currentTopic].questions">
+            <div ng-if="question.multipleAnswers == false">
+              <div class="quiz__list__item__title" ng-bind="question.text"></div>
+              <div class="quiz__list__item__text">
+                <div class="custom-radio" ng-repeat="answer in question.answers">
+                  <div class="custom-radio__container">
+                    <input type="radio" ng-name="quiz-{{ $index }}"
+                           ng-model="question.model" ng-value="{{ answer.id }}">
+                    <span class="custom-radio__fake"></span>
+                  </div>
+                  <label class="custom-radio__label">
+                    {{answer.text}}
+                    <div class="val-pop val-pop-success right"
+                         ng-if="question.model == answer.id && answer.isCorrect"
+                         ng-show="module.topics[topic.id].check && !module.info.final">
+                      <div class="val-pop-inner" translate="frontend.academy.module.correct" translate-default="">Correct! Well done!</div>
+                      <div class="val-pop-arrow"></div>
+                    </div>
+                    <div class="val-pop val-pop-danger right"
+                         ng-if="question.model == answer.id && !answer.isCorrect"
+                         ng-show="module.topics[topic.id].check && !module.info.final">
+                      <div class="val-pop-inner" translate="frontend.academy.module.incorrect" translate-default="">Incorrect! Try again.</div>
+                      <div class="val-pop-arrow"></div>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div ng-if="question.multipleAnswers == true">
+              <div class="quiz__list__item__title" ng-bind="question.text"></div>
+              <div class="quiz__list__item__text clearfix">
+
+                <div class="custom-checkbox" ng-repeat="answer in question.answers">
+                  <div class="custom-checkbox__container">
+                    <input type="checkbox" ng-name="quiz-{{ $index }}"
+                           ng-model="answer.checked">
+                    <span class="custom-checkbox__fake"></span>
+                  </div>
+                  <label class="custom-checkbox__label">
+                    {{ answer.text }}
+                    <div class="val-pop val-pop-success right" ng-if="answer.checked && answer.isCorrect"
+                         ng-show="module.topics[topic.id].check && !module.info.final">
+                      <div class="val-pop-inner" translate="frontend.academy.module.correct" translate-default="">Correct! Well done!</div>
+                      <div class="val-pop-arrow"></div>
+                    </div>
+                    <div class="val-pop val-pop-danger right" ng-if="answer.checked && !answer.isCorrect"
+                         ng-show="module.topics[topic.id].check && !module.info.final">
+                      <div class="val-pop-inner" translate="frontend.academy.module.incorrect" translate-default="">Incorrect! Try again.</div>
+                      <div class="val-pop-arrow"></div>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <div class="text-center">
+          <button ng-click="module.checkTopic(module.topics[module.currentTopic])" class="btn btn-success btn-lg btn-spacious" type="button"><i class="fa fa-check"></i> <span translate="frontend.academy.module.check" translate-default="">Check</span></button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

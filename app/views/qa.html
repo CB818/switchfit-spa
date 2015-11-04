@@ -1,0 +1,71 @@
+<ng-include src="'views/common/header.html'"></ng-include>
+
+<section class="user-level user-progress section--honky">
+  <div class="container">
+    <div class="col-sidebar">
+      <img class="user-level__picture" src="images/icon-community.png">
+    </div>
+    <div class="col-main">
+      <p ng-controller="ContentBlockCtrl as communityBlock" ng-init="communityBlock.init('community-intro')" ng-bind-html="communityBlock.contentBlock"></p>
+    </div>
+  </div>
+</section>
+
+<section class="l-section-main section--community">
+  <div class="container">
+    <div class="filter main-content">
+      <ng-include src="'views/qa/menu.html'"></ng-include>
+      <div class="main-content__body pt-md" ui-view>
+        <div class="row community-table__wrapper">
+          <div class="col-main col-main--sm">
+            <ul class="community-table__feed feed--lg" ng-controller="QACtrl">
+              <li ng-repeat="question in getPagedQuestions()">
+                <div class="community-table__feed__item">
+                  <div class="sub-title-alt uppercase font-size-lg">{{question.category.title}}</div>
+                  <!--<p><a ui-sref="qa.question({ questionId: question.id })"><strong>{{question.title}}</strong></a></p>-->
+                  <p class="font-size-lg text-justify"><a ui-sref="qa.question({ questionId: question.id })">{{question.text | limitTo: 300}}{{question.text.length > 300 ? '...' : '' }}</a></p>
+                  <p class="gray"><span translate="frontend.community.q_a.asked" translate-default="">Asked on</span> {{question.createdAt | amDateFormat:'Do MMMM, h:mm'}}, <span translate="frontend.community.q_a.by" translate-default="">by</span> {{question.user.firstname}} {{question.user.lastname}}.</p>
+                  <p ng-if="question.latestAnswerAt" class="gray mt-base"><span translate="frontend.community.q_a.latest_answer" translate-default="">Latest answer:</span> <span am-time-ago="question.latestAnswerAt"></span></p>
+                  <p ng-if="!question.latestAnswerAt" class="gray mt-base" translate="frontend.community.q_a.no_answers" translate-default="">No answers</p>
+                  <div class="stats">
+                      <span><i class="fa fa-check"></i> {{question.votesCnt}}</span>
+                      <ng-pluralize count="question.votesCnt"
+                                     when="{'0': 'stimmen',
+                                     'one': 'stimme',
+                                     'other': 'stimmen'}">
+                      </ng-pluralize>
+                      &nbsp;&nbsp;&nbsp;
+                      <span><i class="fa fa-eye"></i> {{question.viewsCnt}}</span>
+                      <ng-pluralize count="question.viewsCnt"
+                                     when="{'0': 'ansichten',
+                                     'one': 'ansicht',
+                                     'other': 'ansichten'}">
+                      </ng-pluralize><br>
+                  </div>
+                </div>
+              </li>
+            </ul>
+
+            <div ng-show="totalItems > itemPerPage" ng-controller="QAPaginationCtrl">
+              <pagination
+                    total-items="totalItems"
+                    ng-model="currentPage"
+                    max-size="maxSize"
+                    class="pagination pagination--centered"
+                    boundary-links="true"
+                    first-text="<<"
+                    last-text=">>"
+                    next-text=">"
+                    previous-text="<"
+                    items-per-page="itemPerPage"
+                    ng-change="pageChanged()"></pagination>
+              </div>
+          </div>
+          <ng-include src="'views/qa/sidebar.html'"></ng-include>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<ng-include src="'views/common/footer.html'"></ng-include>

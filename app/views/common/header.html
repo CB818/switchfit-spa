@@ -1,0 +1,47 @@
+<div ng-controller="PointsCtrl" ng-mouseenter="togglePoints(true)" ng-mouseleave="togglePoints(false)" class="points-circle-link hidden-print" ng-click="openPointExplanationModal()">
+    <div ng-class="added ? 'points-circle-link-badge active': 'points-circle-link-badge' ">
+        <i class="fa fa-star-o"></i>
+    </div>
+    <span id="points__container" ng-class="show ? 'active': '' ">
+        <span class="points__count">{{points.total + points.added}}</span><br>
+        <span class="points__label">{{'point.points' | translate}}</span>
+    </span>
+    <span id="points__added" ng-class="added ? 'active': '' ">
+        <span class="points__count">+{{added}}</span><br>
+        <span class="points__label" ng-if="points.added == 1">{{'point.point' | translate}}</span>
+        <span class="points__label" ng-if="points.added > 1">{{'point.points' | translate}}</span>
+    </span>
+</div>
+<div ng-if="showWarmup" ng-click="app.openWarmupModal()" class="warmup-circle-link hidden-print"><i class="fa fa-list"></i></div>
+<nav class="header global-nav hidden-print">
+    <div class="container">
+        <a class="logo" href="#"></a>
+        <ul class="main-menu" ng-class="{'de-main-menu' : locale == 'de'}">
+            <li ng-class="{ 'active': app.moduleName == 'dashboard' }">
+              <a ui-sref="community" translate="frontend.menu.dashboard" translate-default="">Dashboard</a>
+            </li>
+            <li ng-class="{ 'active': app.moduleName == 'kitchen' }">
+              <a ui-sref="kitchen" translate="frontend.menu.kitchen" translate-default="">Kitchen</a>
+            </li>
+            <li ng-class="{ 'active': app.moduleName == 'gym' }">
+              <a ui-sref="gym" translate="frontend.menu.gym" translate-default="">Gym</a>
+            </li>
+            <li ng-class="{ 'active': app.moduleName == 'quests' }">
+                <a ui-sref="qods-overview" translate="frontend.menu.quests" translate-default="">Quests</a>
+            </li>
+            <li ng-class="{ 'active': app.moduleName == 'academy' }">
+              <a ui-sref="academy" translate="frontend.menu.academy" translate-default="">Academy</a>
+            </li>
+            <li ng-class="{ 'active': app.moduleName == 'planner' }">
+              <a ui-sref="dashboard" translate="frontend.menu.planner" translate-default="">Planner</a>
+            </li>
+            <li ng-class="{ 'active': app.moduleName == 'diary' }">
+              <a ui-sref="diary" translate="frontend.menu.diary" translate-default="">Diary</a>
+            </li>
+        </ul>
+        <ng-include src="'views/common/user-menu.html'"></ng-include>
+        <div ng-click="app.mobileMenu()" class="mobile-show menu-trigger">
+            <i class="fa fa-bars"></i>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,320 @@
+//
+// Modals
+// --------------------------------------------------
+
+// .modal-open      - body class for killing the scroll
+// .modal           - container to scroll within
+// .modal-dialog    - positioning shell for the actual modal
+// .modal-content   - actual modal w/ bg and corners and shit
+
+// Kill the scroll on the body
+.modal-open {
+  overflow: hidden;
+}
+
+// Container that the modal scrolls within
+.modal {
+  display: none;
+  overflow: auto;
+  overflow-y: scroll;
+  position: fixed !important;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: @zindex-modal;
+  -webkit-overflow-scrolling: touch;
+
+  // Prevent Chrome on Windows from adding a focus outline. For details, see
+  // https://github.com/twbs/bootstrap/pull/10951.
+  outline: 0;
+
+  // When fading in the modal, animate it to slide down
+  &.fade .modal-dialog {
+    .translate(0, -25%);
+    .transition-transform(~"0.3s ease-out");
+  }
+  &.in .modal-dialog {
+    .translate(0, 0);
+  }
+
+  &__scroller {
+    height: 450px;
+    width: 767px; // 100% + 21px offset
+    padding: 0 21px 0 0;
+    overflow: hidden;
+    position: relative;
+    &.timetable-item-modal {
+      width: 750px;
+      padding: 0;
+    }
+  }
+  .form-inline {
+
+  }
+  .form-group {
+    margin-right: @spacing-base;
+    width: @modal-filter-select-width
+  }
+  .meal-modal {
+    .filter-container {
+      position: relative;
+      margin-bottom: @spacing-base;
+    }
+    .form-group {
+      width: auto;
+    }
+    .inline-checkbox-list {
+      li {
+        margin-right: 12px;
+      }
+    }
+  }
+  .workout-modal {
+    .filter-container {
+      position: relative;
+      margin-bottom: @spacing-base;
+    }
+    .form-group {
+      width: auto;
+    }
+  }
+  .read-more {
+    float: right;
+    display: inline-block;
+    font-size: @font-size-lg;
+  }
+}
+
+// Shell div to position the modal with bottom padding
+.modal-dialog {
+  position: relative;
+  width: @modal-md;
+  margin: 0 auto;
+  padding: 78px 0 30px 0;
+}
+
+.add-diary-entry {
+  &.modal-sm {
+    .modal-dialog {
+      width: 625px;
+    }
+  }
+  .modal-content {
+    background-color: @brand-honky;
+    padding: 10px 30px 20px 30px;
+  }
+  .notifications {
+    width: 100%;
+    .sub-title {
+      float: left;
+      text-align: left;
+      color: @text-color;
+    }
+    .textarea {
+      overflow: hidden;
+    }
+    textarea {
+      resize: none;
+      height: 320px;
+      font-weight: 300;
+      border-radius: 0;
+    }
+  }
+  &.diary-page {
+    .diary-link {
+      display: none;
+    }
+  }
+  &__footer {
+    overflow: hidden;
+    .upload-photo {
+      float: left;
+      margin-right: @spacing-lg;
+      padding-top: 11px;
+      font-size: @font-size-sm;
+      line-height: 14px;
+      border-bottom: 1px dashed #5c677b;
+      cursor: pointer;
+    }
+      :hover {
+        border-bottom: none;
+      }
+    .custom-checkbox {
+      float: left;
+      padding-top: 8px;
+      font-size: @font-size-sm;
+      line-height: 20px;
+    }
+    .upload-photo-info {
+      position: absolute;
+      bottom: 23px;
+      font-size: 10px;
+    }
+  }
+  &__left {
+    float: left;
+    width: 310px;
+    height: 320px;
+    .filter-option, .dropdown-menu li a {
+      font-weight: 300 !important;
+    }
+  }
+  &__right {
+    float: left;
+    width: 250px;
+    height: 320px;
+    padding: 0 0 0 60px;
+    position: relative;
+    font-weight: 300;
+    .diary-link {
+      font-size: @font-size-md;
+      &-icon {
+        display: inline-block;
+        width: 26px;
+        height: 25px;
+        margin-right: 6px;
+        background: url("../images/icon-rounded-arr-r.png") top left no-repeat;
+      }
+      a {
+        text-decoration: none;
+        line-height: 25px;
+        margin-top: -14px;
+        display: inline-block;
+        vertical-align: middle;
+      }
+    }
+    .upload-photo {
+      font-size: @font-size-md;
+      cursor: pointer;
+      line-height: 25px;
+      margin-top: -14px;
+      display: inline-block;
+      vertical-align: middle;
+      &-icon {
+        display: inline-block;
+        width: 26px;
+        height: 25px;
+        margin-right: 6px;
+        background: url("../images/icon-picture-alt.png") top left no-repeat;
+      }
+    }
+    .custom-checkbox {
+      font-size: @font-size-md;
+    }
+    .btn {
+      position: absolute;
+      bottom: 0;
+      padding: 6px 30px;
+    }
+    .upload-photo-info {
+      position: absolute;
+      bottom: 23px;
+      font-size: 10px;
+    }
+  }
+}
+
+.frameless {
+  .close {
+    top: 10px;
+  }
+  .modal-content {
+    padding: 0;
+    background-color: transparent;
+    border: 0;
+    .box-shadow(0 0 24px 0 rgba(0, 0, 0, .31));
+  }
+}
+
+.modal-lg {
+  .modal-dialog {
+    width: @modal-lg;
+  }
+}
+.modal-md {
+  .modal-dialog {
+    width: @modal-md;
+  }
+}
+.modal-sm {
+  .modal-dialog {
+    width: @modal-sm;
+  }
+}
+
+.modal-xs {
+  .modal-dialog {
+    width: @modal-xs;
+  }
+}
+
+
+
+// Actual modal
+.modal-content {
+  position: relative;
+  padding: 30px 20px 20px 20px;
+  background-color: @modal-content-bg;
+  border: 1px solid @modal-content-border-color;
+  border-radius: @border-radius-base;
+  background-clip: padding-box;
+  // Remove focus outline from opened modal
+  outline: none;
+}
+
+// Modal background
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: @zindex-modal-background;
+  background-color: @modal-backdrop-bg;
+  // Fade for backdrop
+  &.fade { .opacity(0); }
+  &.in { .opacity(@modal-backdrop-opacity); }
+}
+
+// Modal header
+// Top section of the modal w/ title and dismiss
+.modal-header {
+  padding: @modal-title-padding;
+  border-bottom: 1px solid @modal-header-border-color;
+  min-height: (@modal-title-padding + @modal-title-line-height);
+}
+// Close icon
+.modal-header .close {
+  margin-top: -2px;
+}
+
+// Modal body
+// Where all modal content resides (sibling of .modal-header and .modal-footer)
+.modal-body {
+  position: relative;
+  padding: @modal-inner-padding;
+}
+
+// Footer (for actions)
+.modal-footer {
+  margin-top: 15px;
+  padding: (@modal-inner-padding - 1) @modal-inner-padding @modal-inner-padding;
+  text-align: right; // right align buttons
+  border-top: 1px solid @modal-footer-border-color;
+  &:extend(.clearfix all); // clear it in case folks use .pull-* classes on buttons
+
+  // Properly space out buttons
+  .btn + .btn {
+    margin-left: 5px;
+    margin-bottom: 0; // account for input[type="submit"] which gets the bottom margin like all other inputs
+  }
+  // but override that for button groups
+  .btn-group .btn + .btn {
+    margin-left: -1px;
+  }
+  // and override it for block buttons as well
+  .btn-block + .btn-block {
+    margin-left: 0;
+  }
+}

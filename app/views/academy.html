@@ -1,0 +1,87 @@
+<ng-include src="'views/common/header.html'"></ng-include>
+
+<section class="user-level user-progress section--honky hidden-print">
+  <div>
+    <div class="container">
+      <div class="col-sidebar">
+        <div class="user-level__picture" ng-click="app.openVideoModal('academy')">
+          <img class="user-level__picture__default" src="images/icon-academy.png">
+          <img class="user-level__picture__play" src="images/icon-play-video.png">
+        </div>
+        <!--<div class="sub-title"><span class="color-info"><span translate="frontend.academy.progressbar.level" translate-default="">LEVEL</span> {{totalCompleteLevel()}}:</span> {{totalComplete}}</div>-->
+        <!--<p class="font-size-sm"><em><strong>{{toNextLevel()}} xp</strong></em> <span translate="frontend.academy.progressbar.to_next" translate-default="">to next level</span></p>-->
+      </div>
+      <div class="col-main">
+        <p class="academy-intro-text" ng-controller="ContentBlockCtrl as academyBlock" ng-init="academyBlock.init('academy-intro')" ng-bind-html="academyBlock.contentBlock"></p>
+        <ul class="weeks">
+          <!--<li class="current"><span>Introduction</span></li>-->
+          <li ng-class="{ 'current': module.status == 'in_progress', 'last': $last, 'pre-current': module.preCurrent }" ng-repeat="module in academy.modules">
+              <span translate="frontend.academy.progressbar.module" translate-default="" translate-values="{number: $index + 1}"></span>
+          </li>
+        </ul>
+        <progressbar value="modulesCompleted.length / allModules.length * 100">{{modulesCompleted.length / allModules.length * 100 | number:0}}%</progressbar>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</section>
+
+<section class="l-section-main section--azure" ui-view>
+  <div class="container">
+    <div class="main-content">
+      <div class="main-content__body" style="display:none;">
+        <!--<div ng-controller="ContentBlockCtrl as academyBlock2" ng-init="academyBlock2.init('academy-header')" ng-bind-html="academyBlock2.contentBlock"></div>-->
+        <div class="text-left clearfix mt-md">
+          <div class="pull-left" ng-if="academy.currentModule">
+            <a ng-if="!academy.currentModule.final" ui-sref="academy.module({ moduleId: academy.currentModule.id })" class="btn btn-default-alt btn-huge-padding">
+              <span ng-if="academy.currentModule.status == 'incomplete'" translate="frontend.academy.main.start" translate-default="">START</span>
+              <span ng-if="academy.currentModule.status == 'in_progress'" translate="frontend.academy.main.continue" translate-default="">CONTINUE</span><!-- - {{ academy.currentModule.title }} <i class="fa fa-chevron-right"></i>-->
+            </a>
+            <a ng-if="academy.currentModule.final" ui-sref="academy.final-test({ moduleId: academy.currentModule.id })" class="btn btn-default-alt btn-huge-padding">
+              <span ng-if="academy.currentModule.status == 'incomplete'" translate="frontend.academy.main.start" translate-default="">START</span>
+              <span ng-if="academy.currentModule.status == 'in_progress'" translate="frontend.academy.main.continue" translate-default="">CONTINUE</span><!-- - {{ academy.currentModule.title }} <i class="fa fa-chevron-right"></i>-->
+            </a>
+          </div>
+        </div>
+        <!--<div class="sub-title bordered-title mt-xl mb-lg" translate="frontend.academy.main.modules_explained" translate-default="">Academie Module</div>-->
+        <hr class="clearfix light mb-md mt-md">
+        <ul class="modules-list mt-md">
+          <li class="module" ng-if="!module.final" ng-repeat="module in academy.modules">
+            <div class="module__title">
+              <img ng-src="images/academy/module-{{ $index + 1 }}.png">
+              <a ui-sref="academy.module({ moduleId: module.id })" ng-if="module.status == 'complete' || module.status == 'in_progress'" class="sub-title"><span>MODUL {{$index+1}}</span><br /><span ng-bind="module.title"></span></a>
+              <div ng-if="module.status == 'incomplete'" class="sub-title"><span>MODUL {{$index+1}}</span><br /><span ng-bind="module.title"></span></div>
+            </div>
+            <p ng-bind="module.text"></p>
+          </li>
+        </ul>
+        <div class="final-test" ng-if="finalModule.length>0">
+          <img src="temp-img/goblet-small.png">
+          <div class="sub-title" ng-bind="finalModule[0].title"></div>
+          <p ng-bind="finalModule[0].text"></p>
+        </div>
+        <hr class="light mb-md">
+        <div ng-if="academy.currentModule">
+            <a ng-if="!academy.currentModule.final" ui-sref="academy.module({ moduleId: academy.currentModule.id })" class="btn btn-default-alt btn-huge-padding">
+              <span ng-if="academy.currentModule.status == 'incomplete'" translate="frontend.academy.main.start" translate-default="">START</span>
+              <span ng-if="academy.currentModule.status == 'in_progress'" translate="frontend.academy.main.continue" translate-default="">CONTINUE</span><!-- - {{ academy.currentModule.title }} <i class="fa fa-chevron-right"></i>-->
+            </a>
+            <a ng-if="academy.currentModule.final" ui-sref="academy.final-test({ moduleId: academy.currentModule.id })" class="btn btn-default-alt btn-huge-padding">
+              <span ng-if="academy.currentModule.status == 'incomplete'" translate="frontend.academy.main.start" translate-default="">START</span>
+              <span ng-if="academy.currentModule.status == 'in_progress'" translate="frontend.academy.main.continue" translate-default="">CONTINUE</span><!-- - {{ academy.currentModule.title }} <i class="fa fa-chevron-right"></i>-->
+            </a>
+        </div>
+      </div>
+      <div class="main-content__body">
+        <div class="akademie-hp-canvas">
+          <div class="akademie-navi">
+            <a class="akademie-m akademie-m-{{$index+1}} {{ module.status }}" ng-repeat="module in academy.modules" ui-sref="academy.module({ moduleId: module.id })" ng-if="!module.final && (module.status == 'complete' || module.status == 'in_progress')">M{{$index+1}} <span ng-bind="module.title"></span></a>
+            <span class="akademie-m akademie-m-{{$index+1}} {{ module.status }}" ng-repeat="module in academy.modules" ng-if="!module.final && module.status == 'incomplete'">M{{$index+1}} <span ng-bind="module.title"></span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<ng-include src="'views/common/footer.html'"></ng-include>

@@ -1,0 +1,157 @@
+<div class="community-life-feed">
+    <div class="clearfix">
+        <div class="sub-title nmb" translate="frontend.community.life_feed.title" translate-default="">SwitchFit Life! feed</div>
+    </div>
+
+    <ng-include src="'views/diary/diaryEntryForm.html'"></ng-include>
+
+    <ul class="img-items-list community-feed mt-md">
+        <li class="img-item" ng-repeat="entry in entries | orderBy: '-createdAt'" ng-class="($index+1)%3==0 ? 'last-column' : ''">
+            <div class="feed-entry">
+                <div class="feed-entry__header">
+                    <div class="feed-entry__header__left">
+                        <div class="feed-entry__header__left__avatar">
+                            <img src="{{ entry.user.picture != null && entry.user.picture.c66x66 || 'temp-img/avatar.png'}}">
+                        </div>
+                    </div>
+                    <div class="feed-entry__header__right">
+                        <div class="feed-entry__header__right__author">
+                            <span class="feed-entry__header__right__author__name">{{ entry.user.firstname }} {{ entry.user.lastname }}</span>
+                            <div class="pull-right">
+                                <span><i class="fa fa-heart"></i> {{entry.likeCnt}}</span>&nbsp;&nbsp;<span><i class="fa fa-comment"></i> {{entry.commentCnt}}</span>
+                            </div>
+                        </div>
+                        <div class="feed-entry__header__right__meta">
+                            <span>{{ entry.createdAt | date : 'd. MMMM, HH:mm' }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="feed-entry__body">
+                    <div class="feed-entry__body__text"><span ng-bind-html="entry.text|newLines"></span></div>
+                    <div class="feed-entry__body__image" ng-if="entry.picture">
+                        <a ng-click="openLightboxModal(entry.picture['c-x-'])">
+                            <img src="{{ entry.picture != null && entry.picture.c500x500 }}">
+                        </a>
+                    </div>
+                </div>
+                <div class="feed-entry__actions">
+                              <span class="feed-entry__actions__like">
+                                <span ng-if="entry.like" class="btn btn-default" btn-loading="entry.isLoadingLike" btn-loading-options="{'radius':4,'width':2,'length':4,'color':'#f34a70'}" ng-click="like(entry)"><i class="fa fa-heart-o"></i></span>
+                                <span ng-if="!entry.like" class="btn btn-default" ng-click="unlike(entry)" btn-loading="entry.isLoadingUnlike" btn-loading-options="{'radius':4,'width':2,'length':4,'color':'#f34a70'}"><i class="fa fa-heart"></i></span>
+                              </span>
+                </div>
+                <div class="clearfix"></div>
+
+                <div class="feed-entry__comments">
+                    <ul class="feed-entry__comments__list">
+                        <li ng-if="entry.expandable && !entry.expanded">
+                            <a href="#" class="feed-entry__comments__showlatest" ng-click="showAllComments(entry)" >{{ 'frontend.feed.comments.show_previous' | translate }}</a>
+                        </li>
+                        <li ng-repeat="comment in entry.comments | orderBy: 'createdAt' | limitTo : commentsLimit(entry)">
+                            <div class="feed-entry__comments__list__comment">
+                                <div class="feed-entry__comments__list__comment__left">
+                                    <div class="feed-entry__comments__list__comment__left__avatar">
+                                        <img class="img-responsive" src="{{ comment.user.picture != null && comment.user.picture.c34x34 || 'temp-img/avatar.png'}}">
+                                    </div>
+                                </div>
+
+                                <div class="feed-entry__comments__list__comment__right">
+                                    <div class="feed-entry__comments__list__comment__right__line1">
+                                        <span class="feed-entry__comments__list__comment__right__line1__author">{{ comment.user.firstname }} {{ comment.user.lastname }}</span>
+                                        <span ng-bind-html="comment.text|newLines"></span>
+                                    </div>
+
+                                    <div class="feed-entry__comments__list__comment__right__line2">
+                                        <p>
+                                                      <span class="actions__like">
+                                                        <span ng-if="comment.children.length > 0"><i class="fa fa-comment"></i> {{comment.children.length}}</span>
+                                                        <span ng-if="!comment.like" class="btn btn-default btn-xs" btn-loading="comment.isLoadingLike" btn-loading-options="{'radius':3,'width':2,'length':4,'color':'#f34a70'}" ng-click="unlikeComment(comment)"><i class="fa fa-heart"></i> {{comment.likeCnt ? comment.likeCnt : 0 }}</span>
+                                                        <span ng-if="comment.like" class="btn btn-default btn-xs btn-grayed" btn-loading="comment.isLoadingLike" btn-loading-options="{'radius':3,'width':2,'length':4,'color':'#f34a70'}"  ng-click="likeComment(comment)"><i class="fa fa-heart"></i> {{comment.likeCnt ? comment.likeCnt : 0 }}</span>
+                                                      </span>
+                                            {{ comment.createdAt | date : 'd. MMM, HH:mm' }}  <a href="#" ng-click="isReplyFormOpen = !isReplyFormOpen">{{'frontend.feed.comments.answer' | translate }}</a></p>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="clearfix"></div>
+
+                            </div>
+                            <ul class="feed-entry__subcomments__list">
+                                <li ng-if="comment.expandable && !comment.expanded">
+                                    <a href="#" class="feed-entry__comments__showlatest" ng-click="showAllSubComments(comment)">{{ 'frontend.feed.comments.show_previous' | translate }}</a>
+                                </li>
+                                <li ng-repeat="subcomment in comment.children | limitTo : subCommentsLimit(comment) | orderBy: ['createdAt']">
+                                    <div class="feed-entry__comments__list__comment__left sub">
+                                        <div class="feed-entry__comments__list__comment__left__avatar">
+                                            <img class="img-responsive small__avatar" src="{{ subcomment.user.picture != null && comment.user.picture.c24x24 || 'temp-img/avatar.png'}}">
+                                        </div>
+                                    </div>
+
+                                    <div class="feed-entry__comments__list__comment__right">
+                                        <div class="feed-entry__comments__list__comment__right__line1">
+                                            <span class="feed-entry__comments__list__comment__right__line1__author">{{ subcomment.user.firstname }} {{ subcomment.user.lastname }}</span>
+                                            <span ng-bind-html="subcomment.text|newLines"></span>
+                                        </div>
+
+                                        <div class="feed-entry__comments__list__comment__right__line2">
+                                            <p>
+                                                          <span class="actions__like">
+                                                            <span ng-if="!subcomment.like" class="btn btn-default btn-xs" btn-loading="subcomment.isLoadingLike" btn-loading-options="{'radius':3,'width':2,'length':4,'color':'#ff0000'}" ng-click="unlikeComment(subcomment)"><i class="fa fa-heart"></i> {{subcomment.likeCnt ? subcomment.likeCnt : 0 }}</span>
+                                                            <span ng-if="subcomment.like" class="btn btn-default btn-xs btn-grayed" btn-loading="subcomment.isLoadingLike" btn-loading-options="{'radius':3,'width':2,'length':4,'color':'#ff0000'}"  ng-click="likeComment(subcomment)"><i class="fa fa-heart"></i> {{subcomment.likeCnt ? subcomment.likeCnt : 0 }}</span>
+                                                          </span>
+                                                {{ subcomment.createdAt | date : 'd. MMM, HH:mm' }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="clearfix"></div>
+                                </li>
+                                <li ng-show="isReplyFormOpen">
+                                    <div class="feed-entry__addcomment sub">
+                                        <div class="feed-entry__addcomment__left">
+                                            <img class="img-responsive small__avatar" ng-src="{{ currentUser.picture != null && currentUser.picture.c24x24 || 'temp-img/avatar.png'}}">
+                                        </div>
+                                        <div class="feed-entry__addcomment__right">
+                                            <div class="feed-entry__addcomment__right__input">
+                                                <textarea class="form-control ng-pristine" ng-class="entry['subcomment-'+comment.id] ? 'form-control ng-pristine expanded' : 'form-control ng-pristine'" placeholder="Schreibe einen Kommentar" ng-model="entry['subcomment-'+comment.id]"></textarea>
+                                                <button
+                                                        type="submit"
+                                                        class="btn btn-default-alt"
+                                                        btn-loading="comment.isLoadingSubComment"
+                                                        btn-loading-options="{'radius':4,'width':2,'length':4,'color':'#fff'}"
+                                                        data-comment-parent-id="{{ comment.id }}"
+                                                        ng-click="addSubComment(entry, comment)"><i class="fa fa-pencil"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="feed-entry__addcomment">
+                    <div class="feed-entry__addcomment__left">
+                        <img ng-src="{{ currentUser.picture != null && currentUser.picture.c34x34 || 'temp-img/avatar.png'}}">
+                    </div>
+                    <div class="feed-entry__addcomment__right">
+                        <div class="feed-entry__addcomment__right__input">
+                            <textarea class="form-control ng-pristine" placeholder="Schreibe einen Kommentar" ng-model="entry.newComment"></textarea>
+                            <button
+                                    type="submit"
+                                    class="btn btn-default-alt"
+                                    btn-loading="entry.isLoadingComment"
+                                    btn-loading-options="{'radius':4,'width':2,'length':4,'color':'#fff'}"
+                                    data-entry-id="{{ entry.id }}"
+                                    ng-click="addComment(entry, entry.newComment)"><i class="fa fa-pencil"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </li>
+    </ul>
+    <div class="text-left"><span class="btn btn-default-alt" ng-click="showMoreEntries()" translate="frontend.gym.list.show_more" translate-default="">Show more</span></div>
+</div>

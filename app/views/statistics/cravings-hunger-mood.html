@@ -1,0 +1,76 @@
+<div class="container">
+  <div class="col-sidebar">&nbsp;</div>
+  <div class="col-main">
+    <div class="statistics-header">
+      <div class="bordered-title clearfix mb-md">
+        <div class="h2 mt-base pull-left">Statistik</div>
+        <ng-include src="'views/statistics/menu.html'"></ng-include>
+      </div>
+    </div>
+    <div class="statistics">
+      <div class="weeks-weights">
+      </div>
+      <div class="charts">
+        <span us-spinner="{radius:7, width:2, length: 5, color: '#5c677b'}" spinner-key="chart-loader" spinner-start-active="1"></span>
+        <div
+            class="chart-cravings-hunger-mood"
+            ng-class="{'is-loading': isLoading}"
+            stat-chart="'cravingsHungerMood'"
+            stat-data="stat.cravingsHungerMoodData"
+            stat-sub-data="subData">
+        </div>
+      </div>
+      <div class="chart-left-arrow">
+        <i class="fa fa-arrow-up"></i>
+      </div>
+      <div class="chart-right-arrow">
+        <i class="fa fa-arrow-up"></i>
+      </div>
+      <div class="weeks-titles">
+        <ul ng-class="{'is-loading': isLoading}">
+          <li ng-repeat="(weekNumber, week) in stat.weeks">
+              <span class="week-title" ng-class="{'current': currentWeekNumber == weekNumber}">
+                <span translate="frontend.user_progress.week" translate-default="" translate-values="{number: $index+1}"></span>
+              </span>
+          </li>
+        </ul>
+      </div>
+      <div class="chart-legend">
+        <ul ng-class="{'is-loading': isLoading}">
+          <!--<li-->
+              <!--class="cravings-hunger-legend-box"-->
+              <!--ng-click="activeChart = 'hunger-cravings'; subData['activeChart'] = 'hunger-cravings'" ng-class="{'active': activeChart == 'hunger-cravings'}">-->
+            <!--<span class="legend-icon legend-hunger-cravings"></span>-->
+            <!--<span class="legend-title-group">-->
+              <!--<span class="hunger-box"></span>-->
+              <!--<span class="legend-title" translate="frontend.stat.legend.hunger" translate-default="">HUNGER</span>-->
+            <!--</span><br>-->
+            <!--<span class="legend-title-group">-->
+              <!--<span class="cravings-box"></span>-->
+              <!--<span class="legend-title" translate="frontend.stat.legend.cravings" translate-default="">CRAVINGS</span>-->
+            <!--</span>-->
+          <!--</li>-->
+          <li
+              class="mood-legend-box"
+              ng-click="activeChart = 'hunger'; subData['activeChart'] = 'hunger-cravings'" ng-class="{'active': activeChart == 'hunger'}">
+            <span class="legend-icon legend-hunger"></span>
+            <span class="legend-title" translate="frontend.stat.legend.hunger" translate-default="">HUNGER</span>
+          </li>
+          <li
+              class="mood-legend-box cravings-legend-box"
+              ng-click="activeChart = 'cravings'; subData['activeChart'] = 'hunger-cravings'" ng-class="{'active': activeChart == 'cravings'}">
+            <span class="legend-icon legend-cravings"></span>
+            <span class="legend-title" translate="frontend.stat.legend.cravings" translate-default="">CRAVINGS</span>
+          </li>
+          <li
+              class="mood-legend-box"
+              ng-click="activeChart = 'mood'; subData['activeChart'] = 'mood'" ng-class="{'active': activeChart == 'mood'}">
+            <span class="legend-icon legend-mood"></span>
+            <span class="legend-title" translate="frontend.stat.legend.mood" translate-default="">MOOD</span>
+          </li>
+        </ul>
+      </div>
+  </div>
+  <div class="clearfix"></div>
+  </div>
+</div>

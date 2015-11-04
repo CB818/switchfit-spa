@@ -1,0 +1,40 @@
+<section class="user-level user-progress section--honky">
+    <div class="container">
+        <div class="col-sidebar">
+            <img class="user-level__picture" src="images/icon-community.png">
+        </div>
+        <div class="col-main">
+            <p ng-controller="ContentBlockCtrl as communityBlock" ng-init="communityBlock.init('community-intro')" ng-bind-html="communityBlock.contentBlock"></p>
+        </div>
+    </div>
+</section>
+
+<section class="l-section-main section--community">
+    <div class="container">
+        <div class="filter main-content">
+            <div class="main-content__body pt-md">
+                <i class="fa fa-th-large link-color"></i> <a ui-sref="community" translate="frontend.community.life_feed.back" translate-default="">Back to Community</a>
+                <hr class="fat mb-md">
+                <div class="row">
+                    <ul class="community-table__feed feed--xl" ng-controller="BlogFeedCtrl">
+                        <li ng-repeat="item in items">
+                            <div class="community-table__feed__figure">
+                                <img src="{{ item.imgSrc }}">
+                            </div>
+                            <div class="community-table__feed__content">
+                                <div class="clearfix">
+                                    <div class="community-table__feed__title pull-left"><a href="{{ item.link }}" target="_blank">{{ item.title }}</a></div>
+                                    <p class="pull-right"><strong>Rubrik:</strong> <em>{{ item.categories[0] }}</em></p>
+                                </div>
+                                <div class="community-table__feed__meta">
+                                    <em>{{ item.publishedDate }}, {{ item.author }}</em>
+                                </div>
+                                <p>{{ item.description }}</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

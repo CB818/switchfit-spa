@@ -1,0 +1,91 @@
+<ng-include src="'views/common/header.html'"></ng-include>
+
+<section class="user-level user-progress section--honky">
+  <div class="container">
+    <div class="col-sidebar">
+      <img class="user-level__picture" src="images/icon-community.png">
+    </div>
+    <div class="col-main">
+      <p ng-controller="ContentBlockCtrl as communityBlock" ng-init="communityBlock.init('community-intro')" ng-bind-html="communityBlock.contentBlock"></p>
+    </div>
+  </div>
+</section>
+
+<section class="l-section-main section--community">
+  <div class="container">
+    <div class="filter main-content">
+      <ng-include src="'views/qa/menu.html'"></ng-include>
+      <div class="main-content__body pt-md" ui-view>
+        <div class="row community-table__wrapper">
+          <div class="col-main col-main--sm">
+            <ul class="community-table__feed feed--lg" ng-controller="QACtrl">
+              <li ng-repeat="question in getPagedQuestions()">
+                <div class="community-table__feed__figure">
+                    <div
+                            class="community-table__feed__figure__votes label--{{question.category.classSuffix.length > 0 ? question.category.classSuffix : 'info'}}">
+                        <span>{{question.votesCnt}}<i class="fa fa-thumbs-o-up"></i></span>
+                        <ng-pluralize count="question.votesCnt"
+                                      when="{'0': 'stimmen',
+                                   'one': 'stimme',
+                                   'other': 'stimmen'}">
+                        </ng-pluralize><br>
+                    </div>
+                    <div class="community-table__feed__figure__views">
+                        {{question.viewsCnt}} <ng-pluralize count="question.viewsCnt"
+                                      when="{'0': 'ansichten',
+                                   'one': 'ansicht',
+                                   'other': 'ansichten'}">
+                        </ng-pluralize><br>
+                    </div>
+                </div>
+                <div class="community-table__feed__content">
+                  <div class="clearfix">
+                    <div class="community-table__feed__title pull-left"><a ui-sref="qa.question({ questionId: question.id })">{{question.title}}</a></div>
+                    <p class="pull-right"><strong>{{question.category.title}}</strong></p>
+                  </div>
+                  <div class="community-table__feed__meta">
+                    <em><i translate="frontend.community.q_a.asked" translate-default="">Asked on</i> {{question.createdAt | amDateFormat:'MMMM Do h:mm'}}, <i translate="frontend.community.q_a.by" translate-default="">by</i> {{question.user.firstname}} {{question.user.lastname}}.</em>
+                      <p ng-if="question.latestAnswerAt"><strong translate="frontend.community.q_a.latest_answer" translate-default="">Latest answer:</strong> <em am-time-ago="question.latestAnswerAt"></em></p>
+                      <p ng-if="!question.latestAnswerAt"><strong translate="frontend.community.q_a.no_answers" translate-default="">No answers</strong></p>
+                  </div>
+                  <p>{{question.text | limitTo: 200}}{{question.text.length > 200 ? '...' : '' }}</p>
+                </div>
+              </li>
+            </ul>
+
+            <div ng-show="totalItems > itemPerPage" ng-controller="QAPaginationCtrl">
+              <pagination
+                    total-items="totalItems"
+                    ng-model="currentPage"
+                    max-size="maxSize"
+                    class="pagination pagination--centered"
+                    boundary-links="true"
+                    first-text="<<"
+                    last-text=">>"
+                    next-text=">"
+                    previous-text="<"
+                    items-per-page="itemPerPage"
+                    ng-change="pageChanged()"></pagination>
+              </div>
+            <!--<ul class="pagination pagination--centered">-->
+              <!--<li><a href="#"><i class="fa fa-angle-left"></i></a></li>-->
+              <!--<li class="active"><a href="#">1</a></li>-->
+              <!--<li><a href="#">2</a></li>-->
+              <!--<li><a href="#">3</a></li>-->
+              <!--<li><a href="#">4</a></li>-->
+              <!--<li><a href="#">5</a></li>-->
+              <!--<li><a href="#">...</a></li>-->
+              <!--<li><a href="#">10</a></li>-->
+              <!--<li><a href="#"><i class="fa fa-angle-right"></i></a></li>-->
+              <!--<li><a href="#">Last</a></li>-->
+              <!--<li><a href="#"><i class="fa fa-angle-double-right"></i></a></li>-->
+            <!--</ul>-->
+          </div>
+          <ng-include src="'views/qa/sidebar.html'"></ng-include>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<ng-include src="'views/common/footer.html'"></ng-include>

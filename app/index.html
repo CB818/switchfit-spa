@@ -1,0 +1,237 @@
+<!doctype html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Switchfit</title>
+  <base href="/">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width; initial-scale=1.0; minimum-scale=1.0; maximum-scale=1.0;">
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+  <link href="images/ico/apple-touch-icon-57-precomposed.ico" rel="apple-touch-icon-precomposed" sizes="57x57" />
+  <link href="images/ico/apple-touch-icon-72-precomposed.ico" rel="apple-touch-icon-precomposed" sizes="72x72" />
+  <link href="images/ico/apple-touch-icon-114-precomposed.ico" rel="apple-touch-icon-precomposed" sizes="114x114" />
+  <link href="images/ico/apple-touch-icon-144-precomposed.ico" rel="apple-touch-icon-precomposed" sizes="144x144" />
+  <link rel="icon" type="image/x-icon" href="images/ico/favicon.ico">
+
+  <link href='//fonts.googleapis.com/css?family=PT+Sans:400,700,400italic,700italic' rel='stylesheet'>
+
+  <!-- build:css({.tmp,app}) styles/main.css -->
+  <link rel="stylesheet" href="styles/all.css">
+  <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.css"/>
+  <link rel="stylesheet" href="bower_components/angular-bootstrap-lightbox/dist/angular-bootstrap-lightbox.css">
+  <!-- endbuild -->
+
+</head>
+<body ng-app="switchfitApp" ng-controller="AppCtrl as app">
+<!--[if lt IE 9]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+  your browser</a> to improve your experience.</p>
+<![endif]-->
+
+<!-- Add your site or application content here -->
+<div ui-view="" class="wrapper"></div>
+
+<!-- Google Analytics: change UA-XXXXX-X to be your site's ID
+ <script>
+   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+   ga('create', 'UA-XXXXX-X');
+   ga('send', 'pageview');
+</script> -->
+
+<!-- Intercom JS library -->
+<script>
+  (function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',intercomSettings);}else{var d=document;var i=function(){i.c(arguments)};i.q=[];i.c=function(args){i.q.push(args)};w.Intercom=i;function l(){var s=d.createElement('script');s.type='text/javascript';s.async=true;
+  s.src='https://widget.intercom.io/widget/go20t8zg';
+  var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);}if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})()
+</script>
+
+<!-- build:js({.tmp,app}) scripts/scripts.js -->
+<!-- vendor -->
+<script src="bower_components/lodash/dist/lodash.js"></script>
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-resource/angular-resource.js"></script>
+<script src="bower_components/angular-cookies/angular-cookies.js"></script>
+<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="bower_components/ui-utils/ui-utils.js"></script>
+<script src="bower_components/angular-animate/angular-animate.js"></script>
+<script src="bower_components/angular-bootstrap-jbruni/ui-bootstrap.js"></script>
+<script src="bower_components/angular-bootstrap-jbruni/ui-bootstrap-tpls.js"></script>
+<script src="bower_components/bootstrap-select/dist/js/bootstrap-select.js"></script>
+<script src="bower_components/nya-bootstrap-select/src/nya-bootstrap-select.js"></script>
+<script src="bower_components/moment/moment.js"></script>
+<script src="bower_components/moment/lang/de.js"></script>
+<script src="bower_components/angular-moment/angular-moment.js"></script>
+<script src="bower_components/angular-file-upload/angular-file-upload.js"></script>
+<script src="bower_components/spin.js/spin.js"></script>
+<script src="bower_components/angular-spinner/angular-spinner.js"></script>
+<script src="bower_components/ng-videosharing-embed/build/ng-videosharing-embed.min.js"></script>
+<script src="bower_components/angular-translate/angular-translate.js"></script>
+<script src="bower_components/d3/d3.js"></script>
+<script src="bower_components/d3-tip/index.js"></script>
+<script src="bower_components/jquery-ui/jquery-ui.js"></script>
+<script src="bower_components/angular-dragdrop/src/angular-dragdrop.js"></script>
+<script src="bower_components/angular-i18n/angular-locale_de-de.js"></script>
+
+<!-- common -->
+<script src="scripts/app.js"></script>
+<script src="scripts/controllers/main.js"></script>
+
+<!-- services -->
+<script src="scripts/services/user.js"></script>
+<script src="scripts/services/api.js"></script>
+<script src="scripts/services/login.js"></script>
+<script src="scripts/services/course.js"></script>
+<script src="scripts/services/day.js"></script>
+<script src="scripts/services/tipps.js"></script>
+
+
+<!-- filters -->
+<script src="scripts/filters/new_lines.js"></script>
+
+<!-- directives -->
+<script src="scripts/directives/file.js"></script>
+<script src="scripts/directives/print_dom.js"></script>
+<script src="scripts/directives/btn-loading.js"></script>
+<script src="scripts/directives/signature-pad.js"></script>
+<script src="scripts/directives/form-autofill-fix.js"></script>
+<script src="scripts/directives/float-model.js"></script>
+<script src="scripts/directives/anchor-scroll-trigger.js"></script>
+<script src="scripts/directives/dynamic-html.js"></script>
+<script src="scripts/directives/right-click.js"></script>
+
+<!-- app -->
+<script src="scripts/controllers/app.js"></script>
+<script src="scripts/controllers/modals.js"></script>
+<script src="scripts/services/notifications.js"></script>
+<script src="scripts/controllers/popover/notifications.js"></script>
+<script src="scripts/controllers/user-menu.js"></script>
+<script src="scripts/controllers/popover/notifications-day.js"></script>
+
+<!-- login -->
+<script src="scripts/controllers/login.js"></script>
+
+<!-- profile settings -->
+<script src="scripts/controllers/profilesettings.js"></script>
+
+<!--dashboard -->
+<script src="scripts/services/dashboard.js"></script>
+<script src="scripts/controllers/dashboard.js"></script>
+<script src="scripts/controllers/dashboard/food_modal.js"></script>
+<script src="scripts/controllers/dashboard/gym_modal.js"></script>
+<script src="scripts/controllers/dashboard/weekly-data.js"></script>
+
+<!-- kitchen -->
+<script src="scripts/services/meals.js"></script>
+<script src="scripts/controllers/kitchen.js"></script>
+<script src="scripts/controllers/meals/recipe.js"></script>
+<script src="scripts/services/demo/meals.js"></script>
+
+<!-- gym -->
+<script src="scripts/services/workouts.js"></script>
+<script src="scripts/controllers/workouts.js"></script>
+<script src="scripts/controllers/workouts/item.js"></script>
+<script src="scripts/services/demo/workouts.js"></script>
+
+<!-- academy -->
+<script src="scripts/services/academy.js"></script>
+<script src="scripts/controllers/academy.js"></script>
+<script src="scripts/controllers/academy/module.js"></script>
+<script src="scripts/controllers/academy/final_test.js"></script>
+<script src="scripts/controllers/academy/final.js"></script>
+<script src="scripts/services/demo/academy.js"></script>
+
+<!-- diary -->
+<script src="scripts/controllers/diary.js"></script>
+<script src="scripts/services/diary.js"></script>
+<script src="scripts/controllers/diary/add-diary-entry.js"></script>
+<script src="scripts/controllers/diary/diary-carousel.js"></script>
+<script src="scripts/controllers/diary/motivation.js"></script>
+<script src="scripts/controllers/diary/manifesto.js"></script>
+<script src="scripts/controllers/diary/weight-edit.js"></script>
+<script src="scripts/controllers/diary/measurements-edit.js"></script>
+
+<!-- statistics -->
+<script src="scripts/controllers/statistics.js"></script>
+<script src="scripts/directives/statistic-charts.js"></script>
+<script src="scripts/controllers/statistics/weight-water-fitness.js"></script>
+<script src="scripts/controllers/statistics/cravings-hunger-mood.js"></script>
+<script src="scripts/controllers/statistics/cigarettes-glucose.js"></script>
+
+<!-- community -->
+<script src="scripts/services/blog-feed.js"></script>
+<script src="scripts/services/top-posts.js"></script>
+<script src="scripts/services/life.js"></script>
+<script src="scripts/controllers/community.js"></script>
+<script src="scripts/controllers/community/blog-feed.js"></script>
+<script src="scripts/controllers/community/top-posts.js"></script>
+<script src="scripts/controllers/community/life-carousel.js"></script>
+<script src="scripts/controllers/community/life-feed.js"></script>
+<script src="scripts/controllers/community/life-feed-v1.js"></script>
+<script src="scripts/controllers/community/life-entry.js"></script>
+<script src="scripts/controllers/community/life-video.js"></script>
+<script src="scripts/controllers/community/life-cities.js"></script>
+<script src="scripts/dependencies/jquery.alert.js"></script>
+<script src="scripts/controllers/community/top-tipps.js"></script>
+
+<!-- qa -->
+<script src="scripts/controllers/qa.js"></script>
+<script src="scripts/services/qa.js"></script>
+<script src="scripts/controllers/qa/question.js"></script>
+<script src="scripts/controllers/qa/menu.js"></script>
+<script src="scripts/controllers/qa/question-form.js"></script>
+<script src="scripts/controllers/qa/answer-form.js"></script>
+<script src="scripts/services/loder-switchfit.js"></script>
+<script src="scripts/controllers/warmup.js"></script>
+<script src="scripts/controllers/video-modals.js"></script>
+
+<!-- content -->
+<script src="scripts/services/content.js"></script>
+<script src="scripts/controllers/content/page.js"></script>
+<script src="scripts/controllers/content/block.js"></script>
+
+<!-- user resetting -->
+<script src="scripts/controllers/resetting/request.js"></script>
+<script src="scripts/controllers/resetting/reset.js"></script>
+<script src="scripts/services/user-resetting.js"></script>
+<script src="scripts/controllers/community/life-cities.js"></script>
+
+<!-- quests -->
+<script src="scripts/controllers/quests.js"></script>
+<script src="scripts/controllers/quests/quests-overview.js"></script>
+<script src="scripts/services/quests.js"></script>
+
+<!-- points -->
+<script src="scripts/controllers/points.js"></script>
+<script src="scripts/services/points.js"></script>
+
+<!-- lightbox -->
+<script src="bower_components/angular-bootstrap-lightbox/dist/angular-bootstrap-lightbox.js"></script>
+
+<script src="scripts/dependencies/jquery.mousewheel.js"></script>
+<script src="scripts/dependencies/perfect-scrollbar.js"></script>
+<script src="scripts/dependencies/angular-perfect-scrollbar.js"></script>
+<script src="scripts/dependencies/bootstrap.button.js"></script>
+<script src="scripts/dependencies/jquery.signaturepad.js"></script>
+<!-- endbuild -->
+
+<!--(if target serve)><!-->
+<script src='//localhost:3000/socket.io/socket.io.js'></script>
+<script>var ___socket___ = io.connect('http://localhost:3000');</script>
+<script src='//localhost:3001/client/browser-sync-client.0.8.2.js'></script>
+<!--<!(endif)-->
+
+</body>
+</html>

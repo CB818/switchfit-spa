@@ -1,0 +1,99 @@
+<ng-include src="'views/common/header.html'"></ng-include>
+<section class="section__intro section--honky hidden-print">
+  <div>
+    <div class="container">
+      <div class="section__intro__picture" ng-click="app.openVideoModal('gym')">
+        <img class="section__intro__picture__default" src="images/icon-gym.png">
+        <img class="section__intro__picture__play" src="images/icon-play-video.png">
+      </div>
+      <p ng-controller="ContentBlockCtrl as gymBlock" ng-init="gymBlock.init('gym-intro')" ng-bind-html="gymBlock.contentBlock"></p>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</section>
+
+<section class="l-section-main section--azure" ui-view>
+  <div class="container">
+    <div class="filter main-content">
+      <ng-include src="'views/gym/tabs.html'"></ng-include>
+      <div class="filter__body">
+        <div class="filter-container">
+          <!--<div class="sub-title" translate="frontend.gym.filter.filter_view" translate-default="">Filter view:</div>-->
+          <div class="clearfix relative">
+            <div class="form-inline pull-left">
+                <div class="form-group">
+                    <select
+                        class="nya-selectpicker type-select"
+                        data-container="body"
+                        data-none-selected-text="Alle Typen"
+                        ng-model="workouts.type"
+                        ng-change="workouts.changeType()"
+                        ng-options="type.id as type.title for type in workouts.types">
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select
+                        class="nya-selectpicker category-select"
+                        data-none-selected-text="Alle Kategorien"
+                        data-container="body"
+                        ng-model="workouts.category"
+                        ng-change="workouts.changeCategory()"
+                        ng-options="category.id as category.title for category in workouts.categories">
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select
+                        class="nya-selectpicker location-select"
+                        data-none-selected-text="Alle Standorte"
+                        data-container="body"
+                        ng-model="workouts.location"
+                        ng-change="workouts.changeLocation()"
+                        ng-options="location.id as location.title for location in workouts.locations">
+                    </select>
+                </div>
+            </div>
+            <ul class="filter-inline pull-left">
+              <li class="active" ng-click="workouts.changeFavs(false)"><span translate="frontend.gym.filter.show_all" translate-default="">Show all</span></li>
+              <li ng-click="workouts.changeFavs(true)"><i class="fa fa-heart"></i> <span translate="frontend.gym.filter.only_favorites" translate-default="">Only favorites</span></li>
+            </ul>
+            <div class="reset" ng-click="workouts.resetFilters()">
+              <span class="btn btn-default">
+                <span translate="frontend.gym.filter.reset_filters" translate-default="">Reset filters</span><!--&nbsp;&nbsp;<i class="fa fa-undo"></i>-->
+              </span>
+            </div>
+          </div>
+        </div>
+        <hr class="fat">
+        <p class="mt-md mb-md" ng-if="!isLoading" translate="frontend.gym.list.showing_workouts" translate-values="{showing: workouts.showingWorkoutsLength(), total: allWorkouts.length}" translate-default=""></p>
+        <p ng-if="isLoading" class="spinner-loader"><span us-spinner="{radius:7, width:2, length: 5, color: '#5c677b'}" spinner-key="gym-loader" spinner-start-active="1"></span></p>
+        <ul class="img-items-list gym">
+          <li
+              ui-sref="gym.workout({ workout: workout.id })"
+              class="img-item"
+              ng-repeat="workout in workouts.filteredWorkouts() | limitTo: workouts.workoutsLimit()"
+              ng-right-click>
+            <figure>
+              <img ng-src="{{ workouts.getPreview(workout).photo.c172x143 }}" class="img-responsive">
+              <div class="liked" ng-if="workout.favorite"><i class="fa fa-heart"></i></div>
+              <!--<span class="type-badges">
+                <span ng-repeat="type in workout.type | orderBy:'abbr'" class="badge img-item--badge">{{ type.abbr }}</span>
+              </span>-->
+              <span class="img-item__action" translate="frontend.gym.list.view_workout" translate-default="">View details</span>
+              <span class="play"></span>
+              <figcaption class="half" ng-hide="workout.workoutTime == undefined">
+                <span class="time" ng-bind="workout.workoutTime"></span>
+              </figcaption>
+            </figure>
+            <div class="img-item__desc">
+              <strong ng-bind="workout.title"></strong>
+              <!--<span ng-repeat="category in workout.category">{{ category.title }}{{ !$last ? ', ' : '' }}</span>-->
+            </div>
+          </li>
+        </ul>
+        <div ng-show="workouts.hasMoreWorkoutsToShow()" ng-click="workouts.showMoreWorkouts()" class="text-center mb-md"><span class="btn btn-default-alt btn-show-more mb-md" translate="frontend.gym.list.show_more" translate-default="">Show more</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<ng-include src="'views/common/footer.html'"></ng-include>

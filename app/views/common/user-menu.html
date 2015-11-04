@@ -1,0 +1,23 @@
+<ul class="user-menu" ng-controller="UserMenuCtrl">
+    <!--<li class="menu-notifications">
+      <span
+          class="user-menu__item fa fa-bell-o"
+          popover-template="views/popovers/notifications-common.html"
+          popover-animation="true"
+          popover-placement="bottom"
+          popover-trigger="{{{true: 'click', false: 'click'}[showPopover]}}"
+          ng-click="openClose()"
+          ng-class="{'has-notice': hasNotice == true }"></span>
+    </li>-->
+    <li><a class="user-menu__item fa fa-shopping-cart"
+           popover="{{'frontend.menu.cart.hover' | translate}}"
+           popover-placement="bottom"
+           data-toggle="popover"
+           popover-trigger="mouseenter"
+           ng-if="paymentUrl"
+           href="{{paymentUrl}}"
+           target="_self"></a></li>
+    <li><a class="user-menu__item fa fa-edit" ui-sref="diary"></a></li>
+    <li ng-class="{ 'active': app.moduleName == 'settings' }"><a class="user-menu__item fa fa-cog" ui-sref="settings"></a></li>
+    <li><a class="user-menu__item fa fa-sign-out" ng-click="logout()"></a></li>
+</ul>

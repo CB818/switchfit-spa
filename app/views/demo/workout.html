@@ -1,0 +1,79 @@
+<div class="container">
+  <div class="filter main-content">
+    <ul class="filter__header hidden-print">
+      <li class="active">Workouts</li>
+      <li>HIITs / LOWs / BURNs</li>
+      <li>Weekly challenges</li>
+      <li>Measuring your progress</li>
+      <li>Workout tools</li>
+      <li>Gym experts</li>
+    </ul>
+    <div class="main-content__body pt-md">
+      <div class="hidden-print">
+        <i class="fa fa-th-large link-color"></i> <a ui-sref="demo.gym">Back to all workouts</a>
+
+        <div class="pull-right">
+          <!--<i class="fa fa-arrow-circle-left link-color"></i> <a href="#">Previuos workout</a> 
+          <span class="text-muted">&nbsp;|&nbsp;</span> 
+          <a href="#">Next workout</a> <i class="fa fa-arrow-circle-right link-color"></i>-->
+        </div>
+        <hr class="fat mb-md">
+      </div>
+      <div class="row">
+        <div class="col-main col-main--sm">
+          <div class="slider mb-md">
+            <div class="image-container">
+              <img ng-repeat="photo in workout.info.photos" class="slide" ng-show="isActive($index)"
+                   ng-src="{{photo.photo.ref}}">
+              <span class="arrow prev fa fa-chevron-left hidden-print" ng-click="showPrev()"></span>
+              <span class="arrow next fa fa-chevron-right hidden-print" ng-click="showNext()"></span>
+            </div>
+            <ul class="nav hidden-print">
+              <li ng-class="{'video':photo.video, 'active':isActive($index)}"
+                  ng-repeat="photo in workout.info.photos">
+                <img ng-src="{{photo.photo.c172x143}}" alt="{{photo.desc}}" title="{{photo.desc}}"
+                     ng-click="showPhoto($index);">
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-sidebar col-sidebar--lg">
+          <div class="h2 nmt" ng-bind="workout.info.title"></div>
+          <ul class="cooking-details-list">
+            <li><i class="fa fa-clock-o"></i> <strong>Workout time:</strong> <em ng-bind="workout.info.workoutTime"></em></li>
+            <li><i class="fa fa-clock-o"></i> <strong>Rest:</strong> <em ng-bind="workout.info.rest"></em></li>
+          </ul>
+          <ul class="meal-details-list">
+            <li>
+              <strong>Workout type:</strong> <em>good for your X and Y</em>
+              <div class="badge badge-sm pull-right" ng-bind="workout.info.type.abbr"></div>
+            </li>
+            <li>
+              <strong>Category:</strong> <em ng-bind="workout.info.category.title"></em>
+              <img class="pull-right" src="../../images/icon-pan.png">
+            </li>
+          </ul>
+          <span class="btn btn-default btn-round mr-base hidden-print" ng-click="workout.fav()"><img src="../../images/icon-heart-sm.png"> Add to favorites</span>
+          <a class="btn btn-default btn-round hidden-print" href="javascript:window.print()"><i class="fa fa-print"></i> Print</a>
+
+          <div class="workout-description">
+            <p ng-bind="workout.info.description"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-main col-main--sm">
+          <div class="sub-title bordered-title">Instructions</div>
+          <div ng-bind-html="workout.info.instructions"></div>
+          <div class="sub-title bordered-title pt-md">Additional info</div>
+          <div ng-bind-html="workout.info.additionalInfo"></div>
+        </div>
+        <div class="col-sidebar col-sidebar--lg">
+          <div class="sub-title bordered-title">Tips</div>
+          <div ng-bind-html="workout.info.tips"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

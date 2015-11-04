@@ -1,0 +1,33 @@
+<ng-include src="'views/common/header.html'"></ng-include>
+<section class="section__intro section--honky hidden-print quests__intro">
+    <div>
+        <div class="container">
+            <div class="section__intro__picture">
+                <img class="section__intro__picture__default__quests" src="images/icon-quest.png">
+            </div>
+            <p class="quest__title"><strong>{{'quest.list.header.title' | translate }}</strong> {{'quest.list.header.text' | translate }}</p>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</section>
+<section class="l-section-main section--azure" ui-view>
+    <div class="container quests-container">
+        <div class="main-content ">
+            <div class="main-content__body" >
+                <h2 ng-if="limitExceeded" class="sub-title nmb limit-reached-header">
+                    {{'frontend.widgets.qod.no_more_quests' | translate}}
+                </h2>
+                <div class="quest__overview__items">
+                    <div class="quest__overview__items__item" ng-repeat="quest in quests | orderBy: '-sort' ">
+                        <a href="/quests/{{quest.id}}" class="quests-cat quests-cat-{{quest.questCategory.slug}}" ng-class="{'quests-current': quest.status == 'ASSIGNED' || quest.status == 'STARTED'}">
+                            <img ng-repeat="media in quest.photo" ng-if="media.type == 'photo'" ng-src="{{media.photo.c217x217}}" class="quest-photo">
+                            <img ng-if="quest.status == 'COMPLETED'" src="images/quest-completed-gold-star.png" class="quest__completed__badge">
+                        </a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<ng-include src="'views/common/footer.html'"></ng-include>

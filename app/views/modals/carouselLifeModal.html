@@ -1,0 +1,12 @@
+<div ng-controller="ModalLifeCarouselCtrl">
+  <span class="close" ng-click="$close()"></span>
+  <carousel interval="myInterval" ng-class="{'init-slide': initSlide}">
+    <slide ng-repeat="slide in slides" active="slide.active">
+      <img ng-if="slide.picture" ng-src="{{slide.picture.ref}}">
+      <div class="carousel-caption">
+        <div class="slide-title">{{slide.text | limitTo:300 }}</div>
+        <div class="slide-index">{{$index+1}}/{{slides.length}}</div>
+      </div>
+    </slide>
+  </carousel>
+</div>

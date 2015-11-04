@@ -1,0 +1,66 @@
+<div class="community-life-feed-modal">
+  <span class="close" ng-click="$close()"></span>
+  
+  <div class="community-life-feed-modal__container">
+    <div class="community-life-feed-modal__photo">
+      <div class="community-life-feed-modal__photo__block">
+        <img src="{{ entry.picture != null && entry.picture.c500x500 || 'temp-img/sf-life-tmp.jpg'}}">
+      </div>
+    </div>
+    <div class="community-life-feed-modal__content">
+      <div class="community-life-feed-modal__content__header">
+        <div class="community-life-feed-modal__content__header__avatar">
+          <figure>
+            <img class="img-responsive" src="{{ entry.user.picture != null && entry.user.picture.c66x66 || 'temp-img/avatar.png'}}">
+          </figure>
+        </div>
+        <div class="community-life-feed-modal__content__header__meta">
+          <div class="community-life-feed-modal__content__header__meta__author">{{ entry.user.firstname }} {{ entry.user.lastname }}</div>
+          <div class="community-life-feed-modal__content__header__meta__info">
+            <span>{{ entry.createdAt | date : 'd. MMMM, HH:mm' }}</span>
+            <div class="pull-right">
+              <span><i class="fa fa-heart"></i> {{entry.likeCnt}}</span>&nbsp;&nbsp;<span><i class="fa fa-comment"></i> {{entry.commentCnt}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="community-life-feed-modal__content__header__text">{{ entry.text }}</div>
+      </div>
+      <ul class="community-life-feed-modal__content__comments">
+        <li ng-repeat="comment in entry.comments | orderBy: 'createdAt'">
+          <div class="community-life-feed-modal__content__comments__avatar">
+            <figure>
+              <img class="img-responsive" src="{{ comment.user.picture != null && comment.user.picture.c66x66 || 'temp-img/avatar.png'}}">
+            </figure>
+          </div>
+          <div class="community-life-feed-modal__content__comments__item">
+            <div class="clearfix">
+              {{ comment.user.firstname }} {{ comment.user.lastname }} <span class="pull-right">{{ comment.createdAt | date : 'd. MMM, HH:mm' }}</span>
+            </div>
+            <p>{{ comment.text }}</p>
+          </div>
+        </li>
+      </ul>
+      <div class="community-life-feed-modal__content__actions">
+        <div class="community-life-feed-modal__content__actions__like">
+          <span ng-if="entry.like" class="btn btn-default" btn-loading="isLoadingLike" btn-loading-options="{'radius':4,'width':2,'length':4,'color':'#ff0000'}" ng-click="like()"><i class="fa fa-heart-o"></i></span>
+          <span ng-if="!entry.like" class="btn btn-default disabled"><i class="fa fa-heart"></i></span>
+        </div>
+        <div class="community-life-feed-modal__content__actions__comment">
+          <textarea class="form-control ng-pristine" placeholder="Schreibe einen Kommentar" ng-model="$parent.lifeComment"></textarea>
+        </div>
+        <div class="community-life-feed-modal__content__actions__submit">
+          <button
+              type="submit"
+              class="btn btn-default-alt"
+              btn-loading="isLoadingComment"
+              btn-loading-options="{'radius':4,'width':2,'length':4,'color':'#fff'}"
+              ng-click="addComment()"><i class="fa fa-pencil"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <a class="left carousel-control" ng-click="prev(entry)"><span class="glyphicon glyphicon-chevron-left"></span></a>
+  <a class="right carousel-control" ng-click="next(entry)"><span class="glyphicon glyphicon-chevron-right"></span></a>
+</div>

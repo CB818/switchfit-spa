@@ -1,0 +1,28 @@
+<ul class="bar-chart">
+    <!--<li ng-repeat="(date,day) in app.progressDays" ng-class="day.milestoneClass"><em ng-if="day.showWeight">{{ day.weight }}</em><div ng-if="day.showWeight" class="dot"></div><span ng-style="{ 'height': day.weight > 0 ? (20 + 30 * day.mult) : 0 }"></span></li>-->
+    <li ng-repeat="(date,day) in app.progressDays" ng-class="day.milestoneClass"><em ng-if="day.showWeight">{{ day.weight }}</em><div ng-if="day.showWeight" class="dot"></div><span ng-style="{ 'height': day.done == true ? '80%' : '0%' }"></span></li>
+
+
+    <!--<li><span style="height: 36px"></span></li>
+    <li><span style="height: 33px"></span></li>
+    <li><span style="height: 33px"></span></li>
+    <li><span style="height: 31px"></span></li>
+    <li><span style="height: 31px"></span></li>
+    <li class="milestone milestone--danger">78<div class="dot"></div><span style="height: 32px"></span></li>
+    <li><span style="height: 29px"></span></li>
+    <li><span style="height: 26px"></span></li>
+    <li><span style="height: 25px"></span></li>
+    <li><span style="height: 23px"></span></li>
+    <li><span style="height: 26px"></span></li>
+    <li><span style="height: 26px"></span></li>
+    <li class="milestone milestone--neutral">75<div class="dot"></div><span style="height: 23px"></span></li>
+    <li><span style="height: 23px"></span></li>
+    <li><span style="height: 23px"></span></li>
+    <li><span style="height: 21px"></span></li>
+    <li class="milestone milestone--success">72<div class="dot"></div><span style="height: 20px"></span></li>
+    -->
+</ul>
+<ul class="weeks">
+    <li ng-class="{ current: week.current, passed: week.passed, 'pre-current': week.preCurrent, last: week.last }" ng-repeat="week in app.weeks"><span translate="frontend.user_progress.week" translate-default="" translate-values="{number: week.number}"></span></li>
+</ul>
+<progressbar value="modulesCompleted.length / allModules.length * 100">{{modulesCompleted.length / allModules.length * 100 | number:0}}%</progressbar>

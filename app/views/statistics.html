@@ -1,0 +1,29 @@
+<ng-include src="'views/common/header.html'"></ng-include>
+<section class="user-progress section--honky">
+  <div class="container">
+    <div class="col-sidebar user-video-modal-trigger" ng-click="app.openVideoModal('statistics')">
+      <img class="avatar" ng-src="{{ currentUser.picture != null && currentUser.picture.c66x66 || 'temp-img/avatar.png'}}">
+      <img class="play" src="images/icon-play-video.png">
+    </div>
+    <div class="col-main">
+      <ng-include src="'views/common/user-progress.html'"></ng-include>
+    </div>
+    <div class="col-sidebar">
+      <div class="main-goal pull-right"><span>{{ userCourse.goalWeight }}</span><span class="xs-text" translate="frontend.dashboard.main_goal" translate-default="">main goal</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section--stats" ui-view>
+  <div class="container">
+    <div class="clearfix">
+      <div class="statistics-header">
+        <div class="bordered-title clearfix mb-md">
+          <div class="h2 mt-base pull-left">Statistik</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<ng-include src="'views/common/footer.html'"></ng-include>

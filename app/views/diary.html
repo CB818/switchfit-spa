@@ -1,0 +1,113 @@
+<ng-include src="'views/common/header.html'"></ng-include>
+<div class="total-upload-progress-box" ng-show="uploader.isHTML5">
+    <div class="total-progress" ng-style="{ 'width': uploader.progress + '%' }"></div>
+</div>
+<section class="section--default l-stick-to-top">
+  <div class="container">
+    <section class="user-profile" ng-style="{'background-image':'url('+diary.bg+')'}">
+      <div class="video-modal-trigger" ng-click="app.openVideoModal('diary')">
+        <img class="video-modal-trigger__play" src="images/icon-play-video.png">
+      </div>
+      <div class="user-profile__content">
+        <div class="avatar-container"><img class="avatar" ng-src="{{ diary.currentUser.picture != null && diary.currentUser.picture.c66x66 || 'temp-img/avatar.png'}}"></div>
+        <div class="stat-container cursor-pointer yellow-hover" ng-click="app.openModal({ templateUrl: 'views/modals/manifesto.html', class:'modal-lg frameless' })">
+          <span class="stat yellow-hover-apply"><i class="fa fa-picture-o"></i></span>
+          <span class="stat-container__action uppercase">SwitchFit Eid</span>
+        </div>
+        <div class="stat-container cursor-pointer stat-container--lg yellow-hover" ng-click="app.openWeightEditModal(user)">
+          <span ng-if="userCourse.currentWeight" class="stat yellow-hover-apply"><span class="stat__weight">{{ userCourse.currentWeight }}</span>kg</span>
+          <span ng-if="!userCourse.currentWeight" class="stat yellow-hover-apply"><i class="fa fa-star"></i></span>
+          <span class="uppercase">Aktuelles Gewicht</span>
+        </div>
+        <div class="stat-container cursor-pointer yellow-hover" ng-click="app.openMeasurementsEditModal()">
+          <span ng-if="!userCourse.measurementTotal" class="stat yellow-hover-apply"><i class="fa fa-star-half-empty"></i></span>
+          <span ng-if="userCourse.measurementTotal" class="stat yellow-hover-apply">{{ userCourse.measurementTotal }}</span>
+          <span class="stat-container__action uppercase">Messungen</span>
+        </div>
+        <span class="change-bg" ng-click="diary.bgClick()"><span translate="frontend.diary.page.change_bg" translate-default="">Change background</span> <input accept="image/png, image/jpeg, image/jpg" ng-if="uploader" style="display: none" id="diary-bg" type="file" nv-file-select uploader="uploader" filters="File"></span>
+      </div>
+    </section>
+
+    <div class="main-content">
+      <div class="main-content__body">
+        <div class="diary">
+            <ng-include src="'views/diary/diaryEntryForm.html'"></ng-include>
+    
+            <div class="text-center mb-md">
+              <div class="label label--md top label-info"><span translate="frontend.diary.page.today" translate-default="">Today</span><div class="arrow"></div></div>
+              <div class="diary-timeline__entry action">
+                <div class="date date--lg date--current">
+                  <span class="date__day">{{ diary.currentDate | date:'dd' }}</span>
+                  <span class="date__month">{{ diary.currentDate | date:'MMM'}}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="diary-timeline">
+              <div class="clearfix">
+                <div class="diary-timeline__col col--left">
+                  <div ng-repeat="leftEntry in diary.getEntries('left') | limitTo : diary.entriesLimit('left')" class="diary-timeline__entry" ng-class="{'left-second-entry' : !diary.isSideWithFirstEntry('left') && $first, 'left-first-entry' : diary.isSideWithFirstEntry('left') && $first, 'text-entry' : !leftEntry.picture}" >
+                      <div class="arrow"></div>
+                      <div class="date">
+                          <span class="date__day">{{ leftEntry.createdAt | date:'dd'}}</span>
+                          <span class="date__month">{{ leftEntry.createdAt | date:'MMM'}}</span>
+                      </div>
+                      <div ng-if="leftEntry.emoji" class="mood" ng-class="{ 'mood--danger': leftEntry.emoji <= 3, 'mood--success': leftEntry.emoji > 3 }"></div>
+                      <div class="diary-timeline__entry__content">
+                        <!--<div ng-if="!leftEntry.picture" class="diary-timeline__entry__no-img"><i class="fa fa-pencil-square-o"></i></div>-->
+                          <a class="text-center" ng-click="openLightboxModal(leftEntry.picture['c-x-'])">
+                              <img ng-if="leftEntry.picture" src="{{ leftEntry.picture != null && leftEntry.picture.c330x330 }}">
+                          </a>
+                        <span class="diary-timeline__entry__published">{{ leftEntry.createdAt | date:'d. MMMM, h:mm'}}</span>
+                        <div class="diary-timeline__entry__text"><span ng-bind-html="leftEntry.text|newLines"></span></div>
+                      </div>
+                  </div>
+                </div>
+
+                <div class="diary-timeline__core"></div>
+                <div class="diary-timeline__col col--right">
+
+                    <div ng-repeat="rightEntry in diary.getEntries('right') | limitTo : diary.entriesLimit('right')" class="diary-timeline__entry" ng-class="{'right-second-entry' : !diary.isSideWithFirstEntry('right') && $first, 'text-entry' : !rightEntry.picture }">
+                        <div class="arrow"></div>
+                        <div class="date">
+                            <span class="date__day">{{ rightEntry.createdAt | date:'dd'}}</span>
+                            <span class="date__month">{{ rightEntry.createdAt | date:'MMM'}}</span>
+                        </div>
+                        <div ng-if="rightEntry.emoji" class="mood" ng-class="{ 'mood--danger': rightEntry.emoji <= 3, 'mood--success': rightEntry.emoji > 3 }"></div>
+                        <div class="diary-timeline__entry__content">
+                          <!--<div ng-if="!rightEntry.picture" class="diary-timeline__entry__no-img"><i class="fa fa-pencil-square-o"></i></div>-->
+                            <a class="text-center" ng-click="openLightboxModal(rightEntry.picture['c-x-'])">
+                                <img ng-if="rightEntry.picture" src="{{ rightEntry.picture != null && rightEntry.picture.c330x330 }}">
+                            </a>
+                          <span class="diary-timeline__entry__published">{{ rightEntry.createdAt | date:'d. MMMM, h:mm'}}</span>
+                          <div class="diary-timeline__entry__text"><span ng-bind-html="rightEntry.text|newLines"></span></div>
+                        </div>
+                    </div>
+
+                  <div ng-repeat="month in diary.months" class="diary-timeline__entry action" ng-show="diary.hasEntriesForMonth(month.MMMM)" ng-click="diary.showEntriesForMonth(month.MMMM)">
+                    <div class="date date--lg month-entries">
+                      <span class="date__month">{{ month.MMM }}</span>
+                    </div>
+                    <span class="diary-timeline__new-entry" translate="frontend.diary.page.show_entries" translate-default=""  translate-values="{month: month.MMMM}">Show {{ month.MMMM }} entries</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div ng-show="diary.getPictures().length > 0" class="sub-title uppercase bordered-title" style="font-size: 14px;" translate="frontend.diary.page.all_photos" translate-default="">All my photos</div>
+            <ul ng-show="diary.getPictures().length > 0" class="photos-list">
+              <li ng-repeat="photo in diary.getPictures() | limitTo: diary.picturesLimit()" class="photos-list__item">
+                <figure>
+                  <img ng-if="photo.picture" ng-click="openCarousel($index)" src="{{photo.picture.c172x143}}">
+                  <!--<figcaption>{{photo.date}}</figcaption>-->
+                </figure>
+              </li>
+            </ul>
+            <div class="text-center"><span class="btn btn-default-alt btn-large btn-show-more" ng-show="diary.hasMorePicturesToShow()" ng-click="diary.showMorePictures()" translate="frontend.diary.page.show_more" translate-default="">Show more</span></div>
+          </div>
+        </div>
+    </div>
+  </div>
+</section>
+
+<ng-include src="'views/common/footer.html'"></ng-include>

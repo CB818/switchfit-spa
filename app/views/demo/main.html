@@ -1,0 +1,453 @@
+<ng-include src="'views/common/demo-header.html'"></ng-include>
+<div ui-view>
+  <div class="demo-page-blocker">
+      <div class="coming-soon"></div>
+  </div>
+
+  <section class="user-progress">
+    <div class="container">
+      <div class="col-sidebar">
+        <img class="avatar" ng-src="{{ currentUser.picture != null && currentUser.picture.c66x66 || 'temp-img/avatar.png'}}">
+      </div>
+      <div class="col-main">
+        <ul class="bar-chart">
+          <li><span style="height: 36px"></span></li>
+          <li><span style="height: 36px"></span></li>
+          <li><span style="height: 33px"></span></li>
+          <li><span style="height: 33px"></span></li>
+          <li><span style="height: 31px"></span></li>
+          <li><span style="height: 31px"></span></li>
+          <li class="milestone milestone--danger">78<div class="dot"></div><span style="height: 32px"></span></li>
+          <li><span style="height: 29px"></span></li>
+          <li><span style="height: 26px"></span></li>
+          <li><span style="height: 25px"></span></li>
+          <li><span style="height: 23px"></span></li>
+          <li><span style="height: 26px"></span></li>
+          <li><span style="height: 26px"></span></li>
+          <li class="milestone milestone--neutral">75<div class="dot"></div><span style="height: 23px"></span></li>
+          <li><span style="height: 23px"></span></li>
+          <li><span style="height: 23px"></span></li>
+          <li><span style="height: 21px"></span></li>
+          <li class="milestone milestone--success">72<div class="dot"></div><span style="height: 20px"></span></li>
+        </ul>
+        <ul class="weeks">
+          <li class="passed"><span>Week 1</span></li>
+          <li class="pre-current passed"><span>Week 2</span></li>
+          <li class="current"><span>Week 3</span></li>
+          <li><span>Week 4</span></li>
+          <li><span>Week 5</span></li>
+          <li><span>Week 6</span></li>
+          <li><span>Week 7</span></li>
+          <li class="last"><span>Week 8</span></li>
+        </ul>
+        <progressbar value="40">40%</progressbar>
+      </div>
+      <div class="col-sidebar">
+        <div class="main-goal pull-right">60</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="current-week section--default">
+    <div class="container">
+      <h2 class="table-title">Current week</h2>
+      <div class="col-sidebar">
+        <div class="weight">
+          <div class="qty">75</div>
+          <div class="desc">current weight</div>
+        </div>
+        <ul class="first-col">
+          <li>Weight</li>
+          <li>Mood</li>
+          <li>Craving</li>
+          <li>Hunger</li>
+          <li>Water</li>
+          <li>Hits</li>
+          <li>Glucose</li>
+        </ul>
+      </div>
+      <div class="col-main">
+        <div class="table-states table-week table-bordered table-striped">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>
+                  <span class="day">Monday</span>
+                  <span class="date">5 jul</span>
+                </th>
+                <th>
+                  <span class="day">Tuesday</span>
+                  <span class="date">6 jul</span>
+                </th>
+                <th>
+                  <div class="relative">
+                    <span class="day">Wednesday</span>
+                    <span class="date">7 jul</span>
+                    <div class="notification notification--warning">2</div>
+                  </div>
+                </th>
+                <th class="current">
+                  <div class="relative">
+                    <span class="day">Thursday</span>
+                    <span class="date">8 jul</span>
+                    <div class="notification notification--warning">!</div>
+                  </div>
+                </th>
+                <th>
+                  <span class="day">Friday</span>
+                  <span class="date">9 jul</span>
+                </th>
+                <th>
+                  <span class="day">Saturday</span>
+                  <span class="date">10 jul</span>
+                </th>
+                <th>
+                  <span class="day">Sunday</span>
+                  <span class="date">11 jul</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="weight semi-tr">75</span></td>
+                <td><span class="weight semi-tr">74</span></td>
+                <td><span class="weight semi-tr">73.5</span></td>
+                <td class="current"><span class="weight semi-tr">72</span></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="state mood-danger semi-tr"></span>
+                  <span class="semi-tr">1/5</span>
+                </td>
+                <td>
+                  <span class="state mood-success semi-tr"></span>
+                  <span class="semi-tr">3/5</span>
+                </td>
+                <td>
+                  <span class="state mood-success semi-tr"></span>
+                  <span class="semi-tr">3/5</span>
+                </td>
+                <td class="current">
+                  <span class="state mood-success semi-tr"></span>
+                  <span class="semi-tr">5/5</span>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="state craving-danger-3 semi-tr"></span>
+                  <span class="semi-tr">1/5</span>
+                </td>
+                <td>
+                  <span class="state craving-success-1 semi-tr"></span>
+                  <span class="semi-tr">2/5</span>
+                </td>
+                <td>
+                  <span class="state craving-danger-1 semi-tr"></span>
+                  <span class="semi-tr">3/5</span>
+                </td>
+                <td class="current">
+                  <span class="state craving-danger-1 semi-tr"></span>
+                  <span class="semi-tr">5/5</span>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="state hunger-danger semi-tr"></span>
+                  <span class="semi-tr">1/5</span>
+                </td>
+                <td>
+                  <span class="state hunger-success semi-tr"></span>
+                  <span class="semi-tr">2/5</span>
+                </td>
+                <td>
+                  <span class="state hunger-danger semi-tr"></span>
+                  <span class="semi-tr">3/5</span>
+                </td>
+                <td class="current">
+                  <span class="state hunger-success semi-tr"></span>
+                  <span class="semi-tr">5/5</span>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="state water-neutral semi-tr"></span>
+                  <span class="semi-tr">1/5</span>
+                </td>
+                <td>
+                  <span class="state water-danger semi-tr"></span>
+                  <span class="semi-tr">2/5</span>
+                </td>
+                <td>
+                  <span class="state water-success semi-tr"></span>
+                  <span class="semi-tr">3/5</span>
+                </td>
+                <td class="current">
+                  <span class="state water-neutral semi-tr"></span>
+                  <span class="semi-tr">5/5</span>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="state hits-danger semi-tr"></span>
+                  <span class="semi-tr">2</span>
+                </td>
+                <td>
+                  <span class="state hits-danger semi-tr"></span>
+                  <span class="semi-tr">3</span>
+                </td>
+                <td>
+                  <span class="state hits-neutral semi-tr"></span>
+                  <span class="semi-tr">5</span>
+                </td>
+                <td class="current">
+                  <span class="state hits-success semi-tr"></span>
+                  <span class="semi-tr">10</span>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="state glucose-danger semi-tr"></span>
+                  <span class="semi-tr">10</span>
+                </td>
+                <td>
+                  <span class="state glucose-neutral semi-tr"></span>
+                  <span class="semi-tr">5.5</span>
+                </td>
+                <td>
+                  <span class="state glucose-neutral semi-tr"></span>
+                  <span class="semi-tr">5.5</span>
+                </td>
+                <td class="current">
+                  <span class="state glucose-success semi-tr"></span>
+                  <span class="semi-tr">3.5</span>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-sidebar">
+        <div class="weight pull-right">
+          <div class="qty">70</div>
+          <div class="desc">week goal</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="timetable section--azure">
+    <div class="container">
+
+      <div class="col-sidebar">
+        <ul class="timeline">
+          <li></li>
+          <li>12:00</li>
+          <li></li>
+          <li>17:00</li>
+          <li></li>
+        </ul>
+      </div>
+      <div class="col-main">
+        <ul class="thead clearfix">
+          <li><h2 class="table-title">Timetable</h2></li>
+          <li><span class="btn label label-primary">Inspire me</span></li>
+          <li></li>
+          <li></li>
+          <li><span class="label top label-success">Detox day<div class="arrow"></div></span></li>
+          <li></li>
+          <li><span class="label top label-info">Party day<div class="arrow"></div></span></li>
+        </ul>
+        <div class="table-timetable table-week table-bordered">
+          <table class="table">
+            <tbody>
+              <tr>
+                <td>
+                  <figure>
+                    <img class="border-success" src="temp-img/timetable-1.jpg">
+                    <span class="badge">a</span>
+                  </figure>
+                </td>
+                <td>
+                  <figure>
+                    <img class="border-normal" src="temp-img/timetable-2.jpg">
+                    <span class="badge">b</span>
+                  </figure>
+                </td>
+                <td>
+                  <figure>
+                    <img class="border-normal" src="temp-img/timetable-4.jpg">
+                    <span class="badge">c</span>
+                  </figure>
+                </td>
+                <td class="current">
+                  <span class="add add-normal" ng-click="app.openModal({ templateUrl: 'views/modals/gymModalContent.html' })"></span>
+                </td>
+                <td>
+                  <figure>
+                    <img class="border-success" src="temp-img/timetable-5.jpg">
+                    <span class="badge">d</span>
+                  </figure>
+                </td>
+                <td>
+                  <figure>
+                    <img class="border-normal" src="temp-img/timetable-3.jpg">
+                  </figure>
+                </td>
+                <td rowspan="7">
+                  <i class="party-day">We are all human after all!</i>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <figure>
+                    <img class="border-success" src="temp-img/timetable-3.jpg" popover-animation="true" popover="No bread burger" popover-placement="bottom" popover-trigger="mouseenter">
+                    <span class="badge">b</span>
+                  </figure>
+                </td>
+                <td>
+                  <figure>
+                    <img class="border-normal" src="temp-img/timetable-1.jpg">
+                  </figure>
+                </td>
+                <td>
+                  <figure>
+                    <img class="border-normal" src="temp-img/timetable-5.jpg">
+                  </figure>
+                </td>
+                <td class="current">
+                  <span class="add add-success" ng-click="app.openModal({ templateUrl: 'views/modals/foodModalContent.html' })"></span>
+                </td>
+                <td>
+                  <figure>
+                    <img class="border-success" src="temp-img/timetable-3.jpg">
+                    <span class="badge">a</span>
+                  </figure>
+                </td>
+                <td>
+                  <figure>
+                    <img class="border-normal" src="temp-img/timetable-4.jpg">
+                  </figure>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <figure>
+                    <img class="border-success" src="temp-img/timetable-2.jpg">
+                  </figure>
+                </td>
+                <td>
+                  <figure>
+                    <img class="border-normal" src="temp-img/timetable-5.jpg">
+                  </figure>
+                </td>
+                <td>
+                  <figure>
+                    <img class="border-normal" src="temp-img/timetable-3.jpg">
+                  </figure>
+                </td>
+                <td class="current">
+                  <figure>
+                    <span class="add add-success" ng-click="app.openModal({ templateUrl: 'views/modals/foodModalContent.html' })"></span>
+                  </figure>
+                </td>
+                <td>
+                  <figure>
+                    <img class="border-success" src="temp-img/timetable-4.jpg">
+                    <span class="badge">a</span>
+                  </figure>
+                </td>
+                <td>
+                  <figure>
+                    <img class="border-normal" src="temp-img/timetable-1.jpg">
+                  </figure>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <figure>
+                    <img class="border-success" src="temp-img/timetable-1.jpg">
+                  </figure>
+                </td>
+                <td>
+                  <figure>
+                    <img class="border-normal" src="temp-img/timetable-2.jpg">
+                  </figure>
+                </td>
+                <td>
+                  <figure>
+                    <img class="border-normal" src="temp-img/timetable-3.jpg">
+                  </figure>
+                </td>
+                <td class="current">
+                  <figure>
+                    <span class="add add-important"></span>
+                  </figure>
+                </td>
+                <td>
+                  <figure>
+                    <img class="border-success" src="temp-img/timetable-5.jpg">
+                    <span class="badge">a</span>
+                  </figure>
+                </td>
+                <td>
+                  <figure>
+                    <img class="border-normal" src="temp-img/timetable-2.jpg">
+                  </figure>
+                </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>
+                  <figure>
+                    <img class="border-normal" src="temp-img/timetable-3.jpg">
+                  </figure>
+                </td>
+                <td></td>
+                <td class="current">
+                  <figure>
+                    <img class="border-normal" src="temp-img/timetable-4.jpg">
+                  </figure>
+                </td>
+                <td>
+                  <figure>
+                    <img class="border-success" src="temp-img/timetable-3.jpg">
+                    <span class="badge">a</span>
+                  </figure>
+                </td>
+                <td>
+                  <figure>
+                    <img class="border-normal" src="temp-img/timetable-5.jpg">
+                  </figure>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<ng-include src="'views/common/demo-footer.html'"></ng-include>

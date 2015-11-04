@@ -1,0 +1,172 @@
+<ng-include src="'views/common/header.html'"></ng-include>
+<div class="total-upload-progress-box" ng-show="uploader.isHTML5">
+    <div class="total-progress" ng-style="{ 'width': uploader.progress + '%' }"></div>
+</div>
+<section class="section--settings">
+  <div class="container">
+    <form ng-submit="profileSettings.submitPersonal()" name="profileForm">
+
+    <div class="note" ng-if="userCourse.paymentUrl">
+        <a href="{{ userCourse.paymentUrl }}" target="_self" translate="frontend.profile.payment_prompt" translate-values="{days: userCourse.paymentFreeDaysLeft}"></a>
+    </div>
+
+    <div class="fake-table">
+
+      <div class="thead user-settings-top">
+        <div class="col-third text-center">
+          <span translate="frontend.profile.personal_info" translate-default="">Personal info</span>
+        </div>
+        <div class="col-third text-center">
+          <span translate="frontend.profile.contact_info" translate-default="">Contact info</span>
+        </div>
+        <div class="col-third text-center">
+          <span translate="frontend.profile.email_notification" translate-default="">Email notifications</span>
+        </div>
+      </div>
+
+      <div class="tbody user-settings">
+
+        <div class="clearfix user-settings--buttons">
+          <div class="col-third">
+            <button ng-disabled="!profileForm.$valid || saveInProgress" type="submit" ng-show="profileSettings.editPersonal" class="btn btn-link">
+              <span><!--<span class="fa fa-save"></span>--> {{ 'frontend.profile.save' | translate }}</span>
+            </button>
+            <div class="btn btn-link" ng-hide="profileSettings.editPersonal" ng-click="profileSettings.editPersonalInfo(true)">
+              <span><!--<span class="fa fa-pencil"></span>--> {{ 'frontend.profile.edit' | translate }}</span>
+            </div>
+          </div>
+          <div class="col-third">
+            <button ng-disabled="!profileForm.$valid || saveInProgress" type="submit" ng-show="profileSettings.editContact" class="btn btn-link">
+              <span><!--<span class="fa fa-save"></span>--> {{ 'frontend.profile.save' | translate }}</span>
+            </button>
+            <div class="btn btn-link" ng-hide="profileSettings.editContact" ng-click="profileSettings.editContactInfo(true)">
+              <span><!--<span class="fa fa-pencil"></span>--> {{ 'frontend.profile.edit' | translate }}</span>
+            </div>
+          </div>
+          <div class="col-third">&nbsp;</div>
+        </div>
+
+        <div class="settings-avatar">
+          <img class="avatar" ng-src="temp-img/avatar.png" ng-if="!profileSettings.user.picture">
+          <img class="avatar" ng-src="{{ profileSettings.user.picture.c66x66 }}" ng-if="profileSettings.user.picture">
+          <label class="action-link-alt font-size-md"><span translate="frontend.profile.change_avatar" translate-default="">Change avatar</span> <input accept="image/png, image/jpeg, image/jpg" ng-if="uploader" style="display: none" id="user-avatar" type="file" nv-file-select uploader="uploader" filters="File"></label>
+        </div>
+        <div class="col-third">
+            <div class="form-group">
+              <label class="tbody__label" translate="frontend.profile.firstname" translate-default="">First name:</label>
+              <div class="value">
+                <span class="value__saved" ng-hide="profileSettings.editPersonal" ng-bind="profileSettings.user.firstname"></span>
+                <input class="form-control" ng-hide="!profileSettings.editPersonal" ng-model="profileSettings.user.firstname" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="tbody__label" translate="frontend.profile.lastname" translate-default="">Last name:</label>
+              <div class="value">
+                <span class="value__saved" ng-hide="profileSettings.editPersonal" ng-bind="profileSettings.user.lastname"></span>
+                <input class="form-control" ng-hide="!profileSettings.editPersonal" ng-model="profileSettings.user.lastname" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="tbody__label" translate="frontend.profile.username" translate-default="">Username:</label>
+              <div class="value">
+                <span class="value__saved" ng-hide="profileSettings.editPersonal" ng-bind="profileSettings.user.username">Diane-B</span>
+                <input class="form-control" ng-hide="!profileSettings.editPersonal" ng-model="profileSettings.user.username" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="tbody__label" translate="frontend.profile.password" translate-default="">Password:</label>
+              <div class="value">
+                <span class="value__saved" ng-hide="profileSettings.editPersonal">**********</span>
+                <!--
+                <input class="form-control" placeholder="Old password" type="password" ng-hide="!profileSettings.editPersonal">
+                -->
+                <input ng-model="profileSettings.password" class="form-control" placeholder="{{ 'frontend.profile.new_password' | translate }}" type="password" ng-hide="!profileSettings.editPersonal">
+                <input ng-model="profileSettings.confirm"
+                       ui-validate="'$value==profileSettings.password'"
+                       ui-validate-watch="'profileSettings.password'"
+                       class="form-control" placeholder="{{ 'frontend.profile.re_new_password' | translate }}" type="password" ng-hide="!profileSettings.editPersonal">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="tbody__label" translate="frontend.profile.birthday" translate-default="">Birthday:</label>
+              <div class="value">
+                <span class="value__saved" ng-hide="profileSettings.editPersonal" ng-bind="profileSettings.user.dateOfBirth | date:shortDate"></span>
+                <span ng-show="profileSettings.editPersonal">
+                    <select data-container="body" class="nya-selectpicker" ng-model="selectedDate" ng-options="date as date for date in profileSettings.dates"></select>
+                </span>
+                <span ng-show="profileSettings.editPersonal">
+                    <select data-container="body" class="nya-selectpicker" ng-model="selectedMonth" ng-options="month.value as month.name for month in profileSettings.months"></select>
+                </span>
+                <span ng-show="profileSettings.editPersonal">
+                    <select data-container="body" class="nya-selectpicker" ng-model="selectedYear" ng-options="year as year for year in profileSettings.years"></select>
+                </span>
+              </div>
+            </div>
+            <!--<div class="form-group">
+              <label class="tbody__label" translate="frontend.profile.locale" translate-default="">Locale:</label>
+              <div class="value">
+                <span class="value__saved" ng-hide="profileSettings.editPersonal">{{ currentLocaleName(profileSettings.user.locale) }}</span>
+                <span ng-show="profileSettings.editPersonal">
+                    <select data-container="body" class="nya-selectpicker" ng-model="profileSettings.user.locale" ng-options="locale.locale as locale.name for locale in getLocales()"></select>
+                </span>
+              </div>
+            </div>-->
+        </div>
+
+        <div class="col-third">
+            <div class="form-group">
+              <label class="tbody__label" translate="frontend.profile.email" translate-default="">E-mail:</label>
+              <div class="value">
+                <span class="value__saved" ng-hide="profileSettings.editContact" ng-bind="profileSettings.user.email"></span>
+                <input type="email" class="form-control ng-invalid" ng-model="profileSettings.user.email" ng-hide="!profileSettings.editContact" name="email" required>
+                <span class="form-error-message" ng-show="profileSettings.editContact && !profileForm.email.$valid">Please enter your E-mail</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="tbody__label" translate="frontend.profile.address" translate-default="">Address:</label>
+              <div class="value">
+                <span class="value__saved" ng-hide="profileSettings.editContact" ng-bind="profileSettings.user.address"></span>
+                <textarea class="textarea form-control" ng-show="profileSettings.editContact" ng-model="profileSettings.user.address"></textarea>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="tbody__label" translate="frontend.profile.phone" translate-default="">Phone:</label>
+              <div class="value">
+                <span class="value__saved" ng-hide="profileSettings.editContact" ng-bind="profileSettings.user.phone"></span>
+                <input class="form-control" ng-model="profileSettings.user.phone" ng-show="profileSettings.editContact">
+              </div>
+            </div>
+        </div>
+
+        <div class="col-third">
+          <div class="form-group">
+            <div class="custom-checkbox">
+              <div class="custom-checkbox__container">
+                <input type="checkbox" checked>
+                <span class="custom-checkbox__fake"></span>
+              </div>
+              <label class="custom-checkbox__label" translate="frontend.profile.important_updates" translate-default="">Recieve important updates from SwitchFit team</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="custom-checkbox">
+              <div class="custom-checkbox__container">
+                <input type="checkbox" checked>
+                <span class="custom-checkbox__fake"></span>
+              </div>
+              <label class="custom-checkbox__label" translate="frontend.profile.daily_summary" translate-default="">Receive daily summary from notifications</label>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+    </form>
+    <div class="clearfix">
+      <div class="pull-left" style="width: 650px;"><span translate="frontend.profile.proof_text" translate-default="">If you require an official program participation proof document for your health insurance simply contact us using </span> <a class="link-alt" onclick="openIntercom()">Intercom</a>.</div>
+      <div class="pull-right"><a class="link-alt pull-right" ui-sref="terms">Allgemeine Geschäftsbedingungen</a></div>
+    </div>
+  </div>
+</section>
+<ng-include src="'views/common/footer.html'"></ng-include>

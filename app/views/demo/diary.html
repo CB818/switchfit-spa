@@ -1,0 +1,96 @@
+<section class="section--default l-stick-to-top">
+  <div class="container">
+    <section class="user-profile" ng-style="{'background-image':'url('+diary.bg+')'}">
+      <div class="user-profile__content">
+        <div class="avatar-container"><img class="avatar" ng-src="{{ diary.currentUser.picture != null && diary.currentUser.picture.c66x66 || 'temp-img/avatar.png'}}"></div>
+        <div class="stat-container">
+          <span class="stat"><i class="fa fa-picture-o"></i></span>
+          <span class="stat-container__action" ng-click="app.openModal({ templateUrl: 'views/modals/manifesto.html', class:'modal-xs frameless' })">Commitment manifesto</span>
+        </div>
+        <div class="stat-container stat-container--lg">
+          <span class="stat"><span class="stat__weight">{{ userCourse.currentWeight }}</span>kg</span>
+          <span>Your Current weight</span>
+        </div>
+        <div class="stat-container">
+          <span class="stat"><i class="fa fa-star-half-empty"></i></span>
+          <span class="stat-container__action" ng-click="app.openModal({ templateUrl: 'views/modals/motivation.html', class:'modal-sm' })">My goal and motivation</span>
+        </div>
+        <span class="change-bg" ng-click="diary.bgClick()"><i class="fa fa-cog"></i> Change background <input style="display: none" id="diary-bg" type="file" ng-file-select></span>
+      </div>
+    </section>
+
+    <div class="main-content">
+      <div class="main-content__body">
+        <div class="text-center mb-md">
+          <div class="label label--sm top label-info">Today<div class="arrow"></div></div>
+        </div>
+
+        <div class="diary-timeline">
+          <div class="clearfix">
+            <div class="diary-timeline__col col--left">
+              <div ng-repeat="leftEntry in diary.getEntries('left') | limitTo : diary.entriesLimit('left')" class="diary-timeline__entry" ng-class="{'left-second-entry' : !diary.isSideWithFirstEntry('left') && $first, 'left-first-entry' : diary.isSideWithFirstEntry('left') && $first, 'text-entry' : !leftEntry.picture}" >
+                  <div class="arrow"></div>
+                  <div class="date">
+                      <span class="date__day">{{ leftEntry.createdAt | date:'dd'}}</span>
+                      <span class="date__month">{{ leftEntry.createdAt | date:'MMM'}}</span>
+                  </div>
+                  <div ng-if="leftEntry.emoji" class="mood" ng-class="{ 'mood--danger': leftEntry.emoji <= 3, 'mood--success': leftEntry.emoji > 3 }"></div>
+                  <div class="diary-timeline__entry__content">
+                      <!--<div ng-if="!leftEntry.picture" class="diary-timeline__entry__no-img"><i class="fa fa-pencil-square-o"></i></div>-->
+                      <img ng-if="leftEntry.picture" ng-src="{{ leftEntry.picture.c370x190 }}">
+                      <span class="diary-timeline__entry__published"><i class="fa fa-clock-o"></i>{{ leftEntry.createdAt | date:'MMMM d h:mm'}}</span>
+                      <div class="diary-timeline__entry__text"><i class="fa fa-pencil"></i>{{ trustedHtml(leftEntry.text) }}</div>
+                  </div>
+              </div>
+            </div>
+
+            <div class="diary-timeline__core"></div>
+
+            <div class="diary-timeline__col col--right">
+              <div class="diary-timeline__entry action">
+                <div class="date date--lg date--current">
+                  <span class="date__day">{{ diary.currentDate | date:'dd' }}</span>
+                  <span class="date__month">{{ diary.currentDate | date:'MMM'}}</span>
+                </div>
+                <span class="diary-timeline__new-entry" ng-click="app.openModal({ templateUrl: 'views/modals/add-diary-entry.html', class:'add-diary-entry modal-sm' })"><i class="fa fa-plus"></i> Create a diary entry for today</span>
+              </div>
+
+                <div ng-repeat="rightEntry in diary.getEntries('right') | limitTo : diary.entriesLimit('right')" class="diary-timeline__entry" ng-class="{'right-second-entry' : !diary.isSideWithFirstEntry('right') && $first, 'text-entry' : !rightEntry.picture }">
+                    <div class="arrow"></div>
+                    <div class="date">
+                        <span class="date__day">{{ rightEntry.createdAt | date:'dd'}}</span>
+                        <span class="date__month">{{ rightEntry.createdAt | date:'MMM'}}</span>
+                    </div>
+                    <div ng-if="rightEntry.emoji" class="mood" ng-class="{ 'mood--danger': rightEntry.emoji <= 3, 'mood--success': rightEntry.emoji > 3 }"></div>
+                    <div class="diary-timeline__entry__content">
+                        <!--<div ng-if="!rightEntry.picture" class="diary-timeline__entry__no-img"><i class="fa fa-pencil-square-o"></i></div>-->
+                        <img ng-if="rightEntry.picture" ng-src="{{ rightEntry.picture.c370x190 }}">
+                        <span class="diary-timeline__entry__published"><i class="fa fa-clock-o"></i>{{ rightEntry.createdAt | date:'MMMM d h:mm'}}</span>
+                        <div class="diary-timeline__entry__text"><i class="fa fa-pencil"></i>{{ trustedHtml(rightEntry.text) }}</div>
+                    </div>
+                </div>
+
+              <div ng-repeat="month in diary.months" class="diary-timeline__entry action" ng-show="diary.hasEntriesForMonth(month.MMMM)" ng-click="diary.showEntriesForMonth(month.MMMM)">
+                <div class="date date--lg month-entries">
+                  <span class="date__month">{{ month.MMM }}</span>
+                </div>
+                <span class="diary-timeline__new-entry">Show {{ month.MMMM }} entries</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div ng-show="diary.getPictures().length > 0" class="sub-title bordered-title">All my photos</div>
+        <ul ng-show="diary.getPictures().length > 0" class="photos-list">
+          <li ng-repeat="photo in diary.getPictures() | limitTo: diary.picturesLimit()" class="photos-list__item">
+            <figure>
+              <img ng-if="photo.picture" ng-click="app.openModal({ templateUrl: 'views/modals/carouselModal.html', class: 'carousel frameless modal-md' })" src="{{photo.picture.c172x143}}">
+              <!--<figcaption>{{photo.date}}</figcaption>-->
+            </figure>
+          </li>
+        </ul>
+        <div class="text-center"><span class="btn btn-success btn-large btn-show-more" ng-show="diary.hasMorePicturesToShow()" ng-click="diary.showMorePictures()">Show more</span></div>
+      </div>
+    </div>
+  </div>
+</section>

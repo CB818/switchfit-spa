@@ -1,0 +1,126 @@
+<ng-include src="'views/common/header.html'"></ng-include>
+
+<section class="user-level user-progress section--honky">
+  <div class="container">
+    <div class="col-sidebar">
+      <img class="user-level__picture" src="images/icon-community.png">
+    </div>
+    <div class="col-main">
+      <p ng-controller="ContentBlockCtrl as communityBlock" ng-init="communityBlock.init('community-intro')" ng-bind-html="communityBlock.contentBlock"></p>
+    </div>
+  </div>
+</section>
+
+<section class="l-section-main section--community" ui-view>
+  <div class="container">
+    <div class="main-content content--honky">
+      <div class="community-table">
+        <div class="col-third">
+          <div class="community-table__header">
+            <div class="sub-title pull-left" translate="frontend.community.main.your_area" translate-default="">SWITCHFIT IN YOUR AREA</div>
+            <!--<div class="pull-right"><i class="fa fa-arrow-circle-right link-color"></i> <a href="#" translate="frontend.community.main.view_all" translate-default="">View all</a></div>-->
+          </div>
+          <div class="community-table__content">
+            <div class="text-center"><img src="temp-img/map.jpg"></div>
+            <div class="sub-title" translate="frontend.community.main.team_stats" translate-default="">Your City Team Statistics:</div>
+            <ul class="community-table__statistics">
+              <!--<li>
+                <span class="community-table__statistics__left" translate="frontend.community.main.city" translate-default="">Your city:</span>
+                <span class="community-table__statistics__right">Hessen</span>
+              </li>-->
+              <li>
+                <span class="community-table__statistics__left" translate="frontend.community.main.members" translate-default="">Active members:</span>
+                <span class="community-table__statistics__right">161</span>
+              </li>
+              <!--<li>
+                <span class="community-table__statistics__left" translate="frontend.community.main.weight_loss" translate-default="">Avg. weight loss so far:</span>
+                <span class="community-table__statistics__right">6.5 kg / week</span>
+              </li>-->
+            </ul>
+          </div>
+        </div>
+        <div class="col-third">
+          <div class="community-table__header">
+            <div class="sub-title pull-left" translate="frontend.community.q_a.title" translate-default="">Q and A</div>
+            <div class="pull-right"><i class="fa fa-arrow-circle-right link-color"></i> <a ui-sref="community.qa" translate="frontend.community.main.view_all" translate-default="">View all</a></div>
+          </div>
+          <div class="community-table__content">
+            <ul class="community-table__feed" ng-controller="QACtrl">
+              <li ng-repeat="question in getQuestions() | orderBy:'-createdAt' | limitTo:3">
+                <div class="community-table__feed__figure">
+                  <div
+                          class="community-table__feed__figure__votes label--{{question.category.classSuffix.length > 0 ? question.category.classSuffix : 'info'}}">
+                      <span>{{question.votesCnt}}<i class="fa fa-thumbs-o-up"></i></span>
+                      <ng-pluralize count="question.votesCnt"
+                                    when="{'0': 'stimmen',
+                                   'one': 'stimme',
+                                   'other': 'stimmen'}">
+                      </ng-pluralize><br>
+                      </div>
+                </div>
+                <div class="community-table__feed__content">
+                  <p><a ui-sref="community.qa.question({ questionId: question.id })"><strong>{{question.title}}</strong></a></p>
+                  <!--<p ng-if="question.text.length > 0"><em>{{question.text | limitTo: 50}}{{question.text.length > 50 ? '...' : '' }}</em></p>-->
+                  <p ng-if="question.latestAnswerAt"><strong translate="frontend.community.q_a.latest_answer" translate-default="">Latest answer:</strong> <em am-time-ago="question.latestAnswerAt"></em></p>
+                  <p ng-if="!question.latestAnswerAt" translate="frontend.community.q_a.no_answers" translate-default="">No answers</p>
+                  <p><strong translate="frontend.community.q_a.category" translate-default="">Category:</strong> <em>{{question.category.title}}</em></p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-third">
+          <div class="community-table__header">
+            <div class="sub-title pull-left" translate="frontend.community.main.news" translate-default="">SWITCHFIT NEWS</div>
+            <div class="pull-right"><i class="fa fa-arrow-circle-right link-color"></i> <a ui-sref="community.blog" translate="frontend.community.main.view_all" translate-default="">View all</a></div>
+          </div>
+          <div class="community-table__content">
+            <ul class="community-table__feed" ng-controller="BlogFeedCtrl">
+              <li ng-repeat="item in items | limitTo:3">
+                <div class="community-table__feed__figure">
+                  <img src="{{item.imgSrc}}" style="height: 57px; width: 57px; border-radius: 50%;">
+                </div>
+                <div class="community-table__feed__content">
+                  <p><a href="{{item.link}}" target="_blank"><strong>{{item.title}}</strong></a></p>
+                  <p>{{item.contentSnippet | limitTo: 50}}{{item.contentSnippet.length > 50 ? '...' : ''}}</p>
+                  <p><em>{{item.publishedDate}}, {{item.author}}</em></p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="main-content__body padding-md">
+        <div class="life-feed" ng-controller="CommunityLifeFeedCtrl">
+        <div class="clearfix mb-base">
+          <div class="pull-left">
+            <div class="sub-title nmb" translate="frontend.community.life_feed.title" translate-default="">SWITCHFIT LIFE FEED</div>
+            <p translate="frontend.community.life_feed.text" translate-default="">Live feed of latest diary entries shared by SwitchFeet users</p>
+          </div>
+          <span class="btn btn-success pull-right" ng-click="app.openModal({ templateUrl: 'views/modals/add-diary-entry.html', class:'add-diary-entry modal-sm' })"><i class="fa fa-picture-o"></i> <span translate="frontend.community.life_feed.update" translate-default="">Upload your picture</span></span>
+        </div>
+
+        <ul class="img-items-list community">
+          <li class="img-item" ng-repeat="entry in entries | orderBy: '-createdAt' | limitTo: entriesLimit()">
+            <figure ng-click="openCarousel($index)">
+              <img
+                  class="img-responsive"
+                  src="{{entry.picture ? entry.picture.c172x143 : 'temp-img/community-1.jpg'}}"
+                      >
+            </figure>
+            <div class="img-item__desc">
+              <p>{{entry.text | limitTo: 50}}{{entry.text.length > 50 ? '...' : ''}}</p>
+              <span translate="frontend.community.q_a.by" translate-default="">by</span> <strong>{{entry.user.firstname}} {{entry.user.lastname}}</strong>
+            </div>
+          </li>
+        </ul>
+
+        <div class="text-center"><span class="btn btn-success btn-show-more" ng-show="hasMoreEntriesToShow()" ng-click="showMoreEntries()" translate="frontend.gym.list.show_more" translate-default="">Show more</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<ng-include src="'views/common/footer.html'"></ng-include>

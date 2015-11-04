@@ -1,0 +1,108 @@
+<div class="container">
+  <div class="main-content">
+    <div class="main-content__body">
+      <div class="clearfix">
+        <div class="h1 pull-left nmt" ng-bind="module.info.title"></div>
+        <div class="action-link pull-right"><i class="fa fa-print"></i> <span class="action-link__text">Print</span>
+        </div>
+      </div>
+      <p>
+        <strong>Module completion time:</strong>&nbsp;&nbsp;<i class="fa fa-clock-o"></i> <em ng-bind="module.info.time"></em>
+      </p>
+
+      <p><strong ng-bind-html="module.info.text"></strong></p>
+
+      <div class="sub-title">Module topics:</div>
+
+      <accordion close-others="oneAtATime">
+        <accordion-group ng-repeat="topic in module.info.topics" is-open="topic.open"
+                         is-disabled="topic.status != 'in_progress'">
+          <accordion-heading>
+            <span ng-class="{'active': topic.open}" ng-bind="topic.title"></span>
+
+            <div class="pull-right">
+              <i class="fa fa-clock-o"></i> <em class="font-size-sm" ng-bind="topic.time"></em>
+              <label class="status"
+                     ng-bind="topic.status"
+                     ng-class="{ 'status-success': topic.status == 'complete', 'status-warning': topic.status == 'in_progress', 'status-danger': topic.status == 'incomplete' }">
+              </label>
+              <i class="fa" ng-class="{'fa-chevron-down': first.open, 'fa-chevron-right': !first.open}"></i>
+            </div>
+          </accordion-heading>
+          <div class="mb-md" ng-bind-html="module.topics[topic.id].text"></div>
+
+          <form class="quiz quiz-default">
+            <div class="sub-title bordered-title"><i class="fa fa-edit"></i> Test your knowlege on this topic</div>
+            <ul class="quiz__list">
+              <li class="quiz__list__item" ng-repeat="question in module.topics[topic.id].questions">
+                <div ng-if="question.multipleAnswers == false">
+                  <div class="quiz__list__item__title" ng-bind="question.text"></div>
+                  <div class="quiz__list__item__text">
+                    <div class="custom-radio" ng-repeat="answer in question.answers">
+                      <div class="custom-radio__container">
+                        <input ng-change="module.topics[topic.id].check = false" type="radio" name="quiz-1"
+                               ng-model="question.model" ng-value="{{ answer.id }}">
+                        <span class="custom-radio__fake"></span>
+                      </div>
+                      <label class="custom-radio__label">
+                        {{answer.text}}
+                        <div class="val-pop val-pop-success right"
+                             ng-if="question.model == answer.id && answer.isCorrect"
+                             ng-show="module.topics[topic.id].check && !module.info.final">
+                          <div class="val-pop-inner">Correct! Well done!</div>
+                          <div class="val-pop-arrow"></div>
+                        </div>
+                        <div class="val-pop val-pop-danger right"
+                             ng-if="question.model == answer.id && !answer.isCorrect"
+                             ng-show="module.topics[topic.id].check && !module.info.final">
+                          <div class="val-pop-inner">Incorrect! Try again.</div>
+                          <div class="val-pop-arrow"></div>
+                        </div>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div ng-if="question.multipleAnswers == true">
+                  <div class="quiz__list__item__title" ng-bind="question.text"></div>
+                  <div class="quiz__list__item__text clearfix">
+
+                    <div class="custom-checkbox" ng-repeat="answer in question.answers">
+                      <div class="custom-checkbox__container">
+                        <input ng-change="module.topics[topic.id].check = false" type="checkbox" name="quiz-2"
+                               ng-model="answer.checked">
+                        <span class="custom-checkbox__fake"></span>
+                      </div>
+                      <label class="custom-checkbox__label">
+                        {{ answer.text }}
+                        <div class="val-pop val-pop-success right" ng-if="answer.checked && answer.isCorrect"
+                             ng-show="module.topics[topic.id].check && !module.info.final">
+                          <div class="val-pop-inner">Correct! Well done!</div>
+                          <div class="val-pop-arrow"></div>
+                        </div>
+                        <div class="val-pop val-pop-danger right" ng-if="answer.checked && !answer.isCorrect"
+                             ng-show="module.topics[topic.id].check && !module.info.final">
+                          <div class="val-pop-inner">Incorrect! Try again.</div>
+                          <div class="val-pop-arrow"></div>
+                        </div>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+            <button ng-click="module.checkTopic(module.topics[topic.id])" class="btn btn-success btn-spacious"
+                    type="button"><i class="fa fa-check"></i> Check
+            </button>
+          </form>
+          <span ng-if="module.topics[topic.id].allRight && module.topics[topic.id].check"
+                class="message message-success mb-md"><i class="fa fa-thumbs-up"></i>Well done Samatha! Continue with the next topics below.</span>
+        </accordion-group>
+      </accordion>
+
+      <div class="text-center" ng-if="module.moduleComplete">
+          <span ng-click="module.next()" class="btn btn-lg btn-success btn-module">NEXT MODULE <i class="fa fa-chevron-right"></i></span>
+      </div>
+    </div>
+  </div>
+</div>

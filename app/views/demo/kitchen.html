@@ -1,0 +1,77 @@
+<section class="section__intro section--honky hidden-print">
+  <div class="container">
+      <img class="section__intro__picture" src="images/icon-kitchen.png">
+      <p><strong>SwitchFit Kitchen</strong> is a all-in one resource to your healthy living. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem. Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit amet.</p>
+  </div>
+</section>
+
+<section class="l-section-main section--azure" ui-view>
+  <div class="container">
+    <div class="filter main-content">
+      <ul class="filter__header">
+        <li class="active">Healthy meal</li>
+        <li>At the restraurant</li>
+        <li>On the go</li>
+        <li>Detox days</li>
+        <li>Party days</li>
+        <li>Kitchen experts</li>
+      </ul>
+      <div class="filter__body">
+        <div class="filter-container clearfix">
+          <div class="sub-title">Filter view:</div>
+          <div class="form-inline pull-left">          
+            <div class="form-group">
+              <select ng-change="meals.filterCategories()" class="nya-selectpicker" data-container="body" ng-model="meals.type" ng-options="type.id as type.title for type in meals.types">
+              </select>
+            </div>
+            <div class="form-group">
+                <select ng-if="meals.type != 0" class="nya-selectpicker" data-container="body" ng-model="meals.category" ng-options="category.id as category.title for category in meals.categories">
+                </select>
+                <select ng-if="meals.type == 0" disabled class="nya-selectpicker" data-container="body" ng-model="meals.category" ng-options="category.id as category.title for category in meals.categories">
+                </select>
+            </div>
+          </div>
+          <ul class="filter-inline">
+            <li class="active" ng-click="meals.onlyFavs = false"><span>Show all</span></li>
+            <li><img src="images/icon-heart-sm.png"> <span ng-click="meals.onlyFavs = true">Only favorites</span></li>
+          </ul>
+        </div>
+        <div class="sub-title">Including products:</div>
+        <div class="clearfix">
+          <ul class="inline-checkbox-list pull-left">
+            <li ng-repeat="product in meals.products">
+                <div class="custom-checkbox">
+                    <div class="custom-checkbox__container">
+                        <input type="checkbox" checked ng-model="product.checked">
+                        <span class="custom-checkbox__fake"></span>
+                    </div>
+                    <label class="custom-checkbox__label" ng-bind="product.title"></label>
+                </div>
+            </li>
+          </ul>
+          <div class="reset pull-right"><div class="fa fa-times"></div> <span ng-click="meals.resetFilters()">Reset filters</span></div>
+        </div>
+        <hr class="fat">
+        <p>Showing <strong ng-bind="meals.filteredMeals().length"></strong> meals out of <strong ng-bind="meals.allMeals.length"></strong> total</p>
+        <ul class="img-items-list dishes">
+          <li ui-sref="demo.kitchen.recipe({ recipe: meal.id })" class="img-item" ng-repeat="meal in meals.filteredMeals()" ng-hide="!meals.showMore && $index > 4">
+            <figure>
+              <img ng-src="{{ meal.photos[0].photo.c172x143 }}">
+              <div class="liked" ng-if="meal.favorite"></div>
+              <span class="badge img-item--badge" ng-bind="meal.type.abbr"></span>
+              <span class="img-item__action">View recipe</span>
+              <figcaption class="half">
+                <span class="time" ng-bind="meal.cook"></span>
+              </figcaption>
+            </figure>
+            <div class="img-item__desc">
+              <strong ng-bind="meal.title"></strong>
+              {{ meal.category.title }}
+            </div>
+          </li>
+        </ul>
+        <div ng-if="!meals.showMore" ng-click="meals.showMore = true" class="text-center mb-md"><span class="btn btn-success btn-show-more mt-md">Show more</span></div>
+      </div>
+    </div>
+  </div>
+</section>

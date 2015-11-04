@@ -1,0 +1,50 @@
+<div class="notifications notification-popover" ng-controller="PopoverNotificationsCtrl">
+  <perfect-scrollbar class="notifications__scroller" scroll-x-margin-offset="12" refresh-on-change="someArray">
+    <ul class="notifications__list">
+      <li ng-if="notices.length == 0">
+          <div>
+              <div class="notifications__text text-center" translate="frontend.notices.you_have_no_notification">You have no notifications...</div>
+          </div>
+      </li>
+      <li ng-repeat="notice in notices">
+        <div ng-if="isDangerModal(notice.type)">
+            <div class="notification notification--danger">!</div>
+            <div class="notifications__text">
+                <span class="link link--dashed" ng-click="openModal(notice)" ng-bind-html="notice.text"></span>
+            </div>
+        </div>
+        <div ng-if="isDangerLink(notice.type)">
+            <div class="notification notification--danger">!</div>
+            <div class="notifications__text">
+              <span class="link link--dashed" ng-click="linkTo(notice)" ng-bind-html="notice.text"></span>
+            </div>
+        </div>
+        <div ng-if="isFaqAnswer(notice.type)">
+            <div class="notification notification--warning"><span class="fa fa-comment"></span></div>
+            <div class="notifications__text">
+                FAQ answer<br><span class="text-muted" ng-bind-html="notice.text"></span>
+            </div>
+        </div>
+        <div ng-if="isDangerText(notice.type)" class="notice-text">
+          <div class="notification notification--warning">!</div>
+          <div class="notifications__text">
+            <span ng-bind-html="notice.text"></span>
+          </div>
+        </div>
+      </li>
+
+      <!--<li ng-show="!currentUser.activeUserCourse.warmupCompleted">-->
+        <!--<div class="notification notification--danger">!</div>-->
+        <!--<div class="notifications__text"><span class="link link--dashed" ng-click="app.openModal({ templateUrl: 'views/modals/warmup-tasks.html', class:'modal-md' })">Complete your warm-up tasks</span></div>-->
+      <!--</li>-->
+      <!--<li>-->
+        <!--<div class="notification notification--success"><span class="fa fa-envelope"></span></div>-->
+        <!--<div class="notifications__text">New message!<br><span class="text-muted">Hi Samanta, your personal trainer...</span></div>-->
+      <!--</li>-->
+      <!--<li>-->
+          <!--<div class="notification notification--warning"><span class="fa fa-comment"></span></div>-->
+        <!--<div class="notifications__text">Forum question liked<br><span class="text-muted">What is the difference...</span></div>-->
+      <!--</li>-->
+    </ul>
+  </perfect-scrollbar>
+</div>

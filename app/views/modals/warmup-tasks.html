@@ -1,0 +1,57 @@
+<div class="warmup-tasks">
+  <span class="close" ng-click="$close()"></span>
+  <div class="sub-title-alt mb-md">{{ 'frontend.warmup.title' | translate }}</div>
+  <p class="mb-md">{{ 'frontend.warmup.intro' | translate: "{first_name: currentUser.firstname, course_date: (currentUser.activeUserCourse.course.dateFrom | date : 'MMM d') }" }}</p>
+
+  <div class="sub-title uppercase bordered-title">{{ 'frontend.warmup.subtitle' | translate }}:</div>
+  <div class="clearfix mb-sm">
+    <div class="custom-checkbox">
+      <!--<div class="custom-checkbox__container">
+        <input type="checkbox" ng-model="warmup[1]" ng-change="checkTask(1)">
+        <span class="custom-checkbox__fake"></span>
+      </div>-->
+      <span class="fa fa-play"></span>
+      <label ng-class="{ 'strikethrough': warmup[1] }" class="custom-checkbox__label">{{ 'frontend.warmup.task_manifesto_text' | translate }} <span class="link" ng-click="completeTask(1); $close(); openModal({ templateUrl: 'views/modals/manifesto.html', class:'modal-lg frameless' })">{{ 'frontend.warmup.task_manifesto_link' | translate }}</span></label>
+    </div>
+    <div class="custom-checkbox">
+      <!--<div class="custom-checkbox__container">
+        <input type="checkbox" ng-model="warmup[2]" ng-change="checkTask(2)">
+        <span class="custom-checkbox__fake"></span>
+      </div>-->
+      <span class="fa fa-play"></span>
+      <label ng-class="{ 'strikethrough': warmup[2] }" class="custom-checkbox__label">{{ 'frontend.warmup.task_settings_text' | translate }} <a class="link" ui-sref="{{ srefPrefix }}settings" ng-click="completeTask(2); $close()">{{ 'frontend.warmup.task_settings_link' | translate }}</a></label>
+    </div>
+      <div class="custom-checkbox">
+          <!--<div class="custom-checkbox__container">
+            <input type="checkbox" ng-model="warmup[3]" ng-change="checkTask(3)">
+            <span class="custom-checkbox__fake"></span>
+          </div>-->
+          <span class="fa fa-play"></span>
+          <label ng-class="{ 'strikethrough': warmup[3] }" class="custom-checkbox__label"><span class="link" ui-sref="{{ srefPrefix }}diary" ng-click="completeTask(3); $close()">{{ 'frontend.warmup.task_diary_link' | translate }}</span> {{ 'frontend.warmup.task_diary_text' | translate }}</label>
+      </div>
+      <div class="custom-checkbox">
+          <!--<div class="custom-checkbox__container">
+            <input type="checkbox" ng-model="warmup[3]" ng-change="checkTask(3)">
+            <span class="custom-checkbox__fake"></span>
+          </div>-->
+          <span class="fa fa-play"></span>
+          <label ng-class="{ 'strikethrough': warmup[4] }" class="custom-checkbox__label"><span class="link" ui-sref="{{ srefPrefix }}community" ng-click="completeTask(4); $close()">{{ 'frontend.warmup.task_feed_link' | translate }}</span> {{ 'frontend.warmup.task_feed_text' | translate }}</label>
+      </div>
+    <div class="custom-checkbox">
+      <!--<div class="custom-checkbox__container">
+        <input type="checkbox" ng-model="warmup[4]" ng-change="checkTask(4)">
+        <span class="custom-checkbox__fake"></span>
+      </div>-->
+      <span class="fa fa-play"></span>
+      <label ng-class="{ 'strikethrough': warmup[5] }" class="custom-checkbox__label"><a class="link" ui-sref="{{ srefPrefix }}academy" ng-click="completeTask(5); $close()">{{ 'frontend.warmup.task_academy_link' | translate }}</a> {{ 'frontend.warmup.task_academy_text' | translate }}</label>
+    </div>
+    <!--<div class="custom-checkbox">
+      <div class="custom-checkbox__container">
+        <input type="checkbox" ng-model="warmup[6]" ng-change="checkTask(6)">
+        <span class="custom-checkbox__fake"></span>
+      </div>
+      <span class="fa fa-play"></span>
+      <label ng-class="{ 'strikethrough': warmup[6] }" class="custom-checkbox__label"><a class="link" ui-sref="{{ srefPrefix }}kitchen" ng-click="completeTask(6); $close()">{{ 'frontend.warmup.task_kitchen_link' | translate }}</a> <a ui-sref="{{ srefPrefix }}gym" ng-click="completeTask(6); $close()">{{ 'frontend.warmup.task_gym_link' | translate }}</a> {{ 'frontend.warmup.task_gym_kitchen_text' | translate }}</label>
+    </div>-->
+  </div> 
+</div>

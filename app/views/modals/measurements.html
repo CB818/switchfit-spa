@@ -1,0 +1,33 @@
+<div class="diary-measurements-modal">
+    <span class="close" ng-click="$close()"></span>
+
+    <h3>Messungen</h3>
+    <form class="form-inline">
+        <div class="form-group clearfix">
+            <div class="input-group">
+                <label>Brust</label>
+                <input type="text" maxlength="3" pattern="[0-9]*" onClick="this.select();" class="form-control" ng-model="data.chest" placeholder="Brust">
+                <div class="input-group-addon">cm</div>
+            </div>
+            <div class="between-icon"><i class="fa fa-plus"></i></div>
+            <div class="input-group">
+                <label>Taille</label>
+                <input type="text" maxlength="3" pattern="[0-9]*" onClick="this.select();" class="form-control" ng-model="data.waist" placeholder="Taille">
+                <div class="input-group-addon">cm</div>
+            </div>
+            <div class="between-icon"><i class="fa fa-plus"></i></div>
+            <div class="input-group">
+                <label>Hüften</label>
+                <input type="text" maxlength="3" pattern="[0-9]*" onClick="this.select();" class="form-control" ng-model="data.hips" placeholder="Hüften">
+                <div class="input-group-addon">cm</div>
+            </div>
+            <div class="between-icon"><i class="fa fa-minus"></i><br/><i class="fa fa-minus"></i></div>
+            <div class="input-group">
+                <span class="sum_label">Summe</span>
+                <span class="measurements_sum">{{data.chest--data.waist--data.hips}}</span>
+                <div class="input-group-addon">cm</div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-default-alt" ng-click="updateMeasurements()">{{'frontend.diary.modal.submit' | translate}}</button>
+    </form>
+</div>

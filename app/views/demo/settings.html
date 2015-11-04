@@ -1,0 +1,152 @@
+<section class="section--default">
+  <div class="container">
+    <form ng-submit="profileSettings.submitPersonal()" name="profileForm">
+    <div class="fake-table">
+
+      <div class="thead">
+
+        <div class="col-third">
+          <div class="thead__title pull-left"><span class="fa fa-user"></span>Personal information</div>
+          <button ng-disabled="!profileForm.$valid || saveInProgress" type="submit" ng-show="profileSettings.editPersonal" class="btn pull-right btn-save">
+              <span><span class="fa fa-save"></span> Save</span>
+          </button>
+          <div class="btn pull-right btn-edit" ng-hide="profileSettings.editPersonal" ng-click="profileSettings.editPersonalInfo(true)">
+            <span><span class="fa fa-pencil"></span> Edit</span>
+          </div>
+        </div>
+
+        <div class="col-third">
+          <div class="thead__title pull-left"><span class="fa fa-list-alt"></span>Contact information</div>
+            <button ng-disabled="!profileForm.$valid || saveInProgress" type="submit" ng-show="profileSettings.editContact" class="btn pull-right btn-save">
+                <span><span class="fa fa-save"></span> Save</span>
+            </button>
+            <div class="btn pull-right btn-edit" ng-hide="profileSettings.editContact" ng-click="profileSettings.editContactInfo(true)">
+                <span><span class="fa fa-pencil"></span> Edit</span>
+            </div>
+        </div>
+
+        <div class="col-third">
+          <div class="thead__title"><span class="fa fa-envelope"></span>Email notifications</div>
+        </div>
+
+      </div>
+
+      <div class="tbody">
+
+        <div class="col-third">
+            <div class="form-group">
+              <label class="tbody__label">First name:</label>
+              <div class="value">
+                <span class="value__saved" ng-hide="profileSettings.editPersonal" ng-bind="profileSettings.user.firstname"></span>
+                <input class="form-control" ng-hide="!profileSettings.editPersonal" ng-model="profileSettings.user.firstname" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="tbody__label">Last name:</label>
+              <div class="value">
+                <span class="value__saved" ng-hide="profileSettings.editPersonal" ng-bind="profileSettings.user.lastname"></span>
+                <input class="form-control" ng-hide="!profileSettings.editPersonal" ng-model="profileSettings.user.lastname" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="tbody__label">Username:</label>
+              <div class="value">
+                <span class="value__saved" ng-hide="profileSettings.editPersonal" ng-bind="profileSettings.user.username">Diane-B</span>
+                <input class="form-control" ng-hide="!profileSettings.editPersonal" ng-model="profileSettings.user.username" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="tbody__label">Password:</label>
+              <div class="value">
+                <span class="value__saved" ng-hide="profileSettings.editPersonal">**********</span>
+                <!--
+                <input class="form-control" placeholder="Old password" type="password" ng-hide="!profileSettings.editPersonal">
+                -->
+                <input ng-model="profileSettings.password" class="form-control" placeholder="New password" type="password" ng-hide="!profileSettings.editPersonal">
+                <input ng-model="profileSettings.confirm"
+                       ui-validate="'$value==profileSettings.password'"
+                       ui-validate-watch="'profileSettings.password'"
+                       class="form-control" placeholder="Retype new password" type="password" ng-hide="!profileSettings.editPersonal">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="tbody__label">Birthday:</label>
+              <div class="value">
+                <span class="value__saved" ng-hide="profileSettings.editPersonal" ng-bind="profileSettings.user.dateOfBirth | date:shortDate"></span>
+                <span ng-show="profileSettings.editPersonal">
+                    <select data-container="body" class="nya-selectpicker" ng-model="selectedDate" ng-options="date as date for date in profileSettings.dates"></select>
+                </span>
+                <span ng-show="profileSettings.editPersonal">
+                    <select data-container="body" class="nya-selectpicker" ng-model="selectedMonth" ng-options="month.value as month.name for month in profileSettings.months"></select>
+                </span>
+                <span ng-show="profileSettings.editPersonal">
+                    <select data-container="body" class="nya-selectpicker" ng-model="selectedYear" ng-options="year as year for year in profileSettings.years"></select>
+                </span>
+              </div>
+            </div>
+          <img class="avatar" ng-src="temp-img/avatar.png" ng-if="!profileSettings.user.picture">
+          <img class="avatar" ng-src="{{ profileSettings.user.picture.c66x66 }}" ng-if="profileSettings.user.picture">
+          <label class="action-link font-size-md"><span class="fa fa-pencil"></span> Change avatar <input style="display: none" id="user-avatar" type="file" ng-file-select></label>
+        </div>
+
+        <div class="col-third">
+            <div class="form-group">
+              <label class="tbody__label">E-mail:</label>
+              <div class="value">
+                <span class="value__saved" ng-hide="profileSettings.editContact" ng-bind="profileSettings.user.email"></span>
+                <input type="email" class="form-control ng-invalid" ng-model="profileSettings.user.email" ng-hide="!profileSettings.editContact" name="email" required>
+                <span class="form-error-message" ng-show="profileSettings.editContact && !profileForm.email.$valid">Please enter your E-mail</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="tbody__label">Address:</label>
+              <div class="value">
+                <span class="value__saved" ng-hide="profileSettings.editContact" ng-bind="profileSettings.user.address"></span>
+                <textarea class="textarea form-control" ng-show="profileSettings.editContact" ng-model="profileSettings.user.address"></textarea>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="tbody__label">Phone:</label>
+              <div class="value">
+                <span class="value__saved" ng-hide="profileSettings.editContact" ng-bind="profileSettings.user.phone"></span>
+                <input class="form-control" ng-model="profileSettings.user.phone" ng-show="profileSettings.editContact">
+              </div>
+            </div>
+        </div>
+
+        <div class="col-third">
+
+          <div class="custom-checkbox">
+            <div class="custom-checkbox__container">
+              <input type="checkbox" checked>
+              <span class="custom-checkbox__fake"></span>
+            </div>
+            <label class="custom-checkbox__label">Recieve important updates from SwitchFit team</label>
+          </div>
+
+          <div class="custom-checkbox">
+            <div class="custom-checkbox__container">
+              <input type="checkbox">
+              <span class="custom-checkbox__fake"></span>
+            </div>
+            <label class="custom-checkbox__label">Receive daily summary from notifications</label>
+          </div>
+
+          <div class="custom-checkbox">
+            <div class="custom-checkbox__container">
+              <input type="checkbox">
+              <span class="custom-checkbox__fake"></span>
+            </div>
+            <label class="custom-checkbox__label">Receive monthly SwitchFit newsletter</label>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+    </form>
+    <p class="pull-left">If you require an official program participation proof document for your health insurance simply send us an <a href="mailto:info@goswitchfit.com">email</a>.</p>
+    <a class="action-link pull-right" href="{{ app.path('/demo/terms-and-conditions') }}">Allgemeine Geschäftsbedingungen</a>
+  </div>
+</section>

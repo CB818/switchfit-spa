@@ -1,0 +1,70 @@
+//
+// Pagination (multiple pages)
+// --------------------------------------------------
+.pagination {
+  overflow: hidden; //clearfix
+  margin: 0;
+  padding-left: 0;
+  border-radius: @border-radius-base;
+
+  > li {
+    display: inline-block; // Remove list-style and block-level defaults
+    > a,
+    > span {
+      display: inline-block;
+      position: relative;
+      padding: 0 8px;
+      line-height: @line-height-base;
+      text-decoration: none;
+      color: @text-muted;
+      margin-left: -1px;
+      &:hover {
+        color: @text-color;
+      }
+    }
+  }
+
+  > .active > a,
+  > .active > span {
+    &,
+    &:hover,
+    &:focus {
+      z-index: 2;
+      color: @text-color;
+      font-weight: bold;
+      cursor: default;
+    }
+  }
+
+  > .disabled {
+    > span,
+    > span:hover,
+    > span:focus,
+    > a,
+    > a:hover,
+    > a:focus {
+      color: @pagination-disabled-color;
+      background-color: @pagination-disabled-bg;
+      border-color: @pagination-disabled-border;
+      cursor: not-allowed;
+      opacity: 0;
+    }
+  }
+
+  &--centered {
+    text-align: center;
+  }
+}
+
+// Sizing
+// --------------------------------------------------
+
+// Large
+.pagination-lg {
+  .pagination-size(@padding-large-vertical; @padding-large-horizontal; @font-size-lg; @border-radius-lg);
+}
+
+// Small
+.pagination-sm {
+  .pagination-size(@padding-small-vertical; @padding-small-horizontal; @font-size-sm; @border-radius-sm);
+}

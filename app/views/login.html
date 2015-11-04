@@ -1,0 +1,31 @@
+<div class="login-container">
+  <div class="login text-center">
+    <form class="login__form" role="form" ng-submit="login.loginCheck()" form-autofill-fix>
+      <!--<div class="form-title">Benutzeranmeldung</div>-->
+      <div class="form-logo"><span class="logo"></span></div>
+
+        <div class="fb_login">
+            <a href="/connect/facebook" target="_self"><span class="fb_button">Mit facebook anmelden</span></a>
+        </div>
+        <div class="or_option">oder</div>
+
+      <div class="form-content">
+        <div class="form-group">
+          <input ng-model="login.username" name="_username" autocomplete='on' type="text" ng-class="{ 'ng-invalid': login.showError }" class="form-control input-lg" id="exampleInputEmail1" placeholder="Benutzername oder E-Mail" required>
+          <span class="input-img fa fa-user"></span>
+        </div>
+        <div class="form-group">
+          <input ng-model="login.password" name="_password" autocomplete='on' type="password" ng-class="{ 'ng-invalid': login.showError }" class="form-control input-lg" id="exampleInputPassword1" placeholder="Passwort" required>
+          <span class="input-img fa fa-key"></span>
+          <div class="form-error-message" ng-show="login.showError">Bitte Login/E-Mail und Passwort überprüfen</div>
+        </div>
+        <button type="submit" class="btn btn-lg btn-block btn-default-alt">Login</button>
+        <a ui-sref="resetting" class="forgot-password action-link" href="#">Passwort vergessen?</a>
+        <div class="links clearfix">
+          <a class="left" href="http://www.switchfit.io/">Zurück zur Startseite</a>
+          <a class="contact-means mail right" href="mailto:team@switchfit.io">team@switchfit.io</a>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

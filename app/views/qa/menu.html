@@ -1,0 +1,5 @@
+{{$location.path()}}
+<ul ng-show="categories.length > 0" class="filter__header" ng-controller="QAMenuCtrl">
+    <li ng-class="{'active': isActive('/qa')}" ui-sref="qa" translate="frontend.community.q_a.all_questions" translate-default="">All questions</li>
+    <li ng-class="{'active': isActive('/qa/category/' + category.id)}" ng-repeat="category in categories" ui-sref="qa.category({ categoryId: category.id })">{{category.title}}</li>
+</ul>

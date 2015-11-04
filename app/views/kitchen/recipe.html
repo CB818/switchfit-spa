@@ -1,0 +1,90 @@
+<div class="container">
+<div class="filter main-content">
+  <ng-include src="'views/kitchen/tabs.html'"></ng-include>
+  <div class="main-content__body pt-md">
+    <div class="hidden-print">
+      <i class="fa fa-th-large link-color"></i> <a ui-sref="kitchen" translate="frontend.kitchen.detail.back_to_all_recipies" translate-default="">Back to all recipies</a>
+      <div class="pull-right">
+          <i ng-if="recipe.info.meta.prev" class="fa fa-arrow-circle-left link-color"></i> <a ng-if="recipe.info.meta.prev" ui-sref="kitchen.recipe({ recipe: recipe.info.meta.prev })" translate="frontend.kitchen.detail.previous_recipe" translate-default="">Previous recipe</a>
+          <span class="text-muted">&nbsp;|&nbsp;</span> 
+          <a ng-if="recipe.info.meta.next" ui-sref="kitchen.recipe({ recipe: recipe.info.meta.next })" translate="frontend.kitchen.detail.next_recipe" translate-default="">Next recipe</a> <i ng-if="recipe.info.meta.next" class="fa fa-arrow-circle-right link-color"></i>
+      </div>
+      <hr class="fat mb-md">
+    </div>
+    <div class="row">
+      <div class="col-main col-main--sm">
+        <div class="slider mb-md">
+          <div class="image-container">
+            <img ng-if="media.type=='photo'" ng-repeat="media in recipe.info.media" class="slide" ng-show="isActive($index)" ng-src="{{ media.photo.ref }}" ng-right-click>
+            <embed-video ng-if="media.type=='video'" ng-repeat="media in recipe.info.media" class="slide" ng-show="isActive($index)" data-ng-href="{{media.embedCode}}" width="520" height="300"></embed-video>
+            <!--<span ></span>-->
+            <span ng-if="recipe.info.media.length > 1" class="arrow prev fa fa-chevron-left hidden-print" ng-click="showPrev()"></span>
+            <span ng-if="recipe.info.media.length > 1" class="arrow next fa fa-chevron-right hidden-print" ng-click="showNext()"></span>
+          </div>
+          <ul ng-if="recipe.info.media.length > 1" class="nav hidden-print">
+            <li ng-class="{'video':media.type == 'video', 'active':isActive($index)}" ng-repeat="media in recipe.info.media" ng-click="showPhoto($index);">
+              <img ng-src="{{media.photo.c172x143}}" alt="{{media.desc}}" title="{{media.desc}}">
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-sidebar col-sidebar--lg">
+        <div class="h2 nmt" ng-bind="recipe.info.title"></div>
+        <ul class="cooking-details-list">
+          <li ng-hide="recipe.info.prep == undefined"><i class="fa fa-clock-o"></i> <strong translate="frontend.kitchen.detail.prep" translate-default="">Prep:</strong> <em ng-bind="recipe.info.prep"></em></li>
+          <li ng-hide="recipe.info.cook == undefined"><i class="fa fa-clock-o"></i> <strong translate="frontend.kitchen.detail.cook" translate-default="">Cook:</strong> <em ng-bind="recipe.info.cook"></em></li>
+          <li ng-hide="recipe.info.makes == undefined"><img src="../../images/icon-makes.png"> <strong translate="frontend.kitchen.detail.makes" translate-default="">Makes:</strong> <em ng-bind="recipe.info.makes"></em></li>
+        </ul>
+        <ul class="meal-details-list">
+          <li>
+            <strong translate="frontend.kitchen.detail.meal_type" translate-default="">Мeal type:</strong>
+            <span ng-repeat="type in recipe.info.type | orderBy:'abbr'">{{ type.title }} <span class="badge img-item--badge">{{ type.abbr }}</span></span>
+          </li>
+          <li>
+            <strong translate="frontend.kitchen.detail.category" translate-default="">Category:</strong>
+            <em ng-repeat="category in recipe.info.category">{{ category.title }}{{ !$last ? ', ' : '' }}</em>
+            <!--<img class="pull-right" src="../../images/icon-pan.png">-->
+          </li>
+        </ul>
+        <span
+            class="btn btn-default btn-round mr-base hidden-print"
+            ng-click="recipe.fav()"
+            btn-loading="recipe.isLoading"
+            data-btn-loading-options="{color: '#4d888d', radius: 3}"
+            ng-class="{'active-favorite': recipe.info.favorite}"
+            >
+          <i class="fa fa-heart"></i>
+          <span ng-if="!recipe.info.favorite" translate="frontend.kitchen.detail.add_to_favorites" translate-default="">Add to favorites</span>
+          <span ng-if="recipe.info.favorite" translate="frontend.kitchen.detail.remove_from_favorites" translate-default="">Remove from favorites</span>
+        </span>
+        <a class="btn btn-default btn-round hidden-print" href="javascript:window.print()"><i class="fa fa-print"></i> <span translate="frontend.kitchen.detail.print" translate-default="">Print</span></a>
+        <div class="recipe-description">
+          <p ng-bind-html="recipe.info.description"></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row recipe-info">
+      <div class="col-main col-main--sm">
+        <div ng-hide="recipe.info.directions == undefined" class="sub-title bordered-title" translate="frontend.kitchen.detail.directions" translate-default="">Directions</div>
+        <div ng-bind-html="recipe.info.directions"></div>
+        <div ng-hide="recipe.info.additionalInfo == undefined" class="sub-title bordered-title pt-md" translate="frontend.kitchen.detail.additional_info" translate-default="">Additional info</div>
+        <div ng-bind-html="recipe.info.additionalInfo"></div>
+      </div>
+      <div class="col-sidebar col-sidebar--lg">
+        <div class="sub-title bordered-title" translate="frontend.kitchen.detail.ingredients" translate-default="">Ingredients</div>
+        <div class="custom-checkbox" ng-repeat="ingredient in recipe.info.ingredients">
+            <div ng-if="!recipe.isIngredientSections(ingredient.title)" class="custom-checkbox__container">
+              <input type="checkbox" name="quiz-2" ng-model="ingredient.checked">
+              <span class="custom-checkbox__fake"></span>
+            </div>
+            <label ng-if="!recipe.isIngredientSections(ingredient.title)" ng-class="{ 'strikethrough': ingredient.checked }" class="custom-checkbox__label" ng-bind-html="ingredient.title"></label>
+            <label ng-if="recipe.isIngredientSections(ingredient.title)" class="custom-checkbox__label"><strong>{{ recipe.getIngredientSections(ingredient.title) }}</strong></label>
+        </div>
+        <div ng-hide="recipe.info.nutritionalInfo == undefined" class="sub-title bordered-title pt-md" translate="frontend.kitchen.detail.nutritional_info" translate-default="">Nutritional info rep serve</div>
+        <div ng-bind-html="recipe.info.nutritionalInfo"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

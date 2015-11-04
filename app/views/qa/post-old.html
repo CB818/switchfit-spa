@@ -1,0 +1,68 @@
+<div class="row community-table__wrapper">
+<div class="col-main col-main--sm">
+  <ul class="community-table__feed feed--lg mb-md">
+    <li>
+      <div class="community-table__feed__figure">
+          <div
+                  class="community-table__feed__figure__votes label--{{question.category.classSuffix.length > 0 ? question.category.classSuffix : 'info'}}">
+              <span>{{question.votesCnt}}<i class="fa fa-thumbs-o-up"></i></span>
+              <ng-pluralize count="question.votesCnt"
+                            when="{'0': 'stimmen',
+                                   'one': 'stimme',
+                                   'other': 'stimmen'}">
+              </ng-pluralize><br>
+          </div>
+          <div class="community-table__feed__figure__views">
+              {{question.viewsCnt}} <ng-pluralize count="question.viewsCnt"
+                                                  when="{'0': 'ansichten',
+                                                         'one': 'ansicht',
+                                                         'other': 'ansichten'}">
+          </ng-pluralize><br>
+          </div>
+        <div ng-if="question.canVote" class="community-table__feed__figure__vote" ng-click="vote()"><span translate="frontend.community.q_a.vote_action" translate-default="">VOTE</span>&nbsp;<i class="fa fa-thumbs-o-up"></i></div>
+      </div>
+      <div class="community-table__feed__content">
+        <div class="clearfix">
+            <div class="community-table__feed__title pull-left">{{question.title}}</div>
+            <p class="pull-right"><strong>{{question.category.title}}</strong></p>
+        </div>
+          <div class="community-table__feed__meta">
+              <em><i translate="frontend.community.q_a.asked" translate-default="">Asked on</i> {{question.createdAt | amDateFormat:'MMMM Do h:mm'}}, <i translate="frontend.community.q_a.by" translate-default="">by</i> {{question.user.firstname}} {{question.user.lastname}}.</em>
+          </div>
+          <p>{{question.text}}</p>
+      </div>
+    </li>
+  </ul>
+  <div class="answers">
+    <ul class="answers__list">
+      <li ng-repeat="answer in question.answers">
+        <div class="answers__list__header">
+          <div class="answers__list__header__avatar">
+              <figure><img src="{{ answer.user.picture != null && answer.user.picture.c66x66 || 'temp-img/avatar.png'}}"></figure>
+          </div>
+          <div class="answers__list__header__meta">
+            <span class="answers__list__header__meta__name">{{answer.user.firstname}} {{answer.user.lastname}}</span>
+            <span class="answers__list__header__meta__published"><i translate="frontend.community.q_a.answered" translate-default="">Answered</i>: <span am-time-ago="answer.createdAt"></span></span>
+          </div>
+        </div>
+        <p>{{answer.text}}</p>
+        <div ng-if="question.canAnswer" class="pull-right"><i class="fa fa-reply"></i> <a class="text-color" href="#" ng-click="showAnswerForm()" onclick="return false;"><strong>Reply to the answer</strong></a></div>
+      </li>
+    </ul>
+
+    <div id="answer-form" ng-if="question.canAnswer && (qaAnswerFormVisible || question.answers.length == 0)" class="answer-form" ng-controller="QAAnswerFormCtrl">
+      <!--<form name="answerForm" class="form--default clearfix"  ng-submit="submit(answerForm)">-->
+      <form name="answerForm" class="clearfix"  ng-submit="submit(answerForm)">
+        <div class="form-group">
+            <textarea class="form-control" placeholder="{{ 'frontend.community.q_a.additional_comment'|translate }}" rows="5" ng-model="formAnswer.text" ng-class="{'has-errors': errorsFields.text.length > 0}"></textarea>
+            <div ng-if="errorsFields.text.length > 0" class="answer-errors">
+                <span ng-repeat="error in errorsFields.text">{{ error }}.</span>
+            </div>
+        </div>
+        <button class="btn btn-default-alt pull-right" btn-loading="isLoading" ng-disabled="disabled()"><span translate="frontend.community.q_a.submit" translate-default="">Submit</span></button>
+      </form>
+    </div>
+  </div>
+</div>
+<ng-include src="'views/qa/sidebar.html'"></ng-include>
+</div>

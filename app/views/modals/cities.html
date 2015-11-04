@@ -1,0 +1,29 @@
+<div class="community-city-full-modal">
+  <span class="close" ng-click="$close()"></span>
+  <div class="community-city-full-modal__container">
+    <div class="community-city-full">
+      <div class="basic-title">SwitchFit! City Leaderboard</div>
+        <p>{{ 'point.city.explanation1'|translate }}</p>
+        <p>{{ 'point.city.explanation2'|translate }}</p>
+
+        <a ng-click="openPointExplanationModal()">{{ 'point.city.link_explanation'|translate }}</a>
+        <br><br>
+
+        <ul class="community-city-full__list">
+        <li ng-repeat="city in cities | orderBy: '-pointsTotal'">
+          <div class="community-city-full__list__info">
+            <div class="community-city-full__list__info__pic"><img ng-src="{{ city.image != null && city.image.ref || 'images/city_default.jpg'}}"></div>
+            <div class="community-city-full__list__info__title">{{ city.title }}</div>
+              <div ng-if="city.pointsTotal >= 0" class="community-city-full__list__info__stats">
+                  {{ city.pointsTotal }} <span translate="point.points" translate-default="">Points</span>
+              </div>
+            <div class="community-city-full__list__info__users">
+              <i class="fa fa-female"></i><i class="fa fa-male"></i>&nbsp;<span>{{ city.userCourseUserCount }}</span>
+            </div>
+          </div>
+          <div ng-if="$index == 0" class="community-city-full__list__leader"></div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+<div class="notifications">
+  <div class="sub-title">Add diary entry</div>
+  <div class="textarea-container">
+    <div class="textarea form-control" contenteditable="true">
+      How do you feel today?
+    </div>
+    <select class="nya-selectpicker select--narrow select--low select--muted" data-container="body" ng-model="selectMood">
+      <option value="" disabled selected>Select your mood</option>
+      <option value="1">1 very bad</option>
+      <option value="2">2 bad</option>
+      <option value="3">3 neutral</option>
+      <option value="4">4 good</option>
+      <option value="5">5 very good</option>
+    </select>
+    <div class="chars-left">600 characters</div>
+  </div>
+  <!--div class="share-on">
+    Share on:
+    <ul class="socials pull-right">
+      <li class="facebook"><span class="fa fa-facebook"></span></li>
+      <li class="google-plus"><span class="fa fa-google-plus"></span></li>
+      <li class="twitter"><span class="fa fa-twitter"></span></li>
+      <li class="pinterest"><span class="fa fa-pinterest"></span></li>
+    </ul>
+  </div-->
+  <button type="button" class="btn btn-success btn-block"><span class="fa fa-check"></span> Submit</button>
+</div>

@@ -1,0 +1,36 @@
+<div class="login-container">
+  <div class="login resetting text-center" ui-view>
+    <form class="login__form" role="form" ng-submit="request.sendEmail()" form-autofill-fix ng-hide="request.success">
+      <!--<div class="form-title">Passwort vergessen</div>-->
+      <div class="form-logo"><span class="logo"></span></div>
+      <div class="form-content">
+        <div class="form-group">
+          <input ng-model="request.username" name="username" autocomplete='on' type="text" ng-class="{ 'ng-invalid': request.showError }" class="form-control input-lg" id="exampleInputEmail1" placeholder="Benutzername oder E-Mail" required>
+          <span class="input-img fa fa-user"></span>
+          <div class="form-error-message" ng-show="request.showError" ng-bind="request.errorMessage"></div>
+        </div>
+        <button type="submit" class="btn btn-lg btn-block btn-default-alt" btn-loading="isLoading"><span>Passwort zurücksetzen</span></button>
+        <a ui-sref="login" class="forgot-password action-link"><i class="fa fa-arrow-circle-left"></i> Zurück zum Login</a>
+        <div class="links clearfix">
+          <a class="left" href="http://www.switchfit.io/">Zurück zur Startseite</a>
+          <a class="contact-means mail right" href="mailto:team@swtichfit.io">team@swtichfit.io</a>
+        </div>
+      </div>
+    </form>
+    <div class="login__form resetting-request-success" ng-show="request.success">
+      <!--<div class="form-title">Passwort vergessen</div>-->
+      <div class="form-logo"><span class="logo"></span></div>
+      <div class="form-content text-center">
+        <div>
+          <p ng-bind-html="request.successMsg"></p>
+          <hr>
+        </div>
+        <a ui-sref="login" class="forgot-password action-link"><i class="fa fa-arrow-circle-left"></i> Zurück zum Login</a>
+        <div class="links clearfix">
+          <a class="left" href="http://www.switchfit.io/">Zurück zur Startseite</a>
+          <a class="contact-means mail right" href="mailto:team@swtichfit.io">team@swtichfit.io</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

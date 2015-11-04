@@ -1,0 +1,71 @@
+<div class="container">
+  <div class="col-sidebar">&nbsp;</div>
+  <div class="col-main">
+    <div class="statistics-header">
+      <div class="bordered-title clearfix mb-md">
+        <div class="h2 mt-base pull-left">Statistik</div>
+        <ng-include src="'views/statistics/menu.html'"></ng-include>
+      </div>
+    </div>
+    <div class="statistics">
+      <div class="weeks-weights">
+        <ul ng-class="{'is-loading': isLoading}">
+          <li ng-repeat="(weekNumber, week) in stat.weeks">
+            <span class="week-weight week-start-weight" ng-if="$first">{{ week.startWeight }}</span>
+            <span class="week-weight week-end-weight" ng-if="weekNumber < currentWeekNumber">{{ week.endWeight }}</span>
+            <span class="week-mark week-start-mark" ng-if="$first">T</span>
+            <span class="week-mark week-end-mark">T</span>
+          </li>
+        </ul>
+      </div>
+      <div class="charts">
+        <span us-spinner="{radius:7, width:2, length: 5, color: '#5c677b'}" spinner-key="chart-loader" spinner-start-active="1"></span>
+        <div class="chart-weeks" ng-class="{'is-loading': isLoading,'active': activeChart == 'week'}">
+          <div
+            ng-repeat="week in stat.weeks"
+            class="stat-weeks-chart"
+            stat-chart="'week'"
+            stat-data="week.weightOffsets" ng-style="{top: getWeekTopPosition(week.startWeight)}"></div>
+        </div>
+        <div
+          class="chart-water"
+          ng-class="{'is-loading': isLoading, 'active': activeChart == 'water'}"
+          stat-chart="'water'"
+          stat-data="stat.waterData">
+        </div>
+        <div
+          class="chart-fitness-mark"
+          ng-class="{'is-loading': isLoading,'active': activeChart == 'fitness'}"
+          stat-chart="'fitnessMark'"
+          stat-data="stat.fitnessMarkData">
+        </div>
+      </div>
+      <div class="weeks-titles">
+        <ul ng-class="{'is-loading': isLoading}">
+          <li ng-repeat="(weekNumber, week) in stat.weeks">
+            <span class="week-title" ng-class="{'current': currentWeekNumber == weekNumber}">
+              <span translate="frontend.user_progress.week" translate-default="" translate-values="{number: $index+1}"></span>
+            </span>
+          </li>
+        </ul>
+      </div>
+      <div class="chart-legend">
+        <ul ng-class="{'is-loading': isLoading}">
+          <li ng-click="activeChart = 'week'" ng-class="{'active': activeChart == 'week'}">
+            <span class="legend-icon legend-weight"></span>
+            <span class="legend-title" translate="frontend.stat.legend.weight" translate-default="">WEIGHT<br>(kg)</span>
+          </li>
+          <li ng-click="activeChart = 'water'" ng-class="{'active': activeChart == 'water'}">
+            <span class="legend-icon legend-water"></span>
+            <span class="legend-title" translate="frontend.stat.legend.water" translate-default="">WATER<br>(glasses)</span>
+          </li>
+          <li ng-click="activeChart = 'fitness'" ng-class="{'active': activeChart == 'fitness'}">
+            <span class="legend-icon legend-fitness-score"></span>
+            <span class="legend-title" translate="frontend.stat.legend.fitness_score" translate-default="">FITNESS<br>TEST</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+</div>

@@ -1,0 +1,94 @@
+<div class="container">
+  <div class="filter main-content">
+    <ng-include src="'views/gym/tabs.html'"></ng-include>
+    <div class="main-content__body pt-md">
+      <div class="hidden-print">
+        <i class="fa fa-th-large link-color"></i> <a ui-sref="gym" translate="frontend.gym.detail.back_to_all_workouts" translate-default="">Back to all workouts</a>
+
+        <div class="pull-right">
+          <i ng-if="workout.info.meta.prev" class="fa fa-arrow-circle-left link-color"></i> <a ng-if="workout.info.meta.prev" ui-sref="gym.workout({ workout: workout.info.meta.prev })" translate="frontend.gym.detail.previous_workout" translate-default="">Previous workout</a>
+          <span class="text-muted">&nbsp;|&nbsp;</span>
+          <a ng-if="workout.info.meta.next" ui-sref="gym.workout({ workout: workout.info.meta.next })" translate="frontend.gym.detail.next_workout" translate-default="">Next workout</a> <i ng-if="workout.info.meta.next" class="fa fa-arrow-circle-right link-color"></i>
+        </div>
+        <hr class="fat mb-md">
+      </div>
+      <div class="row">
+        <div class="col-main col-main--sm">
+          <div class="slider mb-md">
+            <div class="image-container">
+              <img ng-if="media.type=='photo'"  ng-repeat="media in workout.info.media" class="slide" ng-show="isActive($index)"
+                   ng-src="{{media.photo.c515x300}}" ng-right-click>
+              <embed-video
+                  ng-if="media.type=='video'"
+                  ng-repeat="media in workout.info.media"
+                  class="slide"
+                  ng-show="isActive($index)"
+                  data-ng-href="{{media.embedCode}}"
+                  width="520"
+                  height="300"
+                  controls="0"
+                  force-quality="hq"
+                  ></embed-video>
+              <span ng-if="workout.info.media.length > 1" class="arrow prev fa fa-chevron-left hidden-print" ng-click="showPrev()"></span>
+              <span ng-if="workout.info.media.length > 1" class="arrow next fa fa-chevron-right hidden-print" ng-click="showNext()"></span>
+            </div>
+            <ul ng-if="workout.info.media.length > 1" class="nav hidden-print">
+              <li ng-class="{'video':media.type == 'video', 'active':isActive($index)}" ng-repeat="media in workout.info.media" ng-click="showPhoto($index);">
+                <img ng-src="{{media.photo.c172x143}}" alt="{{media.desc}}" title="{{media.desc}}">
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-sidebar col-sidebar--lg">
+          <div class="h2 nmt" ng-bind="workout.info.title"></div>
+          <ul class="cooking-details-list">
+            <li ng-hide="workout.info.workoutTime == undefined"><i class="fa fa-clock-o"></i> <strong translate="frontend.gym.detail.workout_time" translate-default="">Workout time:</strong> <em ng-bind="workout.info.workoutTime"></em></li>
+            <li ng-hide="workout.info.rest == undefined"><i class="fa fa-clock-o"></i> <strong translate="frontend.gym.detail.rest" translate-default="">Rest:</strong> <em ng-bind="workout.info.rest"></em></li>
+          </ul>
+          <ul class="meal-details-list">
+            <li>
+              <strong translate="frontend.gym.detail.workout_type" translate-default="">Workout type:</strong>
+              <span ng-repeat="type in workout.info.type | orderBy:'abbr'">{{ type.title }} <span class="badge img-item--badge">{{ type.abbr }}</span></span>
+            </li>
+            <li>
+              <strong translate="frontend.gym.detail.category" translate-default="">Category:</strong>
+              <em ng-repeat="category in workout.info.category">{{ category.title }}{{ !$last ? ', ' : '' }}</em>
+            </li>
+            <li>
+              <strong translate="frontend.gym.detail.location" translate-default="">Location:</strong>
+              <em ng-repeat="location in workout.info.location">{{ location.title }}{{ !$last ? ', ' : '' }}</em>
+            </li>
+          </ul>
+          <span
+              class="btn btn-default btn-round mr-base hidden-print"
+              ng-click="workout.fav()"
+              btn-loading="workout.isLoading"
+              data-btn-loading-options="{color: '#4d888d', radius: 3}"
+              ng-class="{'active-favorite': workout.info.favorite}">
+            <i class="fa fa-heart"></i>
+            <span ng-if="!workout.info.favorite" translate="frontend.gym.detail.add_to_favorites" translate-default="">Add to favorites</span>
+            <span ng-if="workout.info.favorite" translate="frontend.gym.detail.remove_from_favorites" translate-default="">Remove from favorites</span>
+          </span>
+          <a class="btn btn-default btn-round hidden-print" href="javascript:window.print()"><i class="fa fa-print"></i> <span translate="frontend.gym.detail.print" translate-default="">Print</span></a>
+
+          <div class="workout-description">
+            <p ng-bind-html="workout.info.description"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-main col-main--sm">
+          <div ng-hide="workout.info.instructions == undefined" class="sub-title bordered-title" translate="frontend.gym.detail.instructions" translate-default="">Instructions</div>
+          <div ng-bind-html="workout.info.instructions"></div>
+          <div ng-hide="workout.info.additionalInfo == undefined" class="sub-title bordered-title pt-md" translate="frontend.gym.detail.additional_info" translate-default="">Additional info</div>
+          <div ng-bind-html="workout.info.additionalInfo"></div>
+        </div>
+        <div class="col-sidebar col-sidebar--lg">
+          <div ng-hide="workout.info.tips == undefined" class="sub-title bordered-title" translate="frontend.gym.detail.tips" translate-default="">Tips</div>
+          <div ng-bind-html="workout.info.tips"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

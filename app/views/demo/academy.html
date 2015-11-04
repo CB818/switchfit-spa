@@ -1,0 +1,50 @@
+<section class="user-level user-progress section--honky">
+  <div class="container">
+    <div class="col-sidebar">
+      <img class="user-level__picture" src="images/icon-academy.png">
+      <div class="sub-title"><span class="color-info">LEVEL 1:</span> 0 EXP</div>
+      <p class="font-size-sm"><em><strong>50 xp</strong></em> to next level</p>
+    </div>
+    <div class="col-main">
+      <p><strong>SwitchFit Academy</strong> is a all-in one resource to your healthy living. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem. Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit amet.</p>
+      <ul class="weeks">
+        <!--<li class="current"><span>Introduction</span></li>-->
+        <li ng-class="{ 'current': module.status == 'in_progress', 'last': $last }" 
+            ng-repeat="module in academy.modules"><span ng-bind="module.title"></span></li>
+      </ul>
+      <progressbar value="0">0%</progressbar>
+    </div>
+  </div>
+</section>
+
+<section class="l-section-main section--academy" ui-view>
+  <div class="container">
+    <div class="main-content">
+      <div class="main-content__body">
+        <div class="h1">SwitchFit Academy - your Online Learning Source on Healthy Living</div>
+        <img class="pull-right" src="temp-img/goblet.png">
+        <p><strong>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean a elit consectetur, posuere urna a, adipiscing purus. Fusce sed massa sed nisi malesuada faucibus sit amet id lacus. In bibendum elementum sapien at porta. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eu nulla facilisis, pharetra leo porttitor, pretium justo.</strong></p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem. Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed.</p>
+        <div class="sub-title bordered-title mt-xl mb-lg">Academy Modules Explained</div>
+        <ul class="modules-list">
+          <li class="module" ng-if="!module.final" ng-repeat="module in academy.modules">
+            <div class="module__title">
+              <img src="temp-img/module.png">
+              <div class="sub-title" ng-bind="module.title"></div>
+            </div>
+            <p ng-bind="module.text"></p>
+          </li>
+        </ul>
+        <div class="final-test" ng-if="finalModule.length>0">
+          <img src="temp-img/goblet-small.png">
+          <div class="sub-title" ng-bind="finalModule[0].title"></div>
+          <p ng-bind="finalModule[0].text"></p>
+        </div>
+        <hr class="light dotted mb-lg">
+        <div class="text-center">
+            <span ui-sref="demo.academy.module({ moduleId: academy.modules[0].id })" class="btn btn-lg btn-success btn-module">START - MODULE ONE <i class="fa fa-chevron-right"></i></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

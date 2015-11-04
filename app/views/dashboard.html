@@ -1,0 +1,247 @@
+<!-- THIS IS THE PLANNER. It can be quite confusing because it used to be the dashboard.
+I tried to rename it from dashboard to planner, but it did not work directly. I did not want
+to waste more time on that as this as it is will not be used in the future.
+
+Kim
+-->
+
+
+<ng-include src="'views/common/header.html'"></ng-include>
+
+<section class="user-progress section--honky">
+  <div>
+    <div class="container">
+      <div class="col-sidebar user-video-modal-trigger" ng-click="app.openVideoModal('planner')">
+        <img class="avatar" ng-src="{{ currentUser.picture != null && currentUser.picture.c66x66 || 'temp-img/avatar.png'}}">
+        <img class="play" src="images/icon-play-video.png">
+      </div>
+      <div class="col-main">
+        <div class="user-progress-wrapper">
+          <ng-include src="'views/common/user-progress.html'"></ng-include>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</section>
+
+<section class="timetable section--azure" ng-class="{'locale-de' : locale == 'de', 'locale-en' : locale == 'en'}">
+  <div class="container">
+
+    <div class="col-sidebar">
+      &nbsp;
+    </div>
+    <div class="col-main timeline-col-main">
+      <ul
+          class="timeline"
+          ng-if="!courseFinished">
+        <li><span translate="frontend.dashboard.breakfast" translate-default="">Breakfast</span></li>
+        <li><span translate="frontend.dashboard.lunch" translate-default="">Lunch</span></li>
+        <li><span translate="frontend.dashboard.dinner" translate-default="">Dinner</span></li>
+        <li><span translate="frontend.dashboard.snack" translate-default="Snack">Snack</span></li>
+        <li></li>
+      </ul>
+      <h2 class="table-title" translate="frontend.dashboard.timetable" translate-default="">Timetable</h2>
+      <ul class="thead clearfix">
+        <li>
+          <button
+              class="btn label label-primary btn-inspire-me"
+              btn-loading="isLoading"
+              ng-click="dashboard.inspireMe()"
+              data-btn-loading-options="{color: '#4d888d'}"
+              ng-if="!courseFinished">
+              <span class="label-inspire-me" translate="frontend.dashboard.inspire_me" translate-default="">Inspire me!</span>
+          </button>
+        </li>
+        <li>
+          <button
+              class="btn label btn-link btn-rearrange"
+              ng-click="dashboard.activeDraggable = !dashboard.activeDraggable"
+              ng-class="{'draggable-on': dashboard.activeDraggable, 'active': dashboard.activeDraggable }"
+              ng-if="!courseFinished">
+            <i ng-if="dashboard.activeDraggable" class="fa fa-check"></i>
+            <!--<i ng-if="!dashboard.activeDraggable" class="fa fa-long-arrow-up rearrange-arrow-up"></i><i ng-if="!dashboard.activeDraggable" class="fa fa-long-arrow-down rearrange-arrow-down"></i>-->
+            <span ng-if="!dashboard.activeDraggable" class="label-rearrange" translate="frontend.dashboard.rearrange" translate-default="">Rearrange</span>
+            <span ng-if="dashboard.activeDraggable" class="label-done" translate="frontend.dashboard.done" translate-default="">Done</span>
+          </button>
+        </li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li>
+          <a ui-sref="kitchen.about" class="about-kitchen"><span translate="frontend.dashboard.party_day_column_text" translate-default="">About kitchen!</span>&nbsp;></a>
+        </li>
+      </ul>
+      <div
+          class="table-timetable table-week table-bordered"
+          ng-class="{'timetable-loading' : isDaysLoading}">
+        <span class="timetable-spinner" us-spinner="{radius:7, width:2, length: 5, color: '#5c677b'}" spinner-key="dashboard-loader" spinner-start-active="1"></span>
+        <table
+            class="table"
+            ng-class="{'timetable-inspire' : isLoading}"
+            ng-if="!courseFinished">
+            <thead>
+            <tr>
+                <th class="current-week-header" ng-repeat="weekDay in dashboard.weekDays" ng-class="{ current: dashboard.currentDate == weekDay.date }">
+                    <div class="relative">
+                        <span class="day" translate-default="" translate="{{weekDay.day}}"> </span>
+                        <span class="date" ng-bind="weekDay.date"></span>
+                        <!--
+                        <div
+                                ng-if="!courseFinished"
+                                ng-show="dayNotices(weekDay.date).length > 0"
+                                class="notification notification--warning"
+                                popover-template="views/popovers/notifications.html"
+                                popover-placement="bottom"
+                                data-toggle="popover"
+                                data-content>!</div>
+                         -->
+                    </div>
+                </th>
+            </tr>
+            </thead>
+          <tbody>
+            <tr>
+              <td ng-repeat="day in dashboard.userDays" class="containment-wrapper-{{$index+1}}" ng-if="$index < 6">
+                <ul class="timetable-items-list" ng-if="$index < 6">
+                  <li
+                      ng-if="timetableItem.type != 'extra'"
+                      ng-repeat="timetableItem in day.timetableItems"
+                      data-drop="true"
+                      ng-model="day.timetableItems"
+                      ng-class="{'not-empty' : timetableItem.item.id, 'active-draggable': dashboard.activeDraggable, 'dropping-over' : dashboard.activeDraggable && dashboard.isDroppingOver(day.day, $index) }"
+                      jqyoui-droppable="{index: {{$index}}, onDrop:'dashboard.dropCallback($parent.day, timetableItem, $index)', onOver: 'dashboard.droppingOver(day.day, $index)', onOut: 'dashboard.droppingOut(day.day, $index)'}">
+                    <span
+                        ng-show="dashboard.activeDraggable && dashboard.isDragging(day.day, $index)"
+                        class="clear-indication"
+                        ng-class="{'clear-indication-success': !dashboard.draggingWorkout, 'clear-indication-normal': dashboard.draggingWorkout}"></span>
+                    <div
+                        ng-if="timetableItem.type == 'meal'"
+                        class="timetable-item-drag"
+                        data-drag="dashboard.activeDraggable"
+                        data-jqyoui-options="{revert: 'invalid', axis: 'y', containment: '.containment-wrapper-{{$parent.$index+1}}'}"
+                        ng-model="day.timetableItems"
+                        jqyoui-draggable="{index: {{$index}}, onDrag: 'dashboard.setDragging(day.day, $index, timetableItem.type)' }" ng-click="dashboard.dragIndex = $index">
+                      <figure>
+                        <img
+                            ng-if="timetableItem.item.id"
+                            class="border-success timetable-image"
+                            ng-src="{{ timetableItem.item.media[0].photo.c102x102 }}">
+                        <span ng-if="!timetableItem.item.id && !dashboard.activeDraggable" class="add add-success" ng-click="dashboard.openMealModal(day, $index)"></span>
+                        <span ng-if="!timetableItem.item.id && dashboard.activeDraggable" class="add add-success">
+                          <span class="draggable-arrows">
+                            <i class="draggable-arrow-up fa fa-arrow-up"></i><br>
+                            <i class="draggable-arrow-down fa fa-arrow-down"></i>
+                          </span>
+                        </span>
+                        <span ng-if="timetableItem.item.id && dashboard.activeDraggable" class="add add-success draggable-exist-item">
+                          <span class="draggable-arrows">
+                            <i class="draggable-arrow-up fa fa-arrow-up"></i><br>
+                            <i class="draggable-arrow-down fa fa-arrow-down"></i>
+                          </span>
+                        </span>
+                        <span class="badge" ng-bind="timetableItem.itemType.abbr"></span>
+                      </figure>
+                      <div ng-if="timetableItem.item.id" class="timetable-item-actions">
+                        <div class="item-title">
+                          <table><tr><td>
+                            <a ui-sref="kitchen.recipe({ recipe: timetableItem.item.id })" target="_blank">
+                              <span>{{ timetableItem.item.title|limitTo : 35 }}{{ timetableItem.item.title.length > 35 ? '...' : '' }}</span>
+                            </a>
+                            <span></span>
+                          </td></tr></table>
+                        </div>
+                        <div class="item-actions">
+                          <div class="timetable-action link-edit">
+                            <a ng-click="dashboard.openMealModal(day, $index)">
+                              <span translate="frontend.dashboard.edit" translate-default="">Edit</span>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!--
+                    <div
+                        ng-if="timetableItem.type == 'workout'"
+                        class="timetable-item-drag"
+                        data-drag="dashboard.activeDraggable"
+                        data-jqyoui-options="{revert: 'invalid', axis: 'y', containment: '.containment-wrapper-{{$parent.$index+1}}'}"
+                        ng-model="day.timetableItems"
+                        jqyoui-draggable="{index: {{$index}}, onDrag: 'dashboard.setDragging(day.day, $index, timetableItem.type)'  }" ng-click="dashboard.dragIndex = $index">
+                      <figure>
+                        <img
+                            ng-if="timetableItem.item.id"
+                            class="border-normal timetable-image"
+                            ng-src="{{ timetableItem.item.media[0].photo.c81x81 }}">
+                        <span ng-if="!timetableItem.item.id && !dashboard.activeDraggable" class="add add-normal" ng-click="dashboard.openWorkoutModal(day, $index)"></span>
+                        <span ng-if="!timetableItem.item.id && dashboard.activeDraggable" class="add add-normal">
+                          <span class="draggable-arrows">
+                            <i class="draggable-arrow-up fa fa-arrow-up"></i><br>
+                            <i class="draggable-arrow-down fa fa-arrow-down"></i>
+                          </span>
+                        </span>
+                        <span ng-if="timetableItem.item.id && dashboard.activeDraggable" class="add add-normal draggable-exist-item">
+                          <span class="draggable-arrows">
+                            <i class="draggable-arrow-up fa fa-arrow-up"></i><br>
+                            <i class="draggable-arrow-down fa fa-arrow-down"></i>
+                          </span>
+                        </span>
+                      </figure>
+                      <div ng-if="timetableItem.item.id" class="timetable-item-actions">
+                        <div class="item-title">
+                          <table><tr><td>
+                            <a ui-sref="gym.workout({ workout: timetableItem.item.id })" target="_blank">
+                              <span>{{ timetableItem.item.title }}</span>
+                            </a>
+                            <span></span>
+                          </td></tr></table>
+                        </div>
+                        <div class="item-actions">
+                          <div class="timetable-action link-edit">
+                            <a ng-click="dashboard.openWorkoutModal(day, $index)">
+                              <span translate="frontend.dashboard.edit" translate-default="">Edit</span>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    -->
+                  </li>
+                </ul>
+              </td>
+              <td style="vertical-align: middle;">
+                &nbsp;
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="timetable-labels" ng-if="!courseFinished">
+        <table>
+          <tbody>
+            <tr>
+              <td ng-repeat="day in dashboard.userDays" class="" ng-if="$index < 6">
+                <div class="label-detox-alt" ng-if="day.type == 'detox'"><span translate="frontend.dashboard.detox_day" translate-default="">Detox day</span>
+              </td>
+              <td style="vertical-align: middle;">
+                <div class="label-party-alt"><span translate="frontend.dashboard.party_day" translate-default="">Party day</span></div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="vegetarianTicker">
+        <div class="custom-checkbox">
+          <div class="custom-checkbox__container">
+            <input id="checkbox-vegetarian-input" type="checkbox" ng-model="userVegetarian" ng-change="updateVegetarian()">
+            <span class="custom-checkbox__fake"></span>
+          </div>
+          <label for="checkbox-vegetarian-input" class="checkbox-vegetarian-label" translate="frontend.dashboard.vegetarian_checkbox.label" translate-default="I am vegetarian"></label>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<ng-include src="'views/common/footer.html'"></ng-include>

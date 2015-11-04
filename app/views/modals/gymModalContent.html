@@ -1,0 +1,76 @@
+<div ng-controller="WorkoutsModalCtrl as workouts" class="workout-modal">
+  <span class="close" ng-click="$close()"></span>
+  <div class="filter-container">
+    <!--<div class="sub-title" translate="frontend.gym.filter.filter_view" translate-default="">Filter view:</div>-->
+    <div class="clearfix relative">
+      <div class="form-inline pull-left">
+        <div class="form-group">
+          <select
+              class="nya-selectpicker type-select"
+              data-container="body"
+              data-none-selected-text="Alle Typen"
+              ng-model="workouts.type"
+              ng-change="workouts.changeType()"
+              ng-options="type.id as type.title for type in workouts.types">
+          </select>
+        </div>
+        <div class="form-group">
+          <select
+              class="nya-selectpicker category-select"
+              data-none-selected-text="Alle Kategorien"
+              data-container="body"
+              ng-model="workouts.category"
+              ng-change="workouts.changeCategory()"
+              ng-options="category.id as category.title for category in workouts.categories">
+          </select>
+        </div>
+        <div class="form-group">
+          <select
+              class="nya-selectpicker location-select"
+              data-none-selected-text="Alle Standorte"
+              data-container="body"
+              ng-model="workouts.location"
+              ng-change="workouts.changeLocation()"
+              ng-options="location.id as location.title for location in workouts.locations">
+          </select>
+        </div>
+      </div>
+      <ul class="filter-inline pull-left">
+        <li class="active" ng-click="workouts.changeFavs(false)"><span translate="frontend.gym.filter.show_all" translate-default="">Show all</span></li>
+        <li ng-click="workouts.changeFavs(true)"><i class="fa fa-heart"></i> <span translate="frontend.gym.filter.only_favorites" translate-default="">Only favorites</span></li>
+      </ul>
+      <div class="reset" ng-click="workouts.resetFilters()">
+        <span class="btn btn-link">
+          <span translate="frontend.gym.modal.reset_filters" translate-default="">Reset filters</span>
+        </span>
+      </div>
+    </div>
+  </div>
+  <hr class="fat">
+  <p ng-if="!isLoading" translate="frontend.gym.list.showing_workouts" translate-values="{showing: workouts.currentFilteredWorkoutsLength, total: workouts.allWorkouts.length}"></p>
+  <p ng-if="isLoading" class="spinner-loader"><span us-spinner="{radius:7, width:2, length: 5, color: '#5c677b'}" spinner-key="gym-loader" spinner-start-active="1"></span></p>
+  <perfect-scrollbar class="modal__scroller mb-md timetable-item-modal" wheel-propagation="true" scroll-x-margin-offset="21" refresh-on-change="someArray">
+    <ul class="img-items-list gym">
+      <li class="img-item" ng-repeat="workout in workouts.filteredWorkouts()">
+        <figure>
+          <img ng-src="{{ workout.media[0].photo.c172x143 }}">
+          <div class="liked" ng-if="workout.favorite"><i class="fa fa-heart"></i></div>
+          <!--<span class="badge img-item--badge" ng-bind="workout.type.abbr"></span>-->
+          <span class="img-item__action" ng-click="workouts.selectWorkout(workout)" translate="frontend.gym.modal.select" translate-default="">Select</span>
+          <figcaption>
+            <a ng-click="$close()" href="{{ '/gym/' + workout.id }}" translate="frontend.gym.list.view_workout" translate-default="">View workout</a>
+            <span class="time">45 min</span>
+          </figcaption>
+        </figure>
+        <div class="img-item__desc">
+          <strong ng-bind="workout.title"></strong>
+          {{ workout.category.title }}
+        </div>
+      </li>
+    </ul>
+  </perfect-scrollbar>
+  <!--<div class="text-center" ng-hide="true"><span class="btn btn-success btn-show-more">Show more</span></div>-->
+  <hr>
+  <a class="font-size-lg" href="mailto:help@swtichfit.io?subject={{ 'frontend.gym.modal.suit_me'|translate }}" translate="frontend.gym.modal.suit_me" translate-default="">None of the workouts suit me</a>
+  <a class="read-more" ui-sref="gym.hiits-lows-burns" target="_blank" translate="frontend.gym.modal.read_more" translate-default="">Read more about <strong>SwitchFit Gym</strong> &raquo;</a>
+</div>

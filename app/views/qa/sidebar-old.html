@@ -1,0 +1,77 @@
+<div class="col-sidebar col-sidebar--lg">
+    <div class="question-form mb-lg" ng-controller="QAQuestionFormCtrl">
+        <!--<form name="questionForm" class="form--default mb-lg" ng-submit="submit(questionForm)">-->
+        <form name="questionForm" class="clearfix" ng-submit="submit(questionForm)">
+            <div class="sub-title uppercase bordered-title mb-base" translate="frontend.community.q_a.ask_your_question" translate-default="">Ask your Question</div>
+            <div class="form-group" ng-class="{'selectpicker-has-errors': errorsFields.category.length > 0}">
+                <select data-container="body" class="nya-selectpicker" ng-model="formQuestion.category">
+                    <option ng-repeat="category in categories" value="{{category.id}}">{{category.title}}</option>
+                </select>
+                <div ng-if="errorsFields.category.length > 0" class="question-errors">
+                    <span ng-repeat="error in errorsFields.category">{{ error }}.</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <input class="form-control" placeholder="{{ 'frontend.community.q_a.your_question'|translate }}" ng-model="formQuestion.title" ng-class="{'has-errors': errorsFields.title.length > 0}">
+                <div ng-if="errorsFields.title.length > 0" class="question-errors">
+                    <span ng-repeat="error in errorsFields.title">{{ error }}.</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <textarea class="form-control" rows="4" placeholder="{{ 'frontend.community.q_a.additional_comment'|translate }}" ng-model="formQuestion.text" ng-class="{'has-errors': errorsFields.text.length > 0}"></textarea>
+                <div ng-if="errorsFields.text.length > 0" class="question-errors">
+                    <span ng-repeat="error in errorsFields.text">{{ error }}.</span>
+                </div>
+            </div>
+            <button class="btn btn-default-alt pull-right" type="submit" btn-loading="isLoading" ng-disabled="disabled()"><span translate="frontend.community.q_a.submit" translate-default="">Submit</span></button>
+        </form>
+        <div ng-if="successfullyAdded" class="success-block">Question<br>successfully added!</div>
+    </div>
+
+    <div class="sub-title uppercase bordered-title mb-md" translate="frontend.community.q_a.most_popular" translate-default="">Most popular questions</div>
+    <ul class="community-table__feed feed--md mb-md" ng-controller="QACtrl">
+        <li ng-repeat="question in getQuestions() | orderBy:'-votesCnt' | limitTo:3">
+            <div class="community-table__feed__figure">
+                <div
+                        class="community-table__feed__figure__votes label--{{question.category.classSuffix.length > 0 ? question.category.classSuffix : 'info'}}">
+                    <span>{{question.votesCnt}}<i class="fa fa-thumbs-o-up"></i></span>
+                    <ng-pluralize count="question.votesCnt"
+                                  when="{'0': 'stimmen',
+                                   'one': 'stimme',
+                                   'other': 'stimmen'}">
+                    </ng-pluralize><br>
+                </div>
+            </div>
+            <div class="community-table__feed__content">
+                <p><a ui-sref="community.qa.question({ questionId: question.id })"><strong>{{question.title}}</strong></a></p>
+                <p ng-if="question.latestAnswerAt"><strong translate="frontend.community.q_a.latest_answer" translate-default="">Latest answer:</strong> <em am-time-ago="question.latestAnswerAt"></em></p>
+                <p ng-if="!question.latestAnswerAt" translate="frontend.community.q_a.no_answers" translate-default="">No answers</p>
+                <p><strong translate="frontend.community.q_a.category" translate-default="">Category:</strong> <em>{{question.category.title}}</em></p>
+            </div>
+        </li>
+    </ul>
+
+    <div class="sub-title uppercase bordered-title mb-md" translate="frontend.community.q_a.most_viewed" translate-default="">Most viewed questions</div>
+    <ul class="community-table__feed feed--md" ng-controller="QACtrl">
+        <li ng-repeat="question in getQuestions() | orderBy:'-viewsCnt' | limitTo:3">
+            <div class="community-table__feed__figure">
+                <div
+                        class="community-table__feed__figure__votes label--{{question.category.classSuffix.length > 0 ? question.category.classSuffix : 'info'}}">
+                    <span>{{question.viewsCnt}}<i class="fa fa-eye"></i></span>
+                    <ng-pluralize count="question.viewsCnt"
+                                  when="{'0': 'ansichten',
+                                   'one': 'ansicht',
+                                   'other': 'ansichten'}">
+                    </ng-pluralize><br>
+                </div>
+            </div>
+            <div class="community-table__feed__content">
+                <p><a ui-sref="qa.question({ questionId: question.id })"><strong>{{question.title}}</strong></a></p>
+                <!--<p ng-if="question.text.length > 0"><em>{{question.text | limitTo: 50}}{{question.text.length > 50 ? '...' : '' }}</em></p>-->
+                <p ng-if="question.latestAnswerAt"><strong translate="frontend.community.q_a.latest_answer" translate-default="">Latest answer:</strong> <em am-time-ago="question.latestAnswerAt"></em></p>
+                <p ng-if="!question.latestAnswerAt" translate="frontend.community.q_a.no_answers" translate-default="">No answers</p>
+                <p><strong translate="frontend.community.q_a.category" translate-default="">Category:</strong> <em>{{question.category.title}}</em></p>
+            </div>
+        </li>
+    </ul>
+</div>

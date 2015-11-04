@@ -1,0 +1,37 @@
+<nav class="header global-nav hidden-print">
+    <div class="container">
+        <a class="logo" href="#"></a>
+        <ul class="main-menu" ng-class="{'de-main-menu' : locale == 'de'}"></ul>
+        <ul class="user-menu">
+            <li><a class="user-menu__item fa fa-sign-out" href="/logout" target="_self"></a></li>
+        </ul>
+    </div>
+</nav>
+
+<section class="section--default">
+  <div class="container">
+    <div class="main-content">
+      <div class="main-content__body text-center">
+        <img class="block centered mb-md" src="../../temp-img/Conny_Stehli.png">
+        <div class="h2">Hallo {{ currentUser.firstname }},</div>
+        <p class="mb-lg font-size-xl">Dein Kurs beginnt am <strong>{{ currentUser.activeUserCourse.course.dateFrom | date : 'd. MMMM' }}, 10:00 Uhr</strong>.<br />Bitte besuche uns dann wieder damit wir zusammen starten können.</p>
+        <p>
+          <em class="font-size-md">Danke,</em><br />
+          <em class="font-size-md">SwitchFit Team</em>
+        </p>
+        <!--<a href="mailto:team@goswtichfit.com">team@swtichfit.io</a>-->
+      </div>
+    </div>
+  </div>
+</section>
+
+<nav class="footer global-nav hidden-print">
+    <div class="container">
+        <a class="logo" href="#"></a>
+        <ul class="contact-menu">
+            <li><i class="fa fa-twitter twitter"></i> <a href="https://twitter.com/GoSwitchFit" target="_blank">@switchfit</a></li>
+        </ul>
+        <ul class="footer-menu">
+        </ul>
+    </div>
+</nav>

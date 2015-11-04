@@ -1,0 +1,21 @@
+<nav class="footer global-nav hidden-print">
+    <div class="container">
+        <a class="logo" href="#"></a>
+        <ul class="contact-menu">
+            <!--<li><i class="fa fa-envelope"></i> <a href="mailto:team@swtichfit.io">team@swtichfit.io</a></li>-->
+            <li><i class="fa fa-twitter twitter"></i> <a href="https://twitter.com/GoSwitchFit" target="_blank">@switchfit</a></li>
+        </ul>
+        <ul class="footer-menu">
+            <!--<li><a href="#" translate="frontend.menu.panic">Panic</a></li>-->
+            <li><a href="#" onclick="openIntercom()" translate="frontend.menu.help">Help</a></li>
+            <li><a ui-sref="settings" translate="frontend.menu.settings">Settings</a></li>
+            <!--<li><a href="http://www.goswitchfit.com/who-we-are" target="_blank" translate="frontend.menu.about">About</a></li>-->
+        </ul>
+    </div>
+</nav>
+<script>
+    function openIntercom() {
+        window.Intercom('show');
+        return false;
+    }
+</script>

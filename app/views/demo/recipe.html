@@ -1,0 +1,82 @@
+<div class="container">
+  <div class="filter main-content">
+    <ul class="filter__header hidden-print">
+      <li class="active"> Healthy meal</li>
+      <li>At the restraurant</li>
+      <li>On the go</li>
+      <li>Detox days</li>
+      <li>Party days</li>
+      <li>Kitchen experts</li>
+    </ul>
+    <div class="main-content__body pt-md">
+      <div class="hidden-print">
+        <i class="fa fa-th-large link-color"></i> <a ui-sref="demo.kitchen">Back to all recipies</a>
+        <!--<div class="pull-right"><i class="fa fa-arrow-circle-left link-color"></i> <a href="#">Previuos recipe</a> <span class="text-muted">&nbsp;|&nbsp;</span> <a href="#">Next recipe</a> <i class="fa fa-arrow-circle-right link-color"></i></div>-->
+        <hr class="fat mb-md">
+      </div>
+      <div class="row">
+        <div class="col-main col-main--sm">
+          <div class="slider mb-md">
+            <div class="image-container">
+              <img ng-repeat="photo in recipe.info.photos" class="slide" ng-show="isActive($index)" ng-src="{{ photo.photo.ref }}">
+              <span class="arrow prev fa fa-chevron-left hidden-print" ng-click="showPrev()"></span>
+              <span class="arrow next fa fa-chevron-right hidden-print" ng-click="showNext()"></span>
+            </div>
+            <ul class="nav hidden-print">
+              <li ng-class="{'video':photo.video, 'active':isActive($index)}" ng-repeat="photo in recipe.info.photos">
+                <img ng-src="{{photo.photo.c172x143}}" alt="{{photo.desc}}" title="{{photo.desc}}" ng-click="showPhoto($index);">
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-sidebar col-sidebar--lg">
+          <div class="h2 nmt" ng-bind="recipe.info.title"></div>
+          <ul class="cooking-details-list">
+            <li><i class="fa fa-clock-o"></i> <strong>Prep:</strong> <em ng-bind="recipe.info.prep"></em></li>
+            <li><i class="fa fa-clock-o"></i> <strong>Cook:</strong> <em ng-bind="recipe.info.cook"></em></li>
+            <li><img src="../../images/icon-makes.png"> <strong>Makes:</strong> <em ng-bind="recipe.info.makes"></em></li>
+          </ul>
+          <ul class="meal-details-list">
+            <li>
+              <strong>Мeal type:</strong> <em>good for your X and Y</em>
+              <div class="badge badge-sm pull-right" ng-bind="recipe.info.type.abbr"></div>
+            </li>
+            <li>
+              <strong>Category:</strong> <em ng-bind="recipe.info.category.title"></em>
+              <img class="pull-right" src="../../images/icon-pan.png">
+            </li>
+          </ul>
+          <span class="btn btn-default btn-round mr-base hidden-print" ng-click="recipe.fav()"><img src="../../images/icon-heart-sm.png"> Add to favorites</span>
+          <a class="btn btn-default btn-round hidden-print" href="javascript:window.print()"><i class="fa fa-print"></i> Print</a>
+          <div class="recipe-description">
+            <p ng-bind="recipe.info.description"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row recipe-info">
+        <div class="col-main col-main--sm">
+          <div class="sub-title bordered-title">Directions</div>
+          <div ng-bind-html="recipe.info.directions"></div>
+          <div class="sub-title bordered-title pt-md">Additional info</div>
+          <div ng-bind-html="recipe.info.additionalInfo"></div>
+        </div>
+        <div class="col-sidebar col-sidebar--lg">
+          <div class="sub-title bordered-title">Ingredients</div>
+
+          <div class="custom-checkbox" ng-repeat="ingredient in recipe.info.ingredients">
+              <div class="custom-checkbox__container">
+                <input type="checkbox" name="quiz-2" ng-model="ingredient.checked">
+                <span class="custom-checkbox__fake"></span>
+              </div>
+              <label ng-class="{ 'strikethrough': ingredient.checked }" class="custom-checkbox__label" ng-bind="ingredient.title"></label>
+          </div>
+          <div class="sub-title bordered-title pt-md">Nutritional info rep serve</div>
+          <div ng-bind-html="recipe.info.nutritionalInfo"></div>
+        </div>
+        <div class="sub-title bordered-title pt-md">Nutritional info rep serve</div>
+        <div ng-bind-html="recipe.info.nutritionalInfo"></div>
+      </div>
+    </div>
+  </div>
+</div>

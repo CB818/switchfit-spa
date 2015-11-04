@@ -1,0 +1,116 @@
+<section class="l-section-main section--academy" ng-if="unpayed">
+  <div class="container">
+
+    <div class="note">
+      <a href="{{paymentUrl}}" target="_self">{{'frontend.academy.has_to_pay' | translate}}</a>
+    </div>
+
+
+  </div>
+</section>
+<div class="container" ng-if="!unpayed">
+  <div class="main-content">
+    <div class="main-content__body academy-topic">
+      <div class="clearfix">
+        <div class="h1 pull-left nmt" ng-bind="module.info.title"></div>
+        <!--<div class="action-link pull-right hidden-print"><i class="fa fa-print"></i> <a href="javascript:window.print()"><span class="action-link__text" translate="frontend.gym.detail.print" translate-default="">Print</span></a></div>-->
+        <div class="action-link pull-right hidden-print">
+            <a href="javascript:window.print()"><span class="action-link__text">Drucken</span></a>
+        </div>
+      </div>
+
+      <accordion close-others="true">
+        <accordion-group ng-repeat="topic in module.info.topics" is-open="topic.open" is-disabled="topic.status == 'incomplete'">
+          <accordion-heading>
+            <strong><span class="h2" ng-class="{'active': topic.open}" ng-bind="topic.title"></span></strong>
+
+            <div class="pull-right">
+              <label ng-if="topic.status == 'complete'" class="status status-success" translate="frontend.academy.module.completed" translate-default=""></label>
+              <label ng-if="topic.status == 'in_progress'" class="status status-warning" translate="frontend.academy.module.in_progress" translate-default=""></label>
+              <label ng-if="topic.status == 'incomplete'" class="status status-danger" translate="frontend.academy.module.incomplete" translate-default=""></label>
+            </div>
+          </accordion-heading>
+          <div class="mb-md academy-topic-text academy-topic-p" ng-bind-html="module.topics[topic.id].text" ng-right-click></div>
+
+          <form class="quiz quiz-default" ng-if="topic.status == 'in_progress'" ng-show="module.topics[topic.id].questions">
+            <div ng-if="module.topics[topic.id].questions[0].noQuestions == false" class="sub-title bordered-title"><i class="fa fa-edit"></i> <span translate="frontend.academy.module.test_text" translate-default="">Test your knowlege on this topic</span></div>
+            <ul ng-if="module.topics[topic.id].questions[0].noQuestions == false" class="quiz__list">
+              <li class="quiz__list__item" ng-repeat="question in module.topics[topic.id].questions">
+                <div ng-if="question.multipleAnswers == false">
+                  <div class="quiz__list__item__title" ng-bind="question.text"></div>
+                  <div class="quiz__list__item__text">
+                    <div class="custom-radio" ng-repeat="answer in question.answers">
+                      <div class="custom-radio__container">
+                        <input ng-change="module.topics[topic.id].check = false" type="radio" ng-name="quiz-{{ $index }}"
+                               ng-model="question.model" ng-value="{{ answer.id }}">
+                        <span class="custom-radio__fake"></span>
+                      </div>
+                      <label class="custom-radio__label">
+                        {{answer.text}}
+                        <div class="val-pop val-pop-success right"
+                             ng-if="question.model == answer.id && answer.isCorrect"
+                             ng-show="module.topics[topic.id].check && !module.info.final">
+                          <div class="val-pop-inner" translate="frontend.academy.module.correct" translate-default="">Correct! Well done!</div>
+                          <div class="val-pop-arrow"></div>
+                        </div>
+                        <div class="val-pop val-pop-danger right"
+                             ng-if="question.model == answer.id && !answer.isCorrect"
+                             ng-show="module.topics[topic.id].check && !module.info.final">
+                          <div class="val-pop-inner" translate="frontend.academy.module.incorrect" translate-default="">Incorrect! Try again.</div>
+                          <div class="val-pop-arrow"></div>
+                        </div>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div ng-if="question.multipleAnswers == true">
+                  <div class="quiz__list__item__title" ng-bind="question.text"></div>
+                  <div class="quiz__list__item__text clearfix">
+
+                    <div class="custom-checkbox" ng-repeat="answer in question.answers">
+                      <div class="custom-checkbox__container">
+                        <input ng-change="module.topics[topic.id].check = false" type="checkbox" ng-name="quiz-{{ $index }}"
+                               ng-model="answer.checked">
+                        <span class="custom-checkbox__fake"></span>
+                      </div>
+                      <label class="custom-checkbox__label">
+                        {{ answer.text }}
+                        <div class="val-pop val-pop-success right" ng-if="answer.checked && answer.isCorrect"
+                             ng-show="module.topics[topic.id].check && !module.info.final">
+                          <div class="val-pop-inner" translate="frontend.academy.module.correct" translate-default="">Correct! Well done!</div>
+                          <div class="val-pop-arrow"></div>
+                        </div>
+                        <div class="val-pop val-pop-danger right" ng-if="answer.checked && !answer.isCorrect"
+                             ng-show="module.topics[topic.id].check && !module.info.final">
+                          <div class="val-pop-inner" translate="frontend.academy.module.incorrect" translate-default="">Incorrect! Try again.</div>
+                          <div class="val-pop-arrow"></div>
+                        </div>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+            <button
+                ng-click="module.checkTopic(module.topics[topic.id])"
+                class="btn btn-success btn-spacious"
+                type="button"><i class="fa fa-check"></i>
+                <span ng-if="module.topics[topic.id].questions[0].noQuestions == false" translate="frontend.academy.module.check" translate-default="">Check</span>
+                <span ng-if="module.topics[topic.id].questions[0].noQuestions == true" translate="frontend.academy.module.continue" translate-default="">Weiter</span>
+            </button>
+            <span ng-if="module.topics[topic.id].showErr"
+                  class="message red mt-md" translate="frontend.academy.module.select_answer" translate-default="">Please select an answer.</span>
+          </form>
+          <span ng-if="module.topics[topic.id].allRight && module.topics[topic.id].check"
+                class="message message-success mb-md"><i class="fa fa-thumbs-up"></i><span translate="frontend.academy.module.well_done" translate-default="" translate-values="{name: currentUser.firstname}">Well done Samatha! Continue with the next topics below</span>.</span>
+        </accordion-group>
+      </accordion>
+
+      <div class="text-center" ng-if="module.moduleComplete">
+          <span ng-if="module.info.position != 8" ng-click="module.next()" class="btn btn-lg btn-success"><span translate="frontend.academy.module.next_module" translate-default="">NEXT MODULE</span> <i class="fa fa-chevron-right"></i></span>
+          <span ng-if="module.info.position == 8" ng-click="module.next()" class="btn btn-lg btn-success"><span translate="frontend.academy.module.to_overview" translate-default="">QUEST OVERVIEW</span> <i class="fa fa-chevron-right"></i></span>
+      </div>
+    </div>
+  </div>
+</div>

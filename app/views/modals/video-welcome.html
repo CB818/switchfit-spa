@@ -1,0 +1,5 @@
+<div class="video-modal">
+  <span class="close" ng-click="$close()"></span>
+  <div class="video-title">Hallo, {{currentUser.firstname}}! <br />Willkommen auf <span>Switch<strong>Fit</strong></span></div>
+  <div class="warmup-video" ng-controller="ContentBlockCtrl as videoBlock" ng-init="videoBlock.init('welcome-video')" ng-bind-html="videoBlock.contentBlock"></div>
+</div>
